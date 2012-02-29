@@ -72,11 +72,9 @@
     </head>
     <body>
         <div class="super-head">
-            <a href="http://www.escuelaaeronautica.edu.co">Página Inicial</a>
-            <a href="http://www.aerocivil.gov.co">Aeronáutica Civil</a>
-            <a href="">Otro Link</a>
-            <a href="">Un Link más</a>
-            <a href="">Acerca de SiCaRa</a>
+            <a href="http://www.escuelaaeronautica.edu.co" target="_blank">Página Principal</a>
+            <a href="http://www.aerocivil.gov.co" target="_blank">Aeronáutica Civil</a>
+            <a href="http://code.google.com/p/sicara/" target="_blank">Acerca de SiCaRa</a>
             <p>
                 SiCaRa - Versión 2.0
             </p>
