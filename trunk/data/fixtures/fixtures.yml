@@ -1,0 +1,89 @@
+# # Populate this file with data to be loaded by your ORM's *:data-load task.
+# # You can create multiple files in this directory (i.e. 010_users.yml,
+# # 020_articles.yml, etc) which will be loaded in alphabetical order.
+# # 
+# # See documentation for your ORM's *:data-load task for more information.
+# 
+# User:
+#   fabien:
+#     username: fabien
+#     password: changeme
+#     name:     Fabien Potencier
+#     email:    fabien.potencier@symfony-project.com
+#   kris:
+#     username: Kris.Wallsmith
+#     password: changeme
+#     name:     Kris Wallsmith
+#     email:    kris.wallsmith@symfony-project.com
+
+TipoDocumento:
+  ninguno:
+    id_tipo_documento: 1
+    nombre: Ninguno
+  tarjeta:
+    id_tipo_documento: 2
+    nombre: Tarjeta de Identidad
+  cedula:
+    id_tipo_documento: 3
+    nombre: CÃ©dula de CiudadanÃ­a
+  registro:
+    id_tipo_documento: 4
+    nombre: Registro Civil de Nacimiento
+  paraporte:
+    id_tipo_documento: 5
+    nombre: Pasaporte
+  extranjeria:
+    id_tipo_documento: 6
+    nombre: CÃ©dula de ExtranjerÃ­a
+  otro:
+    id_tipo_documento: 7
+    nombre: Otro
+    
+TipoPago:
+  ninguno:
+    id_tipo_pago: 1
+    nombre: Ninguno
+  contado:
+    id_tipo_pago: 2
+    nombre: De contado
+  credito_externo:
+    id_tipo_pago: 3
+    nombre: CrÃ©dito Externo
+  credito_interno:
+    id_tipo_pago: 4
+    nombre: CrÃ©dito Interno
+  beca_total:
+    id_tipo_pago: 5
+    nombre: Beca Total
+
+
+Jornada:
+  ninguno:
+    id_jornada: 1
+    nombre: Ninguna
+  diurno:
+    id_jornada: 2
+    nombre: Diurno
+  nocturno:
+    id_jornada: 3
+    nombre: Nocturno
+  tarde:
+    id_jornada: 4
+    nombre: Tarde
+  fin_semana:
+    id_jornada: 5
+    nombre: Fin de Semana
+
+
+
+#Usuario:
+#  root:
+#    id_usuario: 1
+#    primer_nombre: Robinson
+#    segundo_nombre: AndrÃ©s
+#    primer_apellido: Palacios
+#    segundo_apellido: Orjuela
+#    documento: 12345678
+#    id_tipo_documento: 3
+#    lugar_expedicion: BogotÃ¡ D.C.
+#    id_sf_guard_user: 1

@@ -1,0 +1,46 @@
+sf_guard_permission:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                SfGuardPermission
+    module:               sf_guard_permission
+    prefix_path:          /sf_guard_permission
+    column:               id
+    with_wildcard_routes: true
+
+sf_guard_user:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                SfGuardUser
+    module:               sf_guard_user
+    prefix_path:          /sf_guard_user
+    column:               id
+    with_wildcard_routes: true
+
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+homepage:
+  url:   /
+  param: { module: sfGuardAuth, action: signin }
+
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*
+  
+
+
+#Rutas para sfDoctrineUser
+sf_guard_signin:
+  url:   /ingresar
+  param: { module: sfGuardAuth, action: signin }
+
+sf_guard_signout:
+  url:   /salir
+  param: { module: sfGuardAuth, action: signout }
+

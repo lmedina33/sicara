@@ -1,0 +1,330 @@
+
+body{
+    margin: 0;
+    font-size: 16px;
+/*    color: #0A246A;*/
+}
+
+/*Super Head*/
+div.super-head{
+    height: 17px;
+    font-size: 10px;
+    background-color: #333;
+    border-bottom: 1px solid #fc6;
+    padding-left: 10px;
+    padding-top: 3px;
+    color: #eef;
+}
+
+div.super-head a{
+    color: #eef;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding-right: 20px;
+}
+
+div.super-head p{
+    margin-top: -1px;
+    color: #999;
+    padding-right: 20px;
+    float: right;
+}
+
+/*Head*/
+div.head{
+    padding-top: 15px;
+    text-align: center;
+    height: 50px;
+    width: 100%;
+    background-image: url("/images/bg-head.png");
+    color: #eee;
+}
+
+div.head img{
+/*    margin-top: -5px;
+    margin-left: 20px;
+    float: left;*/
+    position: relative;
+    left: -260px;
+    top: -5px;
+}
+
+div.head h1{
+/*    margin-top: 0px;*/
+    font-size: 18px;
+    position: relative;
+    top: -60px;
+}
+
+/*Top*/
+div.top{
+    height: 20px;
+    width: 100%;
+    background-color: #eef;
+    border-top: 1px solid #777;
+    border-bottom: 1px solid #ccc;
+    font-size: 12px;
+    color: #999;
+}
+
+div.top div.user{
+    padding-top: 2px;
+    padding-left: 20px;
+    float: left;
+}
+
+div.top div.date{
+    padding-top: 2px;
+    padding-right: 50px;
+    float: right;
+}
+
+/*Left*/
+div.left{
+    width: 170px;
+    padding-top: 30px;
+    padding-left: 20px;
+    height: 100%;
+    background-color: #eef;
+    padding-bottom: 20px;
+    padding-right: 20px;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    float:left;
+}
+
+/*Menu*/
+
+.sf-menu{
+    font-size: 16px;
+}
+
+.sf-menu a, .sf-menu a:visited {
+    padding: 6px 10px;
+    color: #eee;
+}
+
+.sf-menu li{
+    background:url('/images/bg-menu.png');
+}
+
+.sf-menu li li {
+    background:url('/images/bg-menu.png');
+}
+
+.sf-menu li li li{
+    background:url('/images/bg-menu.png');
+}
+
+.sf-menu li:hover,
+.sf-menu li.sfHover,
+.sf-menu a:hover,
+.sf-menu a:focus,
+.sf-menu a:active{
+    background:url('/images/bg-menu-select.png');
+}
+
+a > .sf-sub-indicator {
+    top: 0.5em;
+}
+
+.sf-vertical li:hover ul,
+.sf-vertical li.sfHover ul {
+        left: 10em; /* match ul width */
+	top: 5px;
+}
+
+ul.sf-menu li li:hover ul,
+ul.sf-menu li li.sfHover ul {
+	left: 10em; /* match ul width */
+	top: 5px;
+}
+
+/*Content*/
+.content{
+    padding-top: 20px;
+    padding-left: 230px;
+    padding-right: 20px;
+}
+
+.content h1{
+    color: #0A246A;
+    font-size: 22px;
+}
+
+.content h2{
+    color: #0A246A;
+    font-size: 20px;
+}
+
+.content div.data_user{
+    margin-top: 20px;
+    margin-left: 0px;
+    border: 1px solid #ccc;
+    width: 300px;
+    height: 200px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #eee;
+    font-size: 14px;
+}
+
+.content div.data_user img{
+    border: 1px solid #999;
+}
+
+.content div.notificaciones{
+    margin-top: 20px;
+    margin-left: 20px;
+    border: 1px solid #ccc;
+    width: 300px;
+    position: relative;
+    top: -230px;
+    left: 340px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    background-color: #eee;
+    font-size: 14px;
+}
+
+.content div.notificaciones ul{
+    padding-left: 20px;
+}
+
+/*Formulario*/
+form table th{
+    text-align: right;
+}
+
+/*Mensajes Flash*/
+
+div.flash{ 
+    position: absolute;
+}
+
+div.flash_error{
+    background: url('/images/bg-flash.png'); 
+    width: 500px;
+    margin-left: 100px;
+    border-bottom: 1px solid #aaa;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    display: none;
+}
+
+div.flash_error img{
+    padding-right: 20px;
+    float: left;
+    position: relative;
+    top:-5px
+}
+
+div.flash_warning{
+    background: url('/images/bg-flash.png'); 
+    width: 500px;
+    margin-left: 100px;
+    border-bottom: 1px solid #aaa;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    display: none;
+}
+
+div.flash_warning img{
+    padding-right: 20px;
+    float: left;
+    position: relative;
+    top:-5px
+}
+
+div.flash_message{
+    background: url('/images/bg-flash.png'); 
+    width: 500px;
+    margin-left: 100px;
+    border-bottom: 1px solid #aaa;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+    display: none;
+}
+
+div.flash_message img{
+    padding-right: 20px;
+    float: left;
+    position: relative;
+    top:-5px
+}
+
+div.flash_notice{
+    background: url('/images/bg-flash.png'); 
+    width: 500px;
+    margin-left: 100px;
+    border-bottom: 1px solid #aaa;
+    border-left: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    display: none;
+}
+
+div.flash_notice img{
+    padding-right: 20px;
+    float: left;
+    position: relative;
+    top:-5px
+}
+
+/*LI para radio list*/
+ul.radio_list{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+ul.radio_list li.horizontal{
+    float: left;
+    padding-left: 15px;
+    position: relative;
+    top: -8px;
+}
+
+/*LI para checkbox list*/
+ul.checkbox_list{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+ul.checkbox_list li.horizontal{
+    float: left;
+    padding-left: 15px;
+}
+
+/*Date picker*/
+.ui-datepicker{
+    font-size: 12px;
+}
+
+.ui-widget-header {
+    background: url("/images/ui-bg_gloss-wave_35_f6a828_500x100.png") repeat-x scroll 50% 50% #767676;
+    border: 1px solid #767676;
+}
+
+.ui-state-default .ui-icon { background-image: url(/images/ui-icons_228ef1_256x240.png); }
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(/images/ui-icons_228ef1_256x240.png); }
+.ui-state-active .ui-icon {background-image: url(/images/ui-icons_228ef1_256x240.png); }
+
+img.ui-datepicker-trigger{
+    position: relative;
+    top: 3px;
+    left: 5px;
+}

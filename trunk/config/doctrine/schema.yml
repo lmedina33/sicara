@@ -1,0 +1,1644 @@
+Asignatura:
+  connection: doctrine
+  tableName: asignatura
+  columns:
+    codigo_asignatura:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: false
+    nombre:
+      type: string(250)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    intensidad_horaria:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    is_practica:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    id_semestre:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Semestre:
+      local: id_semestre
+      foreign: id_semestre
+      type: one
+    AsignaturaCursada:
+      local: codigo_asignatura
+      foreign: codigo_asignatura
+      type: many
+    Grupo:
+      local: codigo_asignatura
+      foreign: codigo_asignatura
+      type: many
+AsignaturaCursada:
+  connection: doctrine
+  tableName: asignatura_cursada
+  columns:
+    id_asignatura_cursada:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nota_asignatura_cursada:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    nota_habilitacion_asignatura_cursada:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    nota_nivelacion_asignatura_cursada:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    is_homologacion:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    asistencia:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    observaciones:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    codigo_estudiante:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    codigo_asignatura:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_periodo:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_asignador:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Asignatura:
+      local: codigo_asignatura
+      foreign: codigo_asignatura
+      type: one
+    Estudiante:
+      local: codigo_estudiante
+      foreign: codigo_estudiante
+      type: one
+    PeriodoAcademico:
+      local: id_periodo
+      foreign: id_periodo_academico
+      type: one
+    Usuario:
+      local: id_asignador
+      foreign: id_usuario
+      type: one
+    Parcial:
+      local: id_asignatura_cursada
+      foreign: id_asignatura_cursada
+      type: many
+Certificacion:
+  connection: doctrine
+  tableName: certificacion
+  columns:
+    id_certificacion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    titulo:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    numero:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_tipo_certificacion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    codigo_profesor:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Profesor:
+      local: codigo_profesor
+      foreign: codigo_profesor
+      type: one
+    TipoCertificacion:
+      local: id_tipo_certificacion
+      foreign: id_tipo_certificacion
+      type: one
+    Grupo:
+      local: id_certificacion
+      foreign: certificacion_primaria
+      type: many
+    Grupo_2:
+      class: Grupo
+      local: id_certificacion
+      foreign: certificacion_secundaria
+      type: many
+EstadoEstudiante:
+  connection: doctrine
+  tableName: estado_estudiante
+  columns:
+    id_estado_estudiante:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    is_primario:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Estudiante:
+      local: id_estado_estudiante
+      foreign: id_estado_secundario
+      type: many
+    Estudiante_3:
+      class: Estudiante
+      local: id_estado_estudiante
+      foreign: id_estado
+      type: many
+Estudiante:
+  connection: doctrine
+  tableName: estudiante
+  columns:
+    codigo_estudiante:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: false
+    fecha_ingreso:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_retiro:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_estado:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_estado_secundario:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_usuario:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    codigo_pensum:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    EstadoEstudiante:
+      local: id_estado_secundario
+      foreign: id_estado_estudiante
+      type: one
+    Pensum:
+      local: codigo_pensum
+      foreign: codigo_pensum
+      type: one
+    EstadoEstudiante_3:
+      class: EstadoEstudiante
+      local: id_estado
+      foreign: id_estado_estudiante
+      type: one
+    Usuario:
+      local: id_usuario
+      foreign: id_usuario
+      type: one
+    AsignaturaCursada:
+      local: codigo_estudiante
+      foreign: codigo_estudiante
+      type: many
+    GrupoHasEstudiante:
+      local: codigo_estudiante
+      foreign: codigo_estudiante
+      type: many
+    Matricula:
+      local: codigo_estudiante
+      foreign: codigo_estudiante
+      type: many
+FotoUsuario:
+  connection: doctrine
+  tableName: foto_usuario
+  columns:
+    id_foto_usuario:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    tipo:
+      type: string(30)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    imagen:
+      type: blob()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_usuario:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Usuario:
+      local: id_usuario
+      foreign: id_usuario
+      type: one
+Grupo:
+  connection: doctrine
+  tableName: grupo
+  columns:
+    id_grupo:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(250)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_periodo:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    certificacion_primaria:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    certificacion_secundaria:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_inicio:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_fin:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    observaciones:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    codigo_asignatura:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    codigo_profesor:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    inicio_calificacion:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fin_calificacion:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Certificacion:
+      local: certificacion_primaria
+      foreign: id_certificacion
+      type: one
+    Certificacion_2:
+      class: Certificacion
+      local: certificacion_secundaria
+      foreign: id_certificacion
+      type: one
+    Asignatura:
+      local: codigo_asignatura
+      foreign: codigo_asignatura
+      type: one
+    Profesor:
+      local: codigo_profesor
+      foreign: codigo_profesor
+      type: one
+    GrupoHasEstudiante:
+      local: id_grupo
+      foreign: id_grupo
+      type: many
+GrupoHasEstudiante:
+  connection: doctrine
+  tableName: grupo_has_estudiante
+  columns:
+    codigo_estudiante:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: false
+    id_grupo:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Estudiante:
+      local: codigo_estudiante
+      foreign: codigo_estudiante
+      type: one
+    Grupo:
+      local: id_grupo
+      foreign: id_grupo
+      type: one
+Inscrito:
+  connection: doctrine
+  tableName: inscrito
+  columns:
+    numero_formulario:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: false
+    id_jornada:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_tipo_pago:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_periodo:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_usuario:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    is_matriculado:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_inscripcion:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Jornada:
+      local: id_jornada
+      foreign: id_jornada
+      type: one
+    PeriodoAcademico:
+      local: id_periodo
+      foreign: id_periodo_academico
+      type: one
+    TipoPago:
+      local: id_tipo_pago
+      foreign: id_tipo_pago
+      type: one
+    Usuario:
+      local: id_usuario
+      foreign: id_usuario
+      type: one
+Jornada:
+  connection: doctrine
+  tableName: jornada
+  columns:
+    id_jornada:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    nombre:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Inscrito:
+      local: id_jornada
+      foreign: id_jornada
+      type: many
+    Matricula:
+      local: id_jornada
+      foreign: id_jornada
+      type: many
+LibCategoria:
+  connection: doctrine
+  tableName: lib_categoria
+  columns:
+    codigo_lib_categoria:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: false
+    nombre:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    dias_prestamo:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    cantidad_sancion:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0.00'
+      notnull: true
+      autoincrement: false
+    id_tipo_sancion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    LibTipoSancion:
+      local: id_tipo_sancion
+      foreign: id_lib_tipo_sancion
+      type: one
+    LibMaterial:
+      local: codigo_lib_categoria
+      foreign: codigo_lib_categoria
+      type: many
+LibEstado:
+  connection: doctrine
+  tableName: lib_estado
+  columns:
+    id_lib_estado:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    LibMaterial:
+      local: id_lib_estado
+      foreign: id_lib_estado
+      type: many
+LibMaterial:
+  connection: doctrine
+  tableName: lib_material
+  columns:
+    codigo_lib_material:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: false
+    titulo:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    sub_titulo:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    autores:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    editorial:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_publicacion:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_actualizacion:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    temas:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    is_referencia:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    is_solo_profesor:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    is_prestado:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    codigo_lib_categoria:
+      type: string(20)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_lib_estado:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_lib_tipo_material:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    LibCategoria:
+      local: codigo_lib_categoria
+      foreign: codigo_lib_categoria
+      type: one
+    LibEstado:
+      local: id_lib_estado
+      foreign: id_lib_estado
+      type: one
+    LibTipoMaterial:
+      local: id_lib_tipo_material
+      foreign: id_lib_tipo_material
+      type: one
+    LibPrestamo:
+      local: codigo_lib_material
+      foreign: codigo_lib_material
+      type: many
+LibPrestamo:
+  connection: doctrine
+  tableName: lib_prestamo
+  columns:
+    id_prestamo:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    id_prestamista:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_solicitante:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_solicitud:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_entrega:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_retorno:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_devolucion:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    observaciones:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    codigo_lib_material:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    LibMaterial:
+      local: codigo_lib_material
+      foreign: codigo_lib_material
+      type: one
+    Usuario:
+      local: id_prestamista
+      foreign: id_usuario
+      type: one
+    Usuario_3:
+      class: Usuario
+      local: id_solicitante
+      foreign: id_usuario
+      type: one
+LibSancion:
+  connection: doctrine
+  tableName: lib_sancion
+  columns:
+    id_lib_sancion:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: true
+    cantidad:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    codigo_lib_material:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_imposicion:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_inicio:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_fin:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    observaciones:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_sancionado:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_ejecutor:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_tipo_sancion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Usuario:
+      local: id_ejecutor
+      foreign: id_usuario
+      type: one
+    Usuario_2:
+      class: Usuario
+      local: id_sancionado
+      foreign: id_usuario
+      type: one
+    LibTipoSancion:
+      local: id_tipo_sancion
+      foreign: id_lib_tipo_sancion
+      type: one
+LibTipoMaterial:
+  connection: doctrine
+  tableName: lib_tipo_material
+  columns:
+    id_lib_tipo_material:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    dias_prestamo:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    cantidad_sancion:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_lib_tipo_sancion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    LibTipoSancion:
+      local: id_lib_tipo_sancion
+      foreign: id_lib_tipo_sancion
+      type: one
+    LibMaterial:
+      local: id_lib_tipo_material
+      foreign: id_lib_tipo_material
+      type: many
+LibTipoSancion:
+  connection: doctrine
+  tableName: lib_tipo_sancion
+  columns:
+    id_lib_tipo_sancion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    nombre:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    LibCategoria:
+      local: id_lib_tipo_sancion
+      foreign: id_tipo_sancion
+      type: many
+    LibSancion:
+      local: id_lib_tipo_sancion
+      foreign: id_tipo_sancion
+      type: many
+    LibTipoMaterial:
+      local: id_lib_tipo_sancion
+      foreign: id_lib_tipo_sancion
+      type: many
+Matricula:
+  connection: doctrine
+  tableName: matricula
+  columns:
+    id_matricula:
+      type: integer(4)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: true
+    fecha:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_periodo:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_jornada:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_tipo_pago:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    codigo_estudiante:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Estudiante:
+      local: codigo_estudiante
+      foreign: codigo_estudiante
+      type: one
+    Jornada:
+      local: id_jornada
+      foreign: id_jornada
+      type: one
+    PeriodoAcademico:
+      local: id_periodo
+      foreign: id_periodo_academico
+      type: one
+    TipoPago:
+      local: id_tipo_pago
+      foreign: id_tipo_pago
+      type: one
+Parcial:
+  connection: doctrine
+  tableName: parcial
+  columns:
+    id_parcial:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    porcentaje:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    calificacion:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_asignatura_cursada:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_calificador:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Usuario:
+      local: id_calificador
+      foreign: id_usuario
+      type: one
+    AsignaturaCursada:
+      local: id_asignatura_cursada
+      foreign: id_asignatura_cursada
+      type: one
+Pensum:
+  connection: doctrine
+  tableName: pensum
+  columns:
+    codigo_pensum:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: false
+    nombre:
+      type: string(250)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Estudiante:
+      local: codigo_pensum
+      foreign: codigo_pensum
+      type: many
+    PeriodoAcademico:
+      local: codigo_pensum
+      foreign: codigo_pensum
+      type: many
+    Semestre:
+      local: codigo_pensum
+      foreign: codigo_pensum
+      type: many
+PeriodoAcademico:
+  connection: doctrine
+  tableName: periodo_academico
+  columns:
+    id_periodo_academico:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    periodo:
+      type: string(6)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_inicio:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_fin:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    estado:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    codigo_pensum:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_predecesor:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    observacion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Pensum:
+      local: codigo_pensum
+      foreign: codigo_pensum
+      type: one
+    AsignaturaCursada:
+      local: id_periodo_academico
+      foreign: id_periodo
+      type: many
+    Inscrito:
+      local: id_periodo_academico
+      foreign: id_periodo
+      type: many
+    Matricula:
+      local: id_periodo_academico
+      foreign: id_periodo
+      type: many
+Profesor:
+  connection: doctrine
+  tableName: profesor
+  columns:
+    codigo_profesor:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: false
+    fecha_ingreso:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_retiro:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_usuario:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Usuario:
+      local: id_usuario
+      foreign: id_usuario
+      type: one
+    Certificacion:
+      local: codigo_profesor
+      foreign: codigo_profesor
+      type: many
+    Grupo:
+      local: codigo_profesor
+      foreign: codigo_profesor
+      type: many
+Semestre:
+  connection: doctrine
+  tableName: semestre
+  columns:
+    id_semestre:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    numero:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    intensidad_horaria:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    codigo_pensum:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Pensum:
+      local: codigo_pensum
+      foreign: codigo_pensum
+      type: one
+    Asignatura:
+      local: id_semestre
+      foreign: id_semestre
+      type: many
+TipoCertificacion:
+  connection: doctrine
+  tableName: tipo_certificacion
+  columns:
+    id_tipo_certificacion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Certificacion:
+      local: id_tipo_certificacion
+      foreign: id_tipo_certificacion
+      type: many
+TipoDocumento:
+  connection: doctrine
+  tableName: tipo_documento
+  columns:
+    id_tipo_documento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Usuario:
+      local: id_tipo_documento
+      foreign: id_tipo_documento
+      type: many
+TipoPago:
+  connection: doctrine
+  tableName: tipo_pago
+  columns:
+    id_tipo_pago:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    nombre:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Inscrito:
+      local: id_tipo_pago
+      foreign: id_tipo_pago
+      type: many
+    Matricula:
+      local: id_tipo_pago
+      foreign: id_tipo_pago
+      type: many
+Usuario:
+  connection: doctrine
+  tableName: usuario
+  columns:
+    id_usuario:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    primer_nombre:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    segundo_nombre:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    primer_apellido:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    segundo_apellido:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    documento:
+      type: string(20)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_tipo_documento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    lugar_expedicion:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    telefono1:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    telefono2:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    direccion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    correo:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    acudiente1:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    telefono_acudiente1:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    acudiente2:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    telefono_acudiente2:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    especificaciones_medicas:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    observaciones:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_sf_guard_user:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    TipoDocumento:
+      local: id_tipo_documento
+      foreign: id_tipo_documento
+      type: one
+    AsignaturaCursada:
+      local: id_usuario
+      foreign: id_asignador
+      type: many
+    Estudiante:
+      local: id_usuario
+      foreign: id_usuario
+      type: many
+    FotoUsuario:
+      local: id_usuario
+      foreign: id_usuario
+      type: many
+    Inscrito:
+      local: id_usuario
+      foreign: id_usuario
+      type: many
+    LibPrestamo:
+      local: id_usuario
+      foreign: id_prestamista
+      type: many
+    LibPrestamo_3:
+      class: LibPrestamo
+      local: id_usuario
+      foreign: id_solicitante
+      type: many
+    LibSancion:
+      local: id_usuario
+      foreign: id_ejecutor
+      type: many
+    LibSancion_2:
+      class: LibSancion
+      local: id_usuario
+      foreign: id_sancionado
+      type: many
+    Parcial:
+      local: id_usuario
+      foreign: id_calificador
+      type: many
+    Profesor:
+      local: id_usuario
+      foreign: id_usuario
+      type: many
