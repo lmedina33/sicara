@@ -1,0 +1,20 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/13-View
+
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    #title:        symfony project
+    #description:  symfony project
+    #keywords:     symfony, project
+    #language:     en
+    #robots:       index, follow
+
+  stylesheets:    [/pmSuperfishMenuPlugin/css/superfish.css, /pmSuperfishMenuPlugin/css/superfish-vertical.css, /js/jquery-ui-1.8.16.custom/css/ui-lightness/jquery-ui-1.8.16.custom.css, /js/formValidator2.5/css/validationEngine.jquery.css, /js/DataTables-1.9.0/media/css/jquery.dataTables.css, datatables.css, main.css]
+
+  javascripts:    [/js/jquery-1.7.1.js, /pmSuperfishMenuPlugin/js/hoverIntent.js, /pmSuperfishMenuPlugin/js/superfish.js, /js/jquery-ui-1.8.16.custom/js/jquery-ui-1.8.16.custom.min.js, /js/formValidator2.5/js/jquery.validationEngine.js, /js/formValidator2.5/js/languages/jquery.validationEngine-es.js, /js/DataTables-1.9.0/media/js/jquery.dataTables.min.js ]
+
+  has_layout:     true
+  layout:         layout
