@@ -15,29 +15,29 @@ abstract class BaseLibSancionForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id_lib_sancion'      => new sfWidgetFormInputHidden(),
-      'cantidad'            => new sfWidgetFormInputText(),
-      'codigo_lib_material' => new sfWidgetFormInputText(),
-      'fecha_imposicion'    => new sfWidgetFormDateTime(),
-      'fecha_inicio'        => new sfWidgetFormDateTime(),
-      'fecha_fin'           => new sfWidgetFormDateTime(),
-      'observaciones'       => new sfWidgetFormTextarea(),
-      'id_sancionado'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario_2'), 'add_empty' => false)),
-      'id_ejecutor'         => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => false)),
-      'id_tipo_sancion'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibTipoSancion'), 'add_empty' => false)),
+      'id_lib_sancion'   => new sfWidgetFormInputHidden(),
+      'cantidad'         => new sfWidgetFormInputText(),
+      'serial_lib_item'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibItem'), 'add_empty' => false)),
+      'fecha_imposicion' => new sfWidgetFormDateTime(),
+      'fecha_inicio'     => new sfWidgetFormDateTime(),
+      'fecha_fin'        => new sfWidgetFormDateTime(),
+      'observaciones'    => new sfWidgetFormTextarea(),
+      'id_sancionado'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario_2'), 'add_empty' => false)),
+      'id_ejecutor'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => false)),
+      'id_tipo_sancion'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibTipoSancion'), 'add_empty' => false)),
     ));
 
     $this->setValidators(array(
-      'id_lib_sancion'      => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id_lib_sancion')), 'empty_value' => $this->getObject()->get('id_lib_sancion'), 'required' => false)),
-      'cantidad'            => new sfValidatorNumber(),
-      'codigo_lib_material' => new sfValidatorString(array('max_length' => 25)),
-      'fecha_imposicion'    => new sfValidatorDateTime(),
-      'fecha_inicio'        => new sfValidatorDateTime(),
-      'fecha_fin'           => new sfValidatorDateTime(),
-      'observaciones'       => new sfValidatorString(array('required' => false)),
-      'id_sancionado'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario_2'))),
-      'id_ejecutor'         => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'))),
-      'id_tipo_sancion'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibTipoSancion'))),
+      'id_lib_sancion'   => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id_lib_sancion')), 'empty_value' => $this->getObject()->get('id_lib_sancion'), 'required' => false)),
+      'cantidad'         => new sfValidatorNumber(),
+      'serial_lib_item'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibItem'))),
+      'fecha_imposicion' => new sfValidatorDateTime(),
+      'fecha_inicio'     => new sfValidatorDateTime(),
+      'fecha_fin'        => new sfValidatorDateTime(),
+      'observaciones'    => new sfValidatorString(array('required' => false)),
+      'id_sancionado'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario_2'))),
+      'id_ejecutor'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'))),
+      'id_tipo_sancion'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibTipoSancion'))),
     ));
 
     $this->widgetSchema->setNameFormat('lib_sancion[%s]');

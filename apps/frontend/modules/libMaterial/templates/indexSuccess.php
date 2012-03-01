@@ -36,7 +36,6 @@
       <td><?php echo $lib_material->getIsSoloProfesor() ?></td>
       <td><?php echo $lib_material->getIsPrestado() ?></td>
       <td><?php echo $lib_material->getCodigoLibCategoria() ?></td>
-      <td><?php echo $lib_material->getIdLibEstado() ?></td>
       <td><?php echo $lib_material->getIdLibTipoMaterial() ?></td>
     </tr>
     <?php endforeach; ?>

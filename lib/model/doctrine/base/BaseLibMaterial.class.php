@@ -20,12 +20,10 @@ Doctrine_Manager::getInstance()->bindComponent('LibMaterial', 'doctrine');
  * @property integer $is_solo_profesor
  * @property integer $is_prestado
  * @property string $codigo_lib_categoria
- * @property integer $id_lib_estado
  * @property integer $id_lib_tipo_material
  * @property LibCategoria $LibCategoria
- * @property LibEstado $LibEstado
  * @property LibTipoMaterial $LibTipoMaterial
- * @property Doctrine_Collection $LibPrestamo
+ * @property Doctrine_Collection $LibItem
  * 
  * @method string              getCodigoLibMaterial()    Returns the current record's "codigo_lib_material" value
  * @method string              getTitulo()               Returns the current record's "titulo" value
@@ -40,12 +38,10 @@ Doctrine_Manager::getInstance()->bindComponent('LibMaterial', 'doctrine');
  * @method integer             getIsSoloProfesor()       Returns the current record's "is_solo_profesor" value
  * @method integer             getIsPrestado()           Returns the current record's "is_prestado" value
  * @method string              getCodigoLibCategoria()   Returns the current record's "codigo_lib_categoria" value
- * @method integer             getIdLibEstado()          Returns the current record's "id_lib_estado" value
  * @method integer             getIdLibTipoMaterial()    Returns the current record's "id_lib_tipo_material" value
  * @method LibCategoria        getLibCategoria()         Returns the current record's "LibCategoria" value
- * @method LibEstado           getLibEstado()            Returns the current record's "LibEstado" value
  * @method LibTipoMaterial     getLibTipoMaterial()      Returns the current record's "LibTipoMaterial" value
- * @method Doctrine_Collection getLibPrestamo()          Returns the current record's "LibPrestamo" collection
+ * @method Doctrine_Collection getLibItem()              Returns the current record's "LibItem" collection
  * @method LibMaterial         setCodigoLibMaterial()    Sets the current record's "codigo_lib_material" value
  * @method LibMaterial         setTitulo()               Sets the current record's "titulo" value
  * @method LibMaterial         setSubTitulo()            Sets the current record's "sub_titulo" value
@@ -59,12 +55,10 @@ Doctrine_Manager::getInstance()->bindComponent('LibMaterial', 'doctrine');
  * @method LibMaterial         setIsSoloProfesor()       Sets the current record's "is_solo_profesor" value
  * @method LibMaterial         setIsPrestado()           Sets the current record's "is_prestado" value
  * @method LibMaterial         setCodigoLibCategoria()   Sets the current record's "codigo_lib_categoria" value
- * @method LibMaterial         setIdLibEstado()          Sets the current record's "id_lib_estado" value
  * @method LibMaterial         setIdLibTipoMaterial()    Sets the current record's "id_lib_tipo_material" value
  * @method LibMaterial         setLibCategoria()         Sets the current record's "LibCategoria" value
- * @method LibMaterial         setLibEstado()            Sets the current record's "LibEstado" value
  * @method LibMaterial         setLibTipoMaterial()      Sets the current record's "LibTipoMaterial" value
- * @method LibMaterial         setLibPrestamo()          Sets the current record's "LibPrestamo" collection
+ * @method LibMaterial         setLibItem()              Sets the current record's "LibItem" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -98,7 +92,7 @@ abstract class BaseLibMaterial extends sfDoctrineRecord
              'fixed' => 0,
              'unsigned' => false,
              'primary' => false,
-             'notnull' => true,
+             'notnull' => false,
              'autoincrement' => false,
              'length' => 45,
              ));
@@ -195,15 +189,6 @@ abstract class BaseLibMaterial extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 20,
              ));
-        $this->hasColumn('id_lib_estado', 'integer', 4, array(
-             'type' => 'integer',
-             'fixed' => 0,
-             'unsigned' => true,
-             'primary' => false,
-             'notnull' => true,
-             'autoincrement' => false,
-             'length' => 4,
-             ));
         $this->hasColumn('id_lib_tipo_material', 'integer', 4, array(
              'type' => 'integer',
              'fixed' => 0,
@@ -222,15 +207,11 @@ abstract class BaseLibMaterial extends sfDoctrineRecord
              'local' => 'codigo_lib_categoria',
              'foreign' => 'codigo_lib_categoria'));
 
-        $this->hasOne('LibEstado', array(
-             'local' => 'id_lib_estado',
-             'foreign' => 'id_lib_estado'));
-
         $this->hasOne('LibTipoMaterial', array(
              'local' => 'id_lib_tipo_material',
              'foreign' => 'id_lib_tipo_material'));
 
-        $this->hasMany('LibPrestamo', array(
+        $this->hasMany('LibItem', array(
              'local' => 'codigo_lib_material',
              'foreign' => 'codigo_lib_material'));
     }

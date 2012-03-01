@@ -9,7 +9,7 @@ Doctrine_Manager::getInstance()->bindComponent('LibSancion', 'doctrine');
  * 
  * @property integer $id_lib_sancion
  * @property float $cantidad
- * @property string $codigo_lib_material
+ * @property string $serial_lib_item
  * @property timestamp $fecha_imposicion
  * @property timestamp $fecha_inicio
  * @property timestamp $fecha_fin
@@ -17,36 +17,39 @@ Doctrine_Manager::getInstance()->bindComponent('LibSancion', 'doctrine');
  * @property integer $id_sancionado
  * @property integer $id_ejecutor
  * @property integer $id_tipo_sancion
+ * @property LibItem $LibItem
  * @property Usuario $Usuario
  * @property Usuario $Usuario_2
  * @property LibTipoSancion $LibTipoSancion
  * 
- * @method integer        getIdLibSancion()        Returns the current record's "id_lib_sancion" value
- * @method float          getCantidad()            Returns the current record's "cantidad" value
- * @method string         getCodigoLibMaterial()   Returns the current record's "codigo_lib_material" value
- * @method timestamp      getFechaImposicion()     Returns the current record's "fecha_imposicion" value
- * @method timestamp      getFechaInicio()         Returns the current record's "fecha_inicio" value
- * @method timestamp      getFechaFin()            Returns the current record's "fecha_fin" value
- * @method string         getObservaciones()       Returns the current record's "observaciones" value
- * @method integer        getIdSancionado()        Returns the current record's "id_sancionado" value
- * @method integer        getIdEjecutor()          Returns the current record's "id_ejecutor" value
- * @method integer        getIdTipoSancion()       Returns the current record's "id_tipo_sancion" value
- * @method Usuario        getUsuario()             Returns the current record's "Usuario" value
- * @method Usuario        getUsuario2()            Returns the current record's "Usuario_2" value
- * @method LibTipoSancion getLibTipoSancion()      Returns the current record's "LibTipoSancion" value
- * @method LibSancion     setIdLibSancion()        Sets the current record's "id_lib_sancion" value
- * @method LibSancion     setCantidad()            Sets the current record's "cantidad" value
- * @method LibSancion     setCodigoLibMaterial()   Sets the current record's "codigo_lib_material" value
- * @method LibSancion     setFechaImposicion()     Sets the current record's "fecha_imposicion" value
- * @method LibSancion     setFechaInicio()         Sets the current record's "fecha_inicio" value
- * @method LibSancion     setFechaFin()            Sets the current record's "fecha_fin" value
- * @method LibSancion     setObservaciones()       Sets the current record's "observaciones" value
- * @method LibSancion     setIdSancionado()        Sets the current record's "id_sancionado" value
- * @method LibSancion     setIdEjecutor()          Sets the current record's "id_ejecutor" value
- * @method LibSancion     setIdTipoSancion()       Sets the current record's "id_tipo_sancion" value
- * @method LibSancion     setUsuario()             Sets the current record's "Usuario" value
- * @method LibSancion     setUsuario2()            Sets the current record's "Usuario_2" value
- * @method LibSancion     setLibTipoSancion()      Sets the current record's "LibTipoSancion" value
+ * @method integer        getIdLibSancion()     Returns the current record's "id_lib_sancion" value
+ * @method float          getCantidad()         Returns the current record's "cantidad" value
+ * @method string         getSerialLibItem()    Returns the current record's "serial_lib_item" value
+ * @method timestamp      getFechaImposicion()  Returns the current record's "fecha_imposicion" value
+ * @method timestamp      getFechaInicio()      Returns the current record's "fecha_inicio" value
+ * @method timestamp      getFechaFin()         Returns the current record's "fecha_fin" value
+ * @method string         getObservaciones()    Returns the current record's "observaciones" value
+ * @method integer        getIdSancionado()     Returns the current record's "id_sancionado" value
+ * @method integer        getIdEjecutor()       Returns the current record's "id_ejecutor" value
+ * @method integer        getIdTipoSancion()    Returns the current record's "id_tipo_sancion" value
+ * @method LibItem        getLibItem()          Returns the current record's "LibItem" value
+ * @method Usuario        getUsuario()          Returns the current record's "Usuario" value
+ * @method Usuario        getUsuario2()         Returns the current record's "Usuario_2" value
+ * @method LibTipoSancion getLibTipoSancion()   Returns the current record's "LibTipoSancion" value
+ * @method LibSancion     setIdLibSancion()     Sets the current record's "id_lib_sancion" value
+ * @method LibSancion     setCantidad()         Sets the current record's "cantidad" value
+ * @method LibSancion     setSerialLibItem()    Sets the current record's "serial_lib_item" value
+ * @method LibSancion     setFechaImposicion()  Sets the current record's "fecha_imposicion" value
+ * @method LibSancion     setFechaInicio()      Sets the current record's "fecha_inicio" value
+ * @method LibSancion     setFechaFin()         Sets the current record's "fecha_fin" value
+ * @method LibSancion     setObservaciones()    Sets the current record's "observaciones" value
+ * @method LibSancion     setIdSancionado()     Sets the current record's "id_sancionado" value
+ * @method LibSancion     setIdEjecutor()       Sets the current record's "id_ejecutor" value
+ * @method LibSancion     setIdTipoSancion()    Sets the current record's "id_tipo_sancion" value
+ * @method LibSancion     setLibItem()          Sets the current record's "LibItem" value
+ * @method LibSancion     setUsuario()          Sets the current record's "Usuario" value
+ * @method LibSancion     setUsuario2()         Sets the current record's "Usuario_2" value
+ * @method LibSancion     setLibTipoSancion()   Sets the current record's "LibTipoSancion" value
  * 
  * @package    sicara2
  * @subpackage model
@@ -75,7 +78,7 @@ abstract class BaseLibSancion extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 18,
              ));
-        $this->hasColumn('codigo_lib_material', 'string', 25, array(
+        $this->hasColumn('serial_lib_item', 'string', 25, array(
              'type' => 'string',
              'fixed' => 0,
              'unsigned' => false,
@@ -152,6 +155,10 @@ abstract class BaseLibSancion extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
+        $this->hasOne('LibItem', array(
+             'local' => 'serial_lib_item',
+             'foreign' => 'serial_lib_item'));
+
         $this->hasOne('Usuario', array(
              'local' => 'id_ejecutor',
              'foreign' => 'id_usuario'));

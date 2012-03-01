@@ -19,7 +19,7 @@ class LibMaterialForm extends BaseLibMaterialForm {
                 ($this->getObject()->isNew()? '' : 'readonly') => ($this->getObject()->isNew()? '' : 'readonly')
             )),
             'titulo' => new sfWidgetFormInputText(array('label' => 'Título'), array('class' => 'validate[required,maxSize[45]]')),
-            'sub_titulo' => new sfWidgetFormInputText(array('label' => 'Sub Título'), array('class' => 'validate[required,maxSize[45]]')),
+            'sub_titulo' => new sfWidgetFormInputText(array('label' => 'Sub Título')),
             'autores' => new sfWidgetFormTextarea(array(), array('class' => 'validate[required]')),
             'editorial' => new sfWidgetFormInputText(array(), array('class' => 'validate[required,maxSize[45]]')),
             'fecha_publicacion' => new sfWidgetFormJQueryDate(array(
@@ -75,11 +75,6 @@ class LibMaterialForm extends BaseLibMaterialForm {
                 'model' => $this->getRelatedModelName('LibCategoria'),
                 'add_empty' => false
             )),
-            'id_lib_estado' => new sfWidgetFormDoctrineChoice(array(
-                'label' => 'Estado del Material',
-                'model' => $this->getRelatedModelName('LibEstado'),
-                'add_empty' => false
-            )),
             'id_lib_tipo_material' => new sfWidgetFormDoctrineChoice(array(
                 'label' => 'Tipo de Material',
                 'model' => $this->getRelatedModelName('LibTipoMaterial'),
@@ -90,7 +85,7 @@ class LibMaterialForm extends BaseLibMaterialForm {
         $this->setValidators(array(
             'codigo_lib_material' => new sfValidatorString(array('required' => true)),
             'titulo' => new sfValidatorString(array('max_length' => 45)),
-            'sub_titulo' => new sfValidatorString(array('max_length' => 45)),
+            'sub_titulo' => new sfValidatorString(array('max_length' => 45, 'required' => false)),
             'autores' => new sfValidatorString(),
             'editorial' => new sfValidatorString(array('max_length' => 45)),
             'fecha_publicacion' => new sfValidatorDate(),
@@ -101,7 +96,6 @@ class LibMaterialForm extends BaseLibMaterialForm {
             'is_solo_profesor' => new sfValidatorInteger(array('required' => false)),
             'is_prestado' => new sfValidatorInteger(array('required' => false)),
             'codigo_lib_categoria' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibCategoria'))),
-            'id_lib_estado' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibEstado'))),
             'id_lib_tipo_material' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibTipoMaterial'))),
         ));
 
