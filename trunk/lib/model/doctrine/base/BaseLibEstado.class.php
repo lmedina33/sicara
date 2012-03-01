@@ -10,16 +10,16 @@ Doctrine_Manager::getInstance()->bindComponent('LibEstado', 'doctrine');
  * @property integer $id_lib_estado
  * @property string $nombre
  * @property string $descripcion
- * @property Doctrine_Collection $LibMaterial
+ * @property Doctrine_Collection $LibItem
  * 
  * @method integer             getIdLibEstado()   Returns the current record's "id_lib_estado" value
  * @method string              getNombre()        Returns the current record's "nombre" value
  * @method string              getDescripcion()   Returns the current record's "descripcion" value
- * @method Doctrine_Collection getLibMaterial()   Returns the current record's "LibMaterial" collection
+ * @method Doctrine_Collection getLibItem()       Returns the current record's "LibItem" collection
  * @method LibEstado           setIdLibEstado()   Sets the current record's "id_lib_estado" value
  * @method LibEstado           setNombre()        Sets the current record's "nombre" value
  * @method LibEstado           setDescripcion()   Sets the current record's "descripcion" value
- * @method LibEstado           setLibMaterial()   Sets the current record's "LibMaterial" collection
+ * @method LibEstado           setLibItem()       Sets the current record's "LibItem" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -62,7 +62,7 @@ abstract class BaseLibEstado extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('LibMaterial', array(
+        $this->hasMany('LibItem', array(
              'local' => 'id_lib_estado',
              'foreign' => 'id_lib_estado'));
     }

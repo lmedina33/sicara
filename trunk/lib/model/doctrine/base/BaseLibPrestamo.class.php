@@ -15,35 +15,35 @@ Doctrine_Manager::getInstance()->bindComponent('LibPrestamo', 'doctrine');
  * @property timestamp $fecha_retorno
  * @property timestamp $fecha_devolucion
  * @property string $observaciones
- * @property string $codigo_lib_material
- * @property LibMaterial $LibMaterial
+ * @property string $serial_lib_item
+ * @property LibItem $LibItem
  * @property Usuario $Usuario
  * @property Usuario $Usuario_3
  * 
- * @method integer     getIdPrestamo()          Returns the current record's "id_prestamo" value
- * @method integer     getIdPrestamista()       Returns the current record's "id_prestamista" value
- * @method integer     getIdSolicitante()       Returns the current record's "id_solicitante" value
- * @method timestamp   getFechaSolicitud()      Returns the current record's "fecha_solicitud" value
- * @method timestamp   getFechaEntrega()        Returns the current record's "fecha_entrega" value
- * @method timestamp   getFechaRetorno()        Returns the current record's "fecha_retorno" value
- * @method timestamp   getFechaDevolucion()     Returns the current record's "fecha_devolucion" value
- * @method string      getObservaciones()       Returns the current record's "observaciones" value
- * @method string      getCodigoLibMaterial()   Returns the current record's "codigo_lib_material" value
- * @method LibMaterial getLibMaterial()         Returns the current record's "LibMaterial" value
- * @method Usuario     getUsuario()             Returns the current record's "Usuario" value
- * @method Usuario     getUsuario3()            Returns the current record's "Usuario_3" value
- * @method LibPrestamo setIdPrestamo()          Sets the current record's "id_prestamo" value
- * @method LibPrestamo setIdPrestamista()       Sets the current record's "id_prestamista" value
- * @method LibPrestamo setIdSolicitante()       Sets the current record's "id_solicitante" value
- * @method LibPrestamo setFechaSolicitud()      Sets the current record's "fecha_solicitud" value
- * @method LibPrestamo setFechaEntrega()        Sets the current record's "fecha_entrega" value
- * @method LibPrestamo setFechaRetorno()        Sets the current record's "fecha_retorno" value
- * @method LibPrestamo setFechaDevolucion()     Sets the current record's "fecha_devolucion" value
- * @method LibPrestamo setObservaciones()       Sets the current record's "observaciones" value
- * @method LibPrestamo setCodigoLibMaterial()   Sets the current record's "codigo_lib_material" value
- * @method LibPrestamo setLibMaterial()         Sets the current record's "LibMaterial" value
- * @method LibPrestamo setUsuario()             Sets the current record's "Usuario" value
- * @method LibPrestamo setUsuario3()            Sets the current record's "Usuario_3" value
+ * @method integer     getIdPrestamo()       Returns the current record's "id_prestamo" value
+ * @method integer     getIdPrestamista()    Returns the current record's "id_prestamista" value
+ * @method integer     getIdSolicitante()    Returns the current record's "id_solicitante" value
+ * @method timestamp   getFechaSolicitud()   Returns the current record's "fecha_solicitud" value
+ * @method timestamp   getFechaEntrega()     Returns the current record's "fecha_entrega" value
+ * @method timestamp   getFechaRetorno()     Returns the current record's "fecha_retorno" value
+ * @method timestamp   getFechaDevolucion()  Returns the current record's "fecha_devolucion" value
+ * @method string      getObservaciones()    Returns the current record's "observaciones" value
+ * @method string      getSerialLibItem()    Returns the current record's "serial_lib_item" value
+ * @method LibItem     getLibItem()          Returns the current record's "LibItem" value
+ * @method Usuario     getUsuario()          Returns the current record's "Usuario" value
+ * @method Usuario     getUsuario3()         Returns the current record's "Usuario_3" value
+ * @method LibPrestamo setIdPrestamo()       Sets the current record's "id_prestamo" value
+ * @method LibPrestamo setIdPrestamista()    Sets the current record's "id_prestamista" value
+ * @method LibPrestamo setIdSolicitante()    Sets the current record's "id_solicitante" value
+ * @method LibPrestamo setFechaSolicitud()   Sets the current record's "fecha_solicitud" value
+ * @method LibPrestamo setFechaEntrega()     Sets the current record's "fecha_entrega" value
+ * @method LibPrestamo setFechaRetorno()     Sets the current record's "fecha_retorno" value
+ * @method LibPrestamo setFechaDevolucion()  Sets the current record's "fecha_devolucion" value
+ * @method LibPrestamo setObservaciones()    Sets the current record's "observaciones" value
+ * @method LibPrestamo setSerialLibItem()    Sets the current record's "serial_lib_item" value
+ * @method LibPrestamo setLibItem()          Sets the current record's "LibItem" value
+ * @method LibPrestamo setUsuario()          Sets the current record's "Usuario" value
+ * @method LibPrestamo setUsuario3()         Sets the current record's "Usuario_3" value
  * 
  * @package    sicara2
  * @subpackage model
@@ -126,23 +126,23 @@ abstract class BaseLibPrestamo extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => '',
              ));
-        $this->hasColumn('codigo_lib_material', 'string', 10, array(
+        $this->hasColumn('serial_lib_item', 'string', 25, array(
              'type' => 'string',
              'fixed' => 0,
              'unsigned' => false,
              'primary' => false,
-             'notnull' => false,
+             'notnull' => true,
              'autoincrement' => false,
-             'length' => 10,
+             'length' => 25,
              ));
     }
 
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('LibMaterial', array(
-             'local' => 'codigo_lib_material',
-             'foreign' => 'codigo_lib_material'));
+        $this->hasOne('LibItem', array(
+             'local' => 'serial_lib_item',
+             'foreign' => 'serial_lib_item'));
 
         $this->hasOne('Usuario', array(
              'local' => 'id_prestamista',

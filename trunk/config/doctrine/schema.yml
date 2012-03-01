@@ -692,7 +692,7 @@ LibEstado:
       notnull: false
       autoincrement: false
   relations:
-    LibMaterial:
+    LibItem:
       local: id_lib_estado
       foreign: id_lib_estado
       type: many
@@ -718,7 +718,7 @@ LibMaterial:
       fixed: false
       unsigned: false
       primary: false
-      notnull: true
+      notnull: false
       autoincrement: false
     autores:
       type: string()
@@ -793,13 +793,6 @@ LibMaterial:
       primary: false
       notnull: true
       autoincrement: false
-    id_lib_estado:
-      type: integer(4)
-      fixed: false
-      unsigned: true
-      primary: false
-      notnull: true
-      autoincrement: false
     id_lib_tipo_material:
       type: integer(4)
       fixed: false
@@ -812,17 +805,64 @@ LibMaterial:
       local: codigo_lib_categoria
       foreign: codigo_lib_categoria
       type: one
-    LibEstado:
-      local: id_lib_estado
-      foreign: id_lib_estado
-      type: one
     LibTipoMaterial:
       local: id_lib_tipo_material
       foreign: id_lib_tipo_material
       type: one
-    LibPrestamo:
+LibItem:
+  connection: doctrine
+  tableName: lib_item
+  columns:
+    serial_lib_item:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_actualizacion:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_lib_estado:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    codigo_lib_material:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    LibEstado:
+      local: id_lib_estado
+      foreign: id_lib_estado
+      type: one
+    LibMaterial:
       local: codigo_lib_material
       foreign: codigo_lib_material
+      type: one
+    LibPrestamo:
+      local: serial_lib_item
+      foreign: serial_lib_item
+      type: many
+    LibSancion:
+      local: serial_lib_item
+      foreign: serial_lib_item
       type: many
 LibPrestamo:
   connection: doctrine
@@ -883,17 +923,17 @@ LibPrestamo:
       primary: false
       notnull: false
       autoincrement: false
-    codigo_lib_material:
-      type: string(10)
+    serial_lib_item:
+      type: string(25)
       fixed: false
       unsigned: false
       primary: false
-      notnull: false
+      notnull: true
       autoincrement: false
   relations:
-    LibMaterial:
-      local: codigo_lib_material
-      foreign: codigo_lib_material
+    LibItem:
+      local: serial_lib_item
+      foreign: serial_lib_item
       type: one
     Usuario:
       local: id_prestamista
@@ -921,7 +961,7 @@ LibSancion:
       primary: false
       notnull: true
       autoincrement: false
-    codigo_lib_material:
+    serial_lib_item:
       type: string(25)
       fixed: false
       unsigned: false
@@ -978,6 +1018,10 @@ LibSancion:
       notnull: true
       autoincrement: false
   relations:
+    LibItem:
+      local: serial_lib_item
+      foreign: serial_lib_item
+      type: one
     Usuario:
       local: id_ejecutor
       foreign: id_usuario

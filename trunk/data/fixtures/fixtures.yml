@@ -76,14 +76,59 @@ Jornada:
 
 
 
-#Usuario:
-#  root:
-#    id_usuario: 1
-#    primer_nombre: Robinson
-#    segundo_nombre: AndrÃ©s
-#    primer_apellido: Palacios
-#    segundo_apellido: Orjuela
-#    documento: 12345678
-#    id_tipo_documento: 3
-#    lugar_expedicion: BogotÃ¡ D.C.
-#    id_sf_guard_user: 1
+Usuario:
+  root:
+    id_usuario: 1
+    primer_nombre: Robinson
+    segundo_nombre: Andrés
+    primer_apellido: Palacios
+    segundo_apellido: Orjuela
+    documento: 12345678
+    id_tipo_documento: 3
+    lugar_expedicion: Bogotá D.C.
+    id_sf_guard_user: 1
+  bibliotecario:
+    id_usuario: 2
+    primer_nombre: Johan
+    segundo_nombre: Sebastian
+    primer_apellido: Leal
+    segundo_apellido: Correa
+    documento: 24353563456
+    id_tipo_documento: 3
+    lugar_expedicion: Bogotá D.C.
+    id_sf_guard_user: 2
+
+
+LibTipoSancion:
+  suspencion:
+    id_lib_tipo_sancion: 1
+    nombre: Suspención
+    descripcion: Suspención del servicio
+
+
+LibTipoMaterial:
+  libro:
+    id_lib_tipo_material: 1
+    nombre: Libro
+    descripcion: Documento de texto
+    dias_prestamo: 0
+    cantidad_sancion: 3.00
+    id_lib_tipo_sancion: 1
+
+
+LibCategoria:
+  general:
+    codigo_lib_categoria: 0
+    nombre: Cultura General
+    dias_prestamo: 0
+    cantidad_sancion: 0.00
+    id_tipo_sancion: 1
+
+
+LibEstado:
+  bueno:
+    id_lib_estado: 1
+    nombre: Bueno
+  ilegible:
+    id_lib_estado: 2
+    nombre: Ilegíble

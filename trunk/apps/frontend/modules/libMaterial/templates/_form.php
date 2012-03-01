@@ -158,13 +158,6 @@
             </td>
         </tr>
         <tr>
-            <th><?php echo $form['id_lib_estado']->renderLabel() ?></th>
-            <td>
-                <?php echo $form['id_lib_estado']->renderError() ?>
-                <?php echo $form['id_lib_estado'] ?>
-            </td>
-        </tr>
-        <tr>
             <th>
                 <?php echo $form['id_lib_tipo_material']->renderLabel() ?>
                 <?php echo $form['id_lib_tipo_material']->renderError() ?>
