@@ -16,7 +16,7 @@
                     "alertText": "* Mínimo de ",
                     "alertText2": " caracteres autorizados"
                 },
-				"groupRequired": {
+                "groupRequired": {
                     "regex": "none",
                     "alertText": "* You must fill one of the following fields"
                 },
@@ -25,7 +25,7 @@
                     "alertText": "* Máximo de ",
                     "alertText2": " caracteres autorizados"
                 },
-		        "min": {
+                "min": {
                     "regex": "none",
                     "alertText": "* Valor mínimo es "
                 },
@@ -33,7 +33,7 @@
                     "regex": "none",
                     "alertText": "* Valor máximo es "
                 },
-		        "past": {
+                "past": {
                     "regex": "none",
                     "alertText": "* Fecha anterior a "
                 },
@@ -82,7 +82,7 @@
                     "alertText": "* Fecha inválida, por favor utilize el formato AAAA-MM-DD"
                 },
                 "ipv4": {
-                	"regex": /^((([01]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))[.]){3}(([0-1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))$/,
+                    "regex": /^((([01]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))[.]){3}(([0-1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))$/,
                     "alertText": "* Direccion IP inválida"
                 },
                 "url": {
@@ -93,7 +93,7 @@
                     "regex": /^[0-9\ ]+$/,
                     "alertText": "* Sólo números"
                 },
-			    "onlyLetterSp": {
+                "onlyLetterSp": {
                     "regex": /^[a-zA-Z\ \']+$/,
                     "alertText": "* Sólo letras"
                 },
@@ -101,26 +101,38 @@
                     "regex": /^[0-9a-zA-Z]+$/,
                     "alertText": "* No se permiten caracteres especiales"
                 },
-				// --- CUSTOM RULES -- Those are specific to the demos, they can be removed or changed to your likings
+                // --- CUSTOM RULES -- Those are specific to the demos, they can be removed or changed to your likings
                 "ajaxUserCall": {
                     "url": "ajaxValidateFieldUser",
-					// you may want to pass extra data on the ajax call
+                    // you may want to pass extra data on the ajax call
                     "extraData": "name=eric",
                     "alertTextLoad": "* Cargando, espere por favor",
                     "alertText": "* Este nombre de usuario ya se encuentra usado"
                 },
                 "ajaxNameCall": {
-					// remote json service location
+                    // remote json service location
                     "url": "ajaxValidateFieldName",
-					// error
+                    // error
                     "alertText": "* Este nombre ya se encuentra usado",
-					// if you provide an "alertTextOk", it will show as a green prompt when the field validates
+                    // if you provide an "alertTextOk", it will show as a green prompt when the field validates
                     "alertTextOk": "* Este nombre está disponible",
-					// speaks by itself
+                    // speaks by itself
                     "alertTextLoad": "* Cargando, espere por favor"
                 },
                 "validate2fields": {
                     "alertText": "* Por favor entrar HELLO"
+                },
+                "ajaxLibMaterialCallPhp_dev": {
+                    "url": '/frontend_dev.php/libMaterial/validarCodigo',
+                    "alertTextOk": "* Este código se encuentra disponible",
+                    "alertText": "* No puede usar este código",
+                    "alertTextLoad": "* Validando, por favor espere..."
+                },
+                "ajaxLibMaterialCallPhp_prod": {
+                    "url": '/frontend.php/libMaterial/validarCodigo',
+                    "alertTextOk": "* Este código se encuentra disponible",
+                    "alertText": "* No puede usar este código",
+                    "alertTextLoad": "* Validando, por favor espere..."
                 }
             };
             

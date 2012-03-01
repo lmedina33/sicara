@@ -20,27 +20,40 @@
                 $('.flash_error').show( "slide", { direction: "up" } ,2000, callbackErr  );
                 $('.flash_warning').show( "slide", { direction: "up" } ,2000, callbackWar  );
                 $('.flash_notice').show( "slide", { direction: "up" } ,2000, callbackNot  );
+                
+                $('div.tip[title]').qtip({
+                    style: {
+                        name: 'cream',
+                        tip: false
+                    },
+                    position: {
+                        corner: {
+                            target: 'topRight',
+                            tooltip: 'leftBottom'
+                        }
+                    }
+                })
             });
             
             function callbackMes(){
-                    tMes=setTimeout(function() {
-                        $('.flash_error').hide( "slide", { direction: "up" } ,2000 );
-                    }, 5000 );
+                tMes=setTimeout(function() {
+                    $('.flash_error').hide( "slide", { direction: "up" } ,2000 );
+                }, 5000 );
             }
             function callbackErr(){
-                    tErr=setTimeout(function() {
-                        $('.flash_error').hide( "slide", { direction: "up" } ,2000 );
-                    }, 5000 );
+                tErr=setTimeout(function() {
+                    $('.flash_error').hide( "slide", { direction: "up" } ,2000 );
+                }, 5000 );
             }
             function callbackWar(){
-                    tWar=setTimeout(function() {
-                        $('.flash_error').hide( "slide", { direction: "up" } ,2000 );
-                    }, 5000 );
+                tWar=setTimeout(function() {
+                    $('.flash_error').hide( "slide", { direction: "up" } ,2000 );
+                }, 5000 );
             }
             function callbackNot(){
-                    tNot=setTimeout(function() {
-                        $('.flash_error').hide( "slide", { direction: "up" } ,2000 );
-                    }, 5000 );
+                tNot=setTimeout(function() {
+                    $('.flash_error').hide( "slide", { direction: "up" } ,2000 );
+                }, 5000 );
             }
             
             function closeMessage(){

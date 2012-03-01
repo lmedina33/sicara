@@ -70,4 +70,20 @@ class libMaterialActions extends sfActions
       $this->redirect('libMaterial/edit?codigo_lib_material='.$lib_material->getCodigoLibMaterial());
     }
   }
+  
+    public function executeValidarCodigo(sfWebRequest $request){
+      $value=$request->getParameter('fieldValue');
+      $id=$request->getParameter('fieldId');
+      $material = Doctrine_Core::getTable('LibMaterial')->find($value);
+      $data=array();
+      $data[0]=$id;
+      if($material==null){
+          $data[1]=true;
+      }else{
+          $data[1]=false;
+      }
+      
+      return $this->renderText(json_encode($data));
+      
+  }
 }
