@@ -86,4 +86,45 @@ class libMaterialActions extends sfActions
       return $this->renderText(json_encode($data));
       
   }
+  
+    
+  public function executeVer(sfWebRequest $request){
+      $this->material = Doctrine_Core::getTable('LibMaterial')->find($request->getParameter('id'));
+      
+      $this->items=$this->material->getLibItem();
+      
+      
+      $this->autores=$this->autores."<ul class=verMasAutores>";
+      $aux= explode("\n", $this->material->getAutores());
+      foreach($aux as $autor){
+          $this->autores=$this->autores."<li>".$autor."</li>";
+      }
+      $this->autores=$this->autores."</ul>";
+      
+      
+      $this->descripciones=$this->descripciones."<ul class=verMasDescripciones>";
+      $aux= explode("\n", $this->material->getDescripcion());
+      foreach($aux as $descripcion){
+          $this->descripciones=$this->descripciones."<li>".$descripcion."</li>";
+      }
+      $this->descripciones=$this->descripciones."</ul>";
+      
+      
+      $this->temas=$this->temas."<ul class=verMasTemas>";
+      $aux= explode("\n", $this->material->getTemas());
+      foreach($aux as $tema){
+          $this->temas=$this->temas."<li>".$tema."</li>";
+      }
+      $this->temas=$this->temas."</ul>";
+  }
+  
+  public function executeDeleteItem(sfWebRequest $request)
+  {
+    $request->checkCSRFProtection();
+
+//    $this->forward404Unless($lib_material = Doctrine_Core::getTable('LibMaterial')->find(array($request->getParameter('codigo_lib_material'))), sprintf('Object lib_material does not exist (%s).', $request->getParameter('codigo_lib_material')));
+//    $lib_material->delete();
+
+    $this->redirect('libMaterial/index');
+  }
 }

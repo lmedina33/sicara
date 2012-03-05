@@ -36,7 +36,7 @@ div.head{
     text-align: center;
     height: 50px;
     width: 100%;
-    background-image: url("/images/bg-head.png");
+    background-image: url("/images/bg/bg-head.png");
     color: #eee;
 }
 
@@ -105,15 +105,15 @@ div.left{
 }
 
 .sf-menu li{
-    background:url('/images/bg-menu.png');
+    background:url('/images/bg/bg-menu.png');
 }
 
 .sf-menu li li {
-    background:url('/images/bg-menu.png');
+    background:url('/images/bg/bg-menu.png');
 }
 
 .sf-menu li li li{
-    background:url('/images/bg-menu.png');
+    background:url('/images/bg/bg-menu.png');
 }
 
 .sf-menu li:hover,
@@ -121,7 +121,7 @@ div.left{
 .sf-menu a:hover,
 .sf-menu a:focus,
 .sf-menu a:active{
-    background:url('/images/bg-menu-select.png');
+    background:url('/images/bg/bg-menu-select.png');
 }
 
 a > .sf-sub-indicator {
@@ -206,7 +206,7 @@ div.flash{
 }
 
 div.flash_error{
-    background: url('/images/bg-flash.png'); 
+    background: url('/images/bg/bg-flash.png'); 
     width: 500px;
     margin-left: 100px;
     border-bottom: 1px solid #aaa;
@@ -226,7 +226,7 @@ div.flash_error img{
 }
 
 div.flash_warning{
-    background: url('/images/bg-flash.png'); 
+    background: url('/images/bg/bg-flash.png'); 
     width: 500px;
     margin-left: 100px;
     border-bottom: 1px solid #aaa;
@@ -246,7 +246,7 @@ div.flash_warning img{
 }
 
 div.flash_message{
-    background: url('/images/bg-flash.png'); 
+    background: url('/images/bg/bg-flash.png'); 
     width: 500px;
     margin-left: 100px;
     border-bottom: 1px solid #aaa;
@@ -266,7 +266,7 @@ div.flash_message img{
 }
 
 div.flash_notice{
-    background: url('/images/bg-flash.png'); 
+    background: url('/images/bg/bg-flash.png'); 
     width: 500px;
     margin-left: 100px;
     border-bottom: 1px solid #aaa;
@@ -354,4 +354,78 @@ ul.error_list{
     font-weight: normal;
     float: right;
     padding-left: 5px;
+}
+
+/*Tabla para ver registros*/
+table.ver{
+    margin-left: 30px;
+}
+table.ver th{
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px dashed #ccc;
+    border-right: 1px dashed #ccc;
+    padding-right: 15px;
+}
+
+table.ver td{
+    border-bottom: 1px dashed #ccc;
+    padding-left: 10px;
+}
+
+table.ver td ul{
+    margin: 0px;
+    padding-left: 0px;
+    list-style: none;
+}
+/*Tabla horizaontal para ver registros*/
+table.verHorizontal{
+    margin-left: 30px;
+}
+table.verHorizontal th{
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px dashed #ccc;
+    border-left: 1px dashed #ccc;
+    padding-right: 15px;
+}
+
+table.verHorizontal td{
+    border-bottom: 1px dashed #ccc;
+    border-left: 1px dashed #ccc;
+    padding-left: 10px;
+}
+
+table.verHorizontal td ul{
+    margin: 0px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+/*JButton*/
+.ui-button-text-only .ui-button-text{
+    padding: 3px 10px;
+    font-weight: normal;
+    color: #555;
+    font-size: 14px;
+}
+
+.ui-button-text-only .ui-button-text img{
+    margin-right: 5px;
+    position: relative;
+    top: 3px;
+}
+
+.ui-state-hover{
+    border-color: #ccc;
+    background: #f6f6f6;
+}
+
+.ui-state-hover .ui-button-text{
+    color: #000;
+}
+
+/*Utencilios de administracion*/
+.administracion{
+    display: none;
 }
