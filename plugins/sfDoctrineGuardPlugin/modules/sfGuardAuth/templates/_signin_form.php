@@ -1,6 +1,10 @@
 <?php use_helper('I18N') ?>
-
-<form action="<?php echo url_for('@sf_guard_signin') ?>" method="post">
+<script>
+    jQuery(document).ready(function(){
+        jQuery("#form").validationEngine();
+    });
+</script>
+<form id="form" action="<?php echo url_for('@sf_guard_signin') ?>" method="post">
   <table>
     <tbody>
       <?php //echo $form ?>

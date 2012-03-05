@@ -39,7 +39,7 @@
             
             function callbackMes(){
                 tMes=setTimeout(function() {
-                    $('.flash_error').hide( "slide", { direction: "up" } ,2000 );
+                    $('.flash_message').hide( "slide", { direction: "up" } ,2000 );
                 }, 5000 );
             }
             function callbackErr(){
@@ -49,12 +49,12 @@
             }
             function callbackWar(){
                 tWar=setTimeout(function() {
-                    $('.flash_error').hide( "slide", { direction: "up" } ,2000 );
+                    $('.flash_warning').hide( "slide", { direction: "up" } ,2000 );
                 }, 5000 );
             }
             function callbackNot(){
                 tNot=setTimeout(function() {
-                    $('.flash_error').hide( "slide", { direction: "up" } ,2000 );
+                    $('.flash_notice').hide( "slide", { direction: "up" } ,2000 );
                 }, 5000 );
             }
             
@@ -130,36 +130,84 @@
             <?php if ($sf_user->hasFlash('message')): ?>
                 <div class="flash_message">
                     <a href="javascript:closeMessage()"><span class="ui-icon ui-icon-circle-close" style="float: right; margin-right: 15px"></span></a>
-                    <img src="/images/message.png" />
+                    <img src="/images/iconos/message.png" />
                     <strong>Mensaje:</strong>
                     <?php echo $sf_user->getFlash('message') ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php if ($sf_user->hasAttribute('message')): ?>
+                <div class="flash_message">
+                    <a href="javascript:closeMessage()"><span class="ui-icon ui-icon-circle-close" style="float: right; margin-right: 15px"></span></a>
+                    <img src="/images/iconos/message.png" />
+                    <strong>Mensaje:</strong>
+                    <?php
+                    echo $sf_user->getAttribute('message');
+                    $sf_user->getAttributeHolder()->remove('message');
+                     ?>
                 </div>
             <?php endif; ?>
 
             <?php if ($sf_user->hasFlash('notice')): ?>
                 <div class="flash_notice">
                     <a href="javascript:closeNotice()"><span class="ui-icon ui-icon-circle-close" style="float: right; margin-right: 15px"></span></a>
-                    <img src="/images/ok.png" />
+                    <img src="/images/iconos/ok.png" />
                     <strong>Confirmación</strong>
                     <?php echo $sf_user->getFlash('notice') ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($sf_user->hasAttribute('notice')): ?>
+                <div class="flash_notice">
+                    <a href="javascript:closeNotice()"><span class="ui-icon ui-icon-circle-close" style="float: right; margin-right: 15px"></span></a>
+                    <img src="/images/iconos/ok.png" />
+                    <strong>Confirmación</strong>
+                    <?php
+                    echo $sf_user->getAttribute('notice');
+                    $sf_user->getAttributeHolder()->remove('notice');
+                    ?>
                 </div>
             <?php endif; ?>
 
             <?php if ($sf_user->hasFlash('warning')): ?>
                 <div class="flash_warning">
                     <a href="javascript:closeWarning()"><span class="ui-icon ui-icon-circle-close" style="float: right; margin-right: 15px"></span></a>
-                    <img src="/images/warning.png" />
+                    <img src="/images/iconos/warning.png" />
                     <strong>Advertencia</strong>
                     <?php echo $sf_user->getFlash('warning') ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($sf_user->hasAttribute('warning')): ?>
+                <div class="flash_warning">
+                    <a href="javascript:closeWarning()"><span class="ui-icon ui-icon-circle-close" style="float: right; margin-right: 15px"></span></a>
+                    <img src="/images/iconos/warning.png" />
+                    <strong>Advertencia</strong>
+                    <?php 
+                    echo $sf_user->getAttribute('warning');
+                    $sf_user->getAttributeHolder()->remove('warning');
+                    ?>
                 </div>
             <?php endif; ?>
 
             <?php if ($sf_user->hasFlash('error')): ?>
                 <div class="flash_error">
                     <a href="javascript:closeError()"><span class="ui-icon ui-icon-circle-close" style="float: right; margin-right: 15px"></span></a>
-                    <img src="/images/error.png" />
+                    <img src="/images/iconos/error.png" />
                     <strong>Error</strong>
                     <?php echo $sf_user->getFlash('error') ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($sf_user->hasAttribute('error')): ?>
+                <div class="flash_error">
+                    <a href="javascript:closeError()"><span class="ui-icon ui-icon-circle-close" style="float: right; margin-right: 15px"></span></a>
+                    <img src="/images/iconos/error.png" />
+                    <strong>Error</strong>
+                    <?php
+                    echo $sf_user->getAttribute('error');
+                    $sf_user->getAttributeHolder()->remove('error');
+                    ?>
                 </div>
             <?php endif; ?>
 

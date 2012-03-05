@@ -199,7 +199,7 @@ slot('title', 'Ver Material Bibliográfico')
     </div>
     <br />
     <br />
-    No hay materiales disponibles
+    No hay Items disponibles
     <?php
 } else {
     ?>
@@ -238,6 +238,7 @@ slot('title', 'Ver Material Bibliográfico')
         </tbody>
     </table>
 <?php } ?>
+<br />
 <br />
 <div class="administracion">
 <a class="button" href="<?php echo url_for('libMaterial/addItem?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>"><img src="/images/iconos/addSmall.png"></img>Agregar Item</a>

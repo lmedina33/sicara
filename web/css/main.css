@@ -315,13 +315,13 @@ ul.checkbox_list li.horizontal{
 }
 
 .ui-widget-header {
-    background: url("/images/ui-bg_gloss-wave_35_f6a828_500x100.png") repeat-x scroll 50% 50% #767676;
+    background: url("/images/bg/ui-bg_gloss-wave_35_f6a828_500x100.png") repeat-x scroll 50% 50% #767676;
     border: 1px solid #767676;
 }
 
-.ui-state-default .ui-icon { background-image: url(/images/ui-icons_228ef1_256x240.png); }
-.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(/images/ui-icons_228ef1_256x240.png); }
-.ui-state-active .ui-icon {background-image: url(/images/ui-icons_228ef1_256x240.png); }
+.ui-state-default .ui-icon { background-image: url(/images/iconos/ui-icons_228ef1_256x240.png); }
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(/images/iconos/ui-icons_228ef1_256x240.png); }
+.ui-state-active .ui-icon {background-image: url(/images/iconos/ui-icons_228ef1_256x240.png); }
 
 img.ui-datepicker-trigger{
     position: relative;
@@ -332,7 +332,7 @@ img.ui-datepicker-trigger{
 
 /*QTip*/
 div.tip{
-    background-image: url(/images/pregunta.png);
+    background-image: url(/images/iconos/pregunta.png);
     float:right;
     width: 16px;
     height: 16px;
