@@ -16,12 +16,14 @@
             var tNot;
             
             $(function() {
+                $('a.button').button();
+                
                 $('.flash_message').show( "slide", { direction: "up" } ,2000, callbackMes  );
                 $('.flash_error').show( "slide", { direction: "up" } ,2000, callbackErr  );
                 $('.flash_warning').show( "slide", { direction: "up" } ,2000, callbackWar  );
                 $('.flash_notice').show( "slide", { direction: "up" } ,2000, callbackNot  );
                 
-                $('div.tip[title]').qtip({
+                $('.tip[title]').qtip({
                     style: {
                         name: 'cream',
                         tip: false
@@ -78,8 +80,10 @@
         </script>
 
         <title>
-            <?php if (!include_slot('title')) { ?>
+            <?php if (get_slot('title')=="") { ?>
                 SiCaRa
+            <?php }else{ ?>
+                SiCaRa: <?php echo get_slot('title'); ?>
             <?php } ?>
         </title>
     </head>
