@@ -24,7 +24,7 @@ class LibMaterialForm extends BaseLibMaterialForm {
             'editorial' => new sfWidgetFormInputText(array(), array('class' => 'validate[required,maxSize[45]]')),
             'fecha_publicacion' => new sfWidgetFormJQueryDate(array(
                 'label' => 'Fecha de Publicación',
-                'image' => '/images/calendar.png',
+                'image' => '/images/iconos/calendar.png',
                 'culture' => 'es',
                 'config' => "{
                     dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
@@ -37,7 +37,7 @@ class LibMaterialForm extends BaseLibMaterialForm {
                     array('class' => 'validate[required,custom[date]]')),
             'fecha_actualizacion' => new sfWidgetFormJQueryDate(array(
                 'label' => 'Fecha de Actualización',
-                'image' => '/images/calendar.png',
+                'image' => '/images/iconos/calendar.png',
                 'culture' => 'es',
                 'disabled' => 'true',
                 'config' => "{
