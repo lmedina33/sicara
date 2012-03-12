@@ -203,12 +203,13 @@ form table th{
 
 div.flash{ 
     position: absolute;
+    z-index: 999;
 }
 
 div.flash_error{
     background: url('/images/bg/bg-flash.png'); 
     width: 500px;
-    margin-left: 100px;
+    margin-left: 210px;
     border-bottom: 1px solid #aaa;
     border-left: 1px solid #aaa;
     border-right: 1px solid #aaa;
@@ -228,7 +229,7 @@ div.flash_error img{
 div.flash_warning{
     background: url('/images/bg/bg-flash.png'); 
     width: 500px;
-    margin-left: 100px;
+    margin-left: 210px;
     border-bottom: 1px solid #aaa;
     border-left: 1px solid #aaa;
     border-right: 1px solid #aaa;
@@ -248,7 +249,7 @@ div.flash_warning img{
 div.flash_message{
     background: url('/images/bg/bg-flash.png'); 
     width: 500px;
-    margin-left: 100px;
+    margin-left: 210px;
     border-bottom: 1px solid #aaa;
     border-left: 1px solid #aaa;
     border-right: 1px solid #aaa;
@@ -268,7 +269,7 @@ div.flash_message img{
 div.flash_notice{
     background: url('/images/bg/bg-flash.png'); 
     width: 500px;
-    margin-left: 100px;
+    margin-left: 210px;
     border-bottom: 1px solid #aaa;
     border-left: 1px solid #aaa;
     border-right: 1px solid #aaa;
@@ -403,6 +404,10 @@ table.verHorizontal td ul{
 }
 
 /*JButton*/
+.button{
+    z-index: 1;
+}
+
 .ui-button-text-only .ui-button-text{
     padding: 3px 10px;
     font-weight: normal;
@@ -428,4 +433,21 @@ table.verHorizontal td ul{
 /*Utencilios de administracion*/
 .administracion{
     display: none;
+}
+
+/*Utencilios de visualizacion*/
+.detalle{
+    display: none;
+}
+
+/*Avisos informativos*/
+.warningInfo{
+/*    background-color: #eee;*/
+    padding: 5px 20px;
+/*    border: 1px solid #fcefa1;*/
+/*    border-radius: 6px 6px 6px 6px;*/
+    font-size: 16px;
+/*    font-weight: bolder;*/
+    color: #555;
+    
 }

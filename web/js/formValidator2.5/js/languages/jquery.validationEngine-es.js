@@ -133,6 +133,18 @@
                     "alertTextOk": "* Este código se encuentra disponible",
                     "alertText": "* No puede usar este código",
                     "alertTextLoad": "* Validando, por favor espere..."
+                },
+                "ajaxLibItemCallPhp_dev": {
+                    "url": '/frontend_dev.php/libMaterial/validarSerialItem',
+                    "alertTextOk": "* Este serial se encuentra disponible",
+                    "alertText": "* No puede usar este serial",
+                    "alertTextLoad": "* Validando, por favor espere..."
+                },
+                "ajaxLibItemCallPhp_prod": {
+                    "url": '/frontend.php/libMaterial/validarSerialItem',
+                    "alertTextOk": "* Este serial se encuentra disponible",
+                    "alertText": "* No puede usar este serial",
+                    "alertTextLoad": "* Validando, por favor espere..."
                 }
             };
             

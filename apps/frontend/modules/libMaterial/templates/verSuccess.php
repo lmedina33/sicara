@@ -5,6 +5,8 @@ slot('title', 'Ver Material Bibliográfico')
     
     $(function() {
         
+        jQuery("#formItem").validationEngine();
+        
         var i=0;
         if($('.ver tbody tr td ul.verMasAutores li').length>1){
         
@@ -133,8 +135,8 @@ slot('title', 'Ver Material Bibliográfico')
     }
 </script>
 
-<h1>Ver Material</h1>
-
+<h1>Ver Material Bibliográfico</h1>
+<a href="<?php echo url_for('libMaterial/index') ?>" class="button"><img src="/images/iconos/back.png"></img>Volver</a>
 <a id="botonAdmin" href="javascript:administrarShow()" class="button"><img src="/images/iconos/toolSmall.png"></img>Activar Administración</a>
 <br />
 <br />
@@ -187,6 +189,16 @@ slot('title', 'Ver Material Bibliográfico')
                 <a id="verTemas" class="tip" title="Ver +/- Temas" href="javascript:verMasTemas()" style="float: right"><img src="/images/iconos/seePlus.png" /></a>
             </td>
         </tr>
+        <?php if($material->getIsReferencia()==1){ ?>
+        <tr>
+            <th colspan="2"><label>Material solo de referencia</label></th>
+        </tr>
+        <?php } ?>
+        <?php if($material->getIsSoloProfesor()==1){ ?>
+        <tr>
+            <th colspan="2"><label>Material solo para profesores</label></th>
+        </tr>
+        <?php } ?>
     </tbody>
 </table>
 <br />
@@ -199,13 +211,14 @@ slot('title', 'Ver Material Bibliográfico')
     </div>
     <br />
     <br />
-    No hay Items disponibles
+    <div class="warningInfo">No hay copias disponibles</div>
+    <br />
+    <br />
     <?php
 } else {
     ?>
     </div>
     <h2>Copias de este Material</h2>
-    <br />
     <table class="verHorizontal">
         <tbody>
             <tr>
@@ -230,8 +243,8 @@ slot('title', 'Ver Material Bibliográfico')
                         <?php echo $item->getLibEstado() ?>
                     </td>
                     <td class="administracion">
-                        <a class="administracion tip" title="Editar Item <?php echo $item->getSerialLibItem() ?>" href="<?php echo url_for('libMaterial/editItem?id=' . $item->getSerialLibItem()) ?>"><img src="/images/iconos/editSmall.png"></img></a>
-                        <?php echo link_to('<img src="/images/iconos/removeSmall.png"></img>',url_for('libMaterial/deleteItem?id=' . $item->getSerialLibItem()),array('class'=>'tip','confirm'=>'Esta seguro de querer eliminar el siguiente item?\n\n '.$item->getSerialLibItem().'\n\nEste proceso es irreversible.','method' => 'delete')) ?>
+                        <a class="administracion tip" title="Editar Copia <?php echo $item->getSerialLibItem() ?>" href="<?php echo url_for('libMaterial/editItem?serial_lib_item=' . $item->getSerialLibItem()) ?>"><img src="/images/iconos/editSmall.png"></img></a>
+                        <?php echo link_to('<img src="/images/iconos/removeSmall.png"></img>',url_for('libMaterial/deleteItem?serial_lib_item=' . $item->getSerialLibItem()),array('title'=>'Eliminar Copia '. $item->getSerialLibItem(),'class'=>'tip','confirm'=>'Esta seguro de querer eliminar la siguiente copia?\n\n '.$item->getSerialLibItem().'\n\nEste proceso es irreversible.','method' => 'delete')) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -239,9 +252,8 @@ slot('title', 'Ver Material Bibliográfico')
     </table>
 <?php } ?>
 <br />
-<br />
 <div class="administracion">
-<a class="button" href="<?php echo url_for('libMaterial/addItem?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>"><img src="/images/iconos/addSmall.png"></img>Agregar Item</a>
+<a class="button" href="<?php echo url_for('libMaterial/addItem?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>"><img src="/images/iconos/addSmall.png"></img>Agregar Copia</a>
 </div>
 <br />
 <br />
