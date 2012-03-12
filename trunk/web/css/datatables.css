@@ -17,6 +17,7 @@ table.dataTable thead th {
 	font-weight: bold;
 	cursor: pointer;
         background-color: #ddd;
+        color: #000;
 	*cursor: hand;
 }
 
@@ -91,8 +92,19 @@ table.dataTable tr.even td.sorting_3 { background-color: #f4f9ff; }
  * Table information
  */
 .dataTables_info {
-	clear: both;
-	float: left;
+    clear: both;
+    float: left;
+    font-size: 14px;
+    margin-top: 3px;
+    color: #555;
+}
+
+.dataTables_length{
+    color: #555;
+}
+
+.dataTables_filter{
+    color: #555;
 }
 
 
@@ -286,18 +298,81 @@ table.dataTable th:active {
 
 /*Selected*/
 
-#dataTable tr.row_selected{
+.dataTable tbody tr.row_selected{
     background-color: #c5dbed;
 }
 
-#dataTable tr.row_selected td.sorting_1 {
+.dataTable  tbody tr.row_selected td.sorting_1 {
     background-color: #c5dbed;
 }
 
-#dataTable tr.row_selected td.sorting_2 {
+.dataTable  tbody tr.row_selected td.sorting_2 {
     background-color: #c5dbed;
 }
 
-#dataTable tr.row_selected td.sorting_3 {
+.dataTable  tbody tr.row_selected td.sorting_3 {
     background-color: #c5dbed;
+}
+
+/*Correcciones*/
+
+.dataTables_wrapper div.ui-helper-clearfix:after{
+    clear: none;
+    content: none;
+    display: none;
+    height: auto;
+}
+
+.dataTables_wrapper div.ui-widget-header{
+    background: none;
+    border: none;
+    color: #000;
+    font-weight: normal;
+}
+
+.DataTables_sort_icon{
+    float:left;
+}
+
+/*Barra de exportacion*/
+
+div.DTTT_container {
+    float:left;
+}
+
+button.DTTT_button {
+    background: none;
+    margin-left: 5px;
+    border: 1px #FFF;
+    background: #eee;
+}
+
+button.DTTT_button_copy {
+    background: url('/images/iconos/copySmall.png');
+    width: 16px;
+    height: 16px;
+}
+
+button.DTTT_button_xls {
+    background: url('/images/iconos/excelSmall.png');
+    width: 16px;
+    height: 16px;
+}
+
+button.DTTT_button_pdf {
+    background: url('/images/iconos/pdfSmall.png');
+    width: 16px;
+    height: 16px;
+}
+
+/*Toolbar*/
+div.toolbar {
+    float: left;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    border-left: 1px solid #ccc;
+}
+
+div.toolbar a {
+    margin-left: 5px;
 }

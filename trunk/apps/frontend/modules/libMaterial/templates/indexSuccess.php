@@ -1,45 +1,82 @@
-<h1>Lib materials List</h1>
+<?php use_helper("DataTable") ?>
+<script type="text/javascript">
+    
+    var oTable;
+    $(document).ready(function(){
+        
+        oTable=$('.dataTable').dataTable({
+            "sDom": 'lfT<"toolbar">trip<"foot">',
+            "oLanguage": <?php echo getLenguageEs(); ?>,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": "<?php echo url_for('libMaterial/getDataPaging') ?>",
+            "aoColumns": [
+                { "mDataProp": "Codigo" },
+                { "mDataProp": "Titulo" },
+                { "mDataProp": "SubTitulo" },
+                { "mDataProp": "Autor" },
+                { "mDataProp": "Categoria" },
+                { "mDataProp": "Tipo" },
+                { "mDataProp": "NItems" }
+            ],
+            "fnDrawCallback": function ( oSettings ) {
+                $('.dataTable tbody tr').each( function () {
+                    $(this).click( function () {
+                        $(oTable.fnSettings().aoData).each(function (){
+                            $(this.nTr).removeClass('row_selected');
+                        });
+                        $(this).addClass('row_selected');
+                        
+                        datos = oTable.fnGetData( this );
+                        
+                        codMaterial=datos.Codigo;
+            
+                        $('#detallar').attr('href', '<?php echo url_for('libMaterial/ver?codigo_lib_material=') ?>'+codMaterial);
+                    } );
+                } );
+            },
+            "oColVis": {
+                "buttonText": "Ver Columnas"
+            },
+            "oTableTools": {
+                "sSwfPath": "/js/DataTables-1.9.0/extras/TableTools/media/swf/copy_cvs_xls_pdf.swf",
+                "aButtons":[
+                    {
+                        "sExtends": "copy",
+                        "sButtonText": "",
+                        "sToolTip": "Copiar"
+                    },
+                    {
+                        "sExtends": "xls",
+                        "sButtonText": "",
+                        "sToolTip": "Exportar a Excel"
+                    },
+                    {
+                        "sExtends": "pdf",
+                        "sButtonText": "",
+                        "sToolTip": "Exportar a PDF"
+                    }
+                ]
+            }
+        });
+        
+        $("div.toolbar").html('<a href="#" id="detallar" title="Ver Material"><img src="/images/iconos/listarSmall.png"/></a>');
+    });
+</script>
+<h1>Listar Material Bibliográfico</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Codigo lib material</th>
-      <th>Titulo</th>
-      <th>Sub titulo</th>
-      <th>Autores</th>
-      <th>Editorial</th>
-      <th>Fecha publicacion</th>
-      <th>Fecha actualizacion</th>
-      <th>Descripcion</th>
-      <th>Temas</th>
-      <th>Is referencia</th>
-      <th>Is solo profesor</th>
-      <th>Is prestado</th>
-      <th>Codigo lib categoria</th>
-      <th>Id lib estado</th>
-      <th>Id lib tipo material</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach ($lib_materials as $lib_material): ?>
-    <tr>
-      <td><a href="<?php echo url_for('libMaterial/edit?codigo_lib_material='.$lib_material->getCodigoLibMaterial()) ?>"><?php echo $lib_material->getCodigoLibMaterial() ?></a></td>
-      <td><?php echo $lib_material->getTitulo() ?></td>
-      <td><?php echo $lib_material->getSubTitulo() ?></td>
-      <td><?php echo $lib_material->getAutores() ?></td>
-      <td><?php echo $lib_material->getEditorial() ?></td>
-      <td><?php echo $lib_material->getFechaPublicacion() ?></td>
-      <td><?php echo $lib_material->getFechaActualizacion() ?></td>
-      <td><?php echo $lib_material->getDescripcion() ?></td>
-      <td><?php echo $lib_material->getTemas() ?></td>
-      <td><?php echo $lib_material->getIsReferencia() ?></td>
-      <td><?php echo $lib_material->getIsSoloProfesor() ?></td>
-      <td><?php echo $lib_material->getIsPrestado() ?></td>
-      <td><?php echo $lib_material->getCodigoLibCategoria() ?></td>
-      <td><?php echo $lib_material->getIdLibTipoMaterial() ?></td>
-    </tr>
-    <?php endforeach; ?>
-  </tbody>
+<table class="dataTable">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Título</th>
+            <th>Subtítulo</th>
+            <th>Autores</th>
+            <th>Categoria</th>
+            <th>Tipo de Material</th>
+            <th># Copias</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
 </table>
-
-  <a href="<?php echo url_for('libMaterial/new') ?>">New</a>

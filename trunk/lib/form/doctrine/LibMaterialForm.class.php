@@ -73,12 +73,16 @@ class LibMaterialForm extends BaseLibMaterialForm {
             'codigo_lib_categoria' => new sfWidgetFormDoctrineChoice(array(
                 'label' => 'Categoría',
                 'model' => $this->getRelatedModelName('LibCategoria'),
-                'add_empty' => false
+                'add_empty' => 'Seleccione...'
+            ),array(
+                'class' => 'validate[required]'
             )),
             'id_lib_tipo_material' => new sfWidgetFormDoctrineChoice(array(
                 'label' => 'Tipo de Material',
                 'model' => $this->getRelatedModelName('LibTipoMaterial'),
-                'add_empty' => false
+                'add_empty' => 'Seleccione...'
+            ),array(
+                'class' => 'validate[required]'
             )),
         ));
 
