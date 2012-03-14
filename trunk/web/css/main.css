@@ -2,7 +2,7 @@
 body{
     margin: 0;
     font-size: 16px;
-/*    color: #0A246A;*/
+    /*    color: #0A246A;*/
 }
 
 /*Super Head*/
@@ -41,16 +41,16 @@ div.head{
 }
 
 div.head img{
-/*    margin-top: -5px;
-    margin-left: 20px;
-    float: left;*/
+    /*    margin-top: -5px;
+        margin-left: 20px;
+        float: left;*/
     position: relative;
     left: -260px;
     top: -5px;
 }
 
 div.head h1{
-/*    margin-top: 0px;*/
+    /*    margin-top: 0px;*/
     font-size: 18px;
     position: relative;
     top: -60px;
@@ -130,14 +130,14 @@ a > .sf-sub-indicator {
 
 .sf-vertical li:hover ul,
 .sf-vertical li.sfHover ul {
-        left: 10em; /* match ul width */
-	top: 5px;
+    left: 10em; /* match ul width */
+    top: 5px;
 }
 
 ul.sf-menu li li:hover ul,
 ul.sf-menu li li.sfHover ul {
-	left: 10em; /* match ul width */
-	top: 5px;
+    left: 10em; /* match ul width */
+    top: 5px;
 }
 
 /*Content*/
@@ -408,17 +408,59 @@ table.verHorizontal td ul{
     z-index: 1;
 }
 
+.button.tool{
+    background-image:url('/images/iconos/toolSmall.png');
+    background-repeat: no-repeat;
+    background-position: 10px 6px;
+    padding-left: 16px;
+}
+
+.button.back{
+    background-image:url('/images/iconos/back.png');
+    background-repeat: no-repeat;
+    background-position: 10px 6px;
+    padding-left: 16px;
+}
+
+.button.new{
+    background-image:url('/images/iconos/newSmall.png');
+    background-repeat: no-repeat;
+    background-position: 10px 6px;
+    padding-left: 16px;
+}
+
+.button.edit{
+    background-image:url('/images/iconos/editSmall.png');
+    background-repeat: no-repeat;
+    background-position: 10px 6px;
+    padding-left: 16px;
+}
+
+.button.delete{
+    background-image:url('/images/iconos/removeSmall.png');
+    background-repeat: no-repeat;
+    background-position: 10px 6px;
+    padding-left: 16px;
+}
+
+.button.add{
+    background-image:url('/images/iconos/addSmall.png');
+    background-repeat: no-repeat;
+    background-position: 10px 6px;
+    padding-left: 16px;
+}
+
+.button.detail{
+    background-image:url('/images/iconos/listarSmall.png');
+    background-repeat: no-repeat;
+    background-position: 10px 6px;
+    padding-left: 16px;
+}
+
 .ui-button-text-only .ui-button-text{
-    padding: 3px 10px;
     font-weight: normal;
     color: #555;
     font-size: 14px;
-}
-
-.ui-button-text-only .ui-button-text img{
-    margin-right: 5px;
-    position: relative;
-    top: 3px;
 }
 
 .ui-state-hover{
@@ -442,12 +484,12 @@ table.verHorizontal td ul{
 
 /*Avisos informativos*/
 .warningInfo{
-/*    background-color: #eee;*/
+    /*    background-color: #eee;*/
     padding: 5px 20px;
-/*    border: 1px solid #fcefa1;*/
-/*    border-radius: 6px 6px 6px 6px;*/
+    /*    border: 1px solid #fcefa1;*/
+    /*    border-radius: 6px 6px 6px 6px;*/
     font-size: 16px;
-/*    font-weight: bolder;*/
+    /*    font-weight: bolder;*/
     color: #555;
-    
+
 }

@@ -32,6 +32,7 @@
                         codMaterial=datos.Codigo;
             
                         $('#detallar').attr('href', '<?php echo url_for('libMaterial/ver?codigo_lib_material=') ?>'+codMaterial);
+                        $('#detallar img').attr('src', '/images/iconos/listarSmall.png');
                     } );
                 } );
             },
@@ -60,7 +61,7 @@
             }
         });
         
-        $("div.toolbar").html('<a href="#" id="detallar" title="Ver Material"><img src="/images/iconos/listarSmall.png"/></a>');
+        $("div.toolbar").html('<a href="#" id="detallar" title="Ver Material"><img src="/images/iconos/listarSmallGray.png"/></a>');
     });
 </script>
 <h1>Listar Material Bibliográfico</h1>
