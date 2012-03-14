@@ -124,20 +124,20 @@ slot('title', 'Ver Material Bibliográfico')
         $('.administracion').show('normal');
         //        $('.administracion').css('display', 'inline');
         $('#botonAdmin').attr('href', 'javascript:administrarHide()');
-        $('#botonAdmin span').html('<img src="/images/iconos/toolSmall.png"></img>Desactivar Administración');
+        $('#botonAdmin span').html('Desactivar Administración');
     }
     
     function administrarHide(){
         $('.administracion').hide('normal');
         //        $('.administracion').css('display', 'none');
         $('#botonAdmin').attr('href', 'javascript:administrarShow()');
-        $('#botonAdmin span').html('<img src="/images/iconos/toolSmall.png"></img>Activar Administración');
+        $('#botonAdmin span').html('Activar Administración');
     }
 </script>
 
 <h1>Ver Material Bibliográfico</h1>
-<a href="<?php echo url_for('libMaterial/index') ?>" class="button"><img src="/images/iconos/back.png"></img>Volver</a>
-<a id="botonAdmin" href="javascript:administrarShow()" class="button"><img src="/images/iconos/toolSmall.png"></img>Activar Administración</a>
+<a href="<?php echo url_for('libMaterial/index') ?>" class="button back">Volver</a>
+<a id="botonAdmin" href="javascript:administrarShow()" class="button tool"></img>Activar Administración</a>
 <br />
 <br />
 <table class="ver">
@@ -203,11 +203,11 @@ slot('title', 'Ver Material Bibliográfico')
 </table>
 <br />
 <div class="administracion ">
-    <a class="button" href="<?php echo url_for('libMaterial/edit?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>"><img src="/images/iconos/editSmall.png"></img>Editar Material</a>
+    <a class="button edit" href="<?php echo url_for('libMaterial/edit?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>">Editar Material</a>
     <?php
     if (count($material->getLibItem()) == 0) {
         ?>
-    <?php echo link_to('<img src="/images/iconos/removeSmall.png"></img>Eliminar Material',url_for('libMaterial/delete?codigo_lib_material=' . $material->getCodigoLibMaterial()),array('class'=>'button','confirm'=>'Esta seguro de querer eliminar el siguiente material?\n\n ['.$material->getCodigoLibMaterial().'] '.$material->getTitulo().'\n\nEste proceso es irreversible.','method' => 'delete')) ?>
+    <?php echo link_to('Eliminar Material',url_for('libMaterial/delete?codigo_lib_material=' . $material->getCodigoLibMaterial()),array('class'=>'button delete','confirm'=>'Esta seguro de querer eliminar el siguiente material?\n\n ['.$material->getCodigoLibMaterial().'] '.$material->getTitulo().'\n\nEste proceso es irreversible.','method' => 'delete')) ?>
     </div>
     <br />
     <br />
@@ -253,7 +253,7 @@ slot('title', 'Ver Material Bibliográfico')
 <?php } ?>
 <br />
 <div class="administracion">
-<a class="button" href="<?php echo url_for('libMaterial/addItem?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>"><img src="/images/iconos/addSmall.png"></img>Agregar Copia</a>
+<a class="button add" href="<?php echo url_for('libMaterial/addItem?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>">Agregar Copia</a>
 </div>
 <br />
 <br />

@@ -124,14 +124,14 @@ slot('title', 'Ver Material Bibliográfico')
         $('.detalle').show('normal');
         //        $('.detalle').css('display', 'inline');
         $('#botonDet').attr('href', 'javascript:detallarHide()');
-        $('#botonDet span').html('<img src="/images/iconos/listarSmall.png"></img>Ocultar Detalles del Material');
+        $('#botonDet span').html('Ocultar Detalles del Material');
     }
     
     function detallarHide(){
         $('.detalle').hide('normal');
         //        $('.detalle').css('display', 'none');
         $('#botonDet').attr('href', 'javascript:detallarShow()');
-        $('#botonDet span').html('<img src="/images/iconos/listarSmall.png"></img>Ver Detalles del Material');
+        $('#botonDet span').html('Ver Detalles del Material');
     }
 </script>
 
@@ -140,7 +140,7 @@ slot('title', 'Ver Material Bibliográfico')
     <br />
     <small>[<?php echo $material->getCodigoLibMaterial() ?>]</small> <?php echo $material->getTitulo() ?>
 </h1>
-<a href="<?php echo url_for('libMaterial/ver?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>" class="button"><img src="/images/iconos/back.png"></img>Volver</a>
+<a href="<?php echo url_for('libMaterial/ver?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>" class="button back">Volver</a>
 <br />
 <br />
 <form id="formItem" action="<?php echo url_for('libMaterial/updateItem?serial_lib_item=' . $formItem->getObject()->getSerialLibItem()) ?>" method="post" <?php $formItem->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
@@ -199,7 +199,7 @@ slot('title', 'Ver Material Bibliográfico')
     </table>
 </form>
 <br />
-<a id="botonDet" href="javascript:detallarShow()" class="button"><img src="/images/iconos/listarSmall.png"></img>Ver Detalles del Material</a>
+<a id="botonDet" href="javascript:detallarShow()" class="button detail">Ver Detalles del Material</a>
 <div class="detalle">
     <h2>Material Bibliográfico</h2>
     <table class="ver">
