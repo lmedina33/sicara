@@ -55,47 +55,27 @@ $root->addChild("Inscritos",$menu);
 //BIBLIOTECA:
 //Material:
 $menu = new pmSuperfishMenu();
-$menu->setName("Material")->setCredentials(array("bibliotecario"));
+$menu->setName("Administrar Material")->setCredentials(array("bibliotecario"));
 
 $menu_item = new pmSuperfishMenuItem();
-$menu_item->setName("Listar")->setUrl("libMaterial/index");
+$menu_item->setName("Listar Material")->setUrl("libMaterial/index");
 $menu->addChild("LibMaterial_Lista", $menu_item);
 
 $menu_item = new pmSuperfishMenuItem();
-$menu_item->setName("Registrar")->setUrl("libMaterial/new");
+$menu_item->setName("Registrar Material")->setUrl("libMaterial/new");
 $menu->addChild("LibMaterial_Registrar", $menu_item);
 
-$root->addChild("LibMaterial",$menu);
-
-//Tipo Material:
-$sub_menu = new pmSuperfishMenu();
-$sub_menu->setName("Tipo de Material")->setCredentials(array("bibliotecario"));
-
-$menu_item = new pmSuperfishMenuItem();
-$menu_item->setName("Listar")->setUrl("libTipoMaterial/index");
-$sub_menu->addChild("LibTipoMaterial_Lista", $menu_item);
-
-$menu_item = new pmSuperfishMenuItem();
-$menu_item->setName("Registrar")->setUrl("libTipoMaterial/new");
-$sub_menu->addChild("LibTipoMaterial_Registrar", $menu_item);
-
-$menu->addChild("LibTipoMaterial",$sub_menu);
-
-
 //Categoria:
-$menu = new pmSuperfishMenu();
-$menu->setName("Categoria")->setCredentials(array("bibliotecario"));
-
 $menu_item = new pmSuperfishMenuItem();
-$menu_item->setName("Listar")->setUrl("libCategoria/index");
+$menu_item->setName("Administrar Categorías")->setUrl("libCategoria/index");
 $menu->addChild("LibCategoria_Lista", $menu_item);
 
+//Tipo Material:
 $menu_item = new pmSuperfishMenuItem();
-$menu_item->setName("Registrar")->setUrl("libCategoria/new");
-$menu->addChild("LibCategoria_Registrar", $menu_item);
+$menu_item->setName("Administrar Tipos de Material")->setUrl("libTipoMaterial/index");
+$menu->addChild("LibTipoMaterial_Lista", $menu_item);
 
-$root->addChild("LibCategoria",$menu);
-
+$root->addChild("LibMaterial",$menu);
 
 //SALIR:
 $menu_item = new pmSuperfishMenuItem();

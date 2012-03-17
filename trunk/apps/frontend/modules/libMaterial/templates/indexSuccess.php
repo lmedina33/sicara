@@ -1,3 +1,6 @@
+<?php
+slot('title', 'Listar Material Bibliográfico')
+?>
 <?php use_helper("DataTable") ?>
 <script type="text/javascript">
     
