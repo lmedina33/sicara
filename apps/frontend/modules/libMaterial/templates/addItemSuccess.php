@@ -1,5 +1,5 @@
 <?php
-slot('title', 'Ver Material Bibliográfico')
+slot('title', 'Agregar Copia de Material Bibliográfico')
 ?>
 <script>
     
