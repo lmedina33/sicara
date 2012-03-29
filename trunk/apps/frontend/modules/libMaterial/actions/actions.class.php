@@ -56,7 +56,7 @@ class libMaterialActions extends sfActions {
         $this->redirect('libMaterial/index');
     }
 
-    protected function processForm(sfWebRequest $request, sfForm $form, $editado=false) {
+    protected function processForm(sfWebRequest $request, sfForm $form, $editado = false) {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
         if ($form->isValid()) {
             $lib_material = $form->save();
@@ -90,6 +90,8 @@ class libMaterialActions extends sfActions {
     }
 
     public function executeVer(sfWebRequest $request) {
+        $this->isSearch=$request->getParameter('search');
+        
         $this->material = Doctrine_Core::getTable('LibMaterial')->find($request->getParameter('codigo_lib_material'));
 
         $this->items = $this->material->getLibItem();
@@ -120,6 +122,10 @@ class libMaterialActions extends sfActions {
             $this->temas = $this->temas . "<li>" . $tema . "</li>";
         }
         $this->temas = $this->temas . "</ul>";
+        
+        if($this->isSearch=="1"){
+            $this->setLayout('vacio');
+        }
     }
 
     public function executeAddItem(sfWebRequest $request) {
@@ -204,7 +210,7 @@ class libMaterialActions extends sfActions {
         $this->processFormItem($request, $this->form, true);
     }
 
-    protected function processFormItem(sfWebRequest $request, sfForm $form, $editado=false) {
+    protected function processFormItem(sfWebRequest $request, sfForm $form, $editado = false) {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
         if ($form->isValid()) {
             $lib_item = $form->save();
@@ -276,7 +282,7 @@ class libMaterialActions extends sfActions {
         if ($request->getParameter('iDisplayStart') != null && $request->getParameter('iDisplayLength') != '-1') {
             $q->limit($limit)->offset($offset);
         }
-        
+
         //Se ordenan los datos de acuerdo a la información suministrada por datatables:
         if ($request->getParameter('iSortCol_0') != null) {
             for ($i = 0; $i < intval($request->getParameter('iSortingCols')); $i++) {
@@ -317,7 +323,7 @@ class libMaterialActions extends sfActions {
         //Se calcula la página actual en la que se encuentra el datatables, a partir de un simple calculo matemático
         $paginaActual = (intval($offset / $limit)) + 1;
         $pager = new Doctrine_Pager($q, $paginaActual, $limit);
-        
+
         //Obtención de los resultados de la consulta dada:
         $rows = $pager->execute();
 
@@ -355,7 +361,7 @@ class libMaterialActions extends sfActions {
 
             if (isset($rows[$i]['tipo']))
                 $tipo = $rows[$i]['tipo'];
-            
+
             $rows2 = Doctrine_Core::getTable('LibItem')
                     ->createQuery('i')
                     ->select('COUNT(i.serial_lib_item) AS nitems')
@@ -388,6 +394,228 @@ class libMaterialActions extends sfActions {
 
         //Envío del mensaje JSON
         return $this->renderText(json_encode($output));
+    }
+
+    public function executeBuscar(sfWebRequest $request) {
+
+        $this->form = new SelectorFiltroForm();
+
+        $this->lib_materials = null;
+
+        if ($request->isMethod(sfRequest::POST)) {
+            $this->form->bind($request->getParameter($this->form->getName()));
+
+
+            $idsTipos = $this->form->getValue('tipo_material');
+
+            $this->sIdsTipos = "";
+
+            for ($i = 0; $i < count($idsTipos); $i++) {
+                if ($i == 0)
+                    $this->sIdsTipos = "" . $idsTipos[$i];
+                else
+                    $this->sIdsTipos = $this->sIdsTipos . "," . $idsTipos[$i];
+            }
+
+            $this->filtro = $this->form->getValue('filtro');
+            $this->parametro = $this->form->getValue('tipo_filtro');
+            $this->page = 1;
+            $this->limit = 10;
+
+            $q = Doctrine_Core::getTable('LibMaterial')
+                    ->createQuery('m')
+                    ->where('m.id_lib_tipo_material IN (' . $this->sIdsTipos . ')');
+
+            $filters = explode(' ', $this->filtro);
+
+            $sql = "";
+
+            switch ($this->parametro) {
+                case 'codigo': {
+                        for ($i = 0; $i < count($filters); $i++) {
+                            if ($filters[$i] != "") {
+                                if ($i == 0) {
+                                    $sql = $sql . "m.codigo_lib_material LIKE '%" . $filters[$i] . "%'";
+                                } else {
+                                    $sql = $sql . " OR m.codigo_lib_material LIKE '%" . $filters[$i] . "%'";
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'titulos': {
+                        for ($i = 0; $i < count($filters); $i++) {
+                            if ($filters[$i] != "") {
+                                if ($i == 0) {
+                                    $sql = $sql . "m.titulo LIKE '%" . $filters[$i] . "%'";
+                                    $sql = $sql . " OR m.sub_titulo LIKE '%" . $filters[$i] . "%'";
+                                } else {
+                                    $sql = $sql . " OR m.titulo LIKE '%" . $filters[$i] . "%'";
+                                    $sql = $sql . " OR m.sub_titulo LIKE '%" . $filters[$i] . "%'";
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'autores': {
+                        for ($i = 0; $i < count($filters); $i++) {
+                            if ($filters[$i] != "") {
+                                if ($i == 0) {
+                                    $sql = $sql . "m.autores LIKE '%" . $filters[$i] . "%'";
+                                } else {
+                                    $sql = $sql . " OR m.autores LIKE '%" . $filters[$i] . "%'";
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'editorial': {
+                        for ($i = 0; $i < count($filters); $i++) {
+                            if ($filters[$i] != "") {
+                                if ($i == 0) {
+                                    $sql = $sql . "m.editorial LIKE '%" . $filters[$i] . "%'";
+                                } else {
+                                    $sql = $sql . " OR m.editorial LIKE '%" . $filters[$i] . "%'";
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'temas': {
+                        for ($i = 0; $i < count($filters); $i++) {
+                            if ($filters[$i] != "") {
+                                if ($i == 0) {
+                                    $sql = $sql . "m.temas LIKE '%" . $filters[$i] . "%'";
+                                } else {
+                                    $sql = $sql . " OR m.temas LIKE '%" . $filters[$i] . "%'";
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+            ;
+
+            $q->andWhere($sql);
+
+            $pager = new Doctrine_Pager($q, $this->page, $this->limit);
+
+            $this->lib_materials = $pager->execute();
+
+            $this->lastPage = $pager->getLastPage();
+            
+            $this->materialsShowed = $pager->getResultsInPage();
+            
+            $this->total = $pager->getNumResults();
+            
+            $this->indicePrimero=$pager->getFirstIndice();
+            
+            $this->indiceUltimo=$pager->getLastIndice();
+        }
+
+        if ($request->isMethod(sfRequest::GET) && $request->getParameter('filtro') != null) {
+            $this->filtro = $request->getParameter('filtro');
+            $this->parametro = $request->getParameter('parametro');
+            $this->sIdsTipos = $request->getParameter('tipos');
+            $this->page = $request->getParameter('page');
+            $this->limit = $request->getParameter('limit');
+
+            $this->form->setDefaults(array(
+                'filtro' => $this->filtro,
+                'tipo_filtro' => $this->parametro,
+                'tipo_material' => explode(',', $this->sIdsTipos)
+            ));
+
+            $q = Doctrine_Core::getTable('LibMaterial')
+                    ->createQuery('m')
+                    ->where('m.id_lib_tipo_material IN (' . $this->sIdsTipos . ')');
+            
+            $filters = explode(' ', $this->filtro);
+
+            $sql = "";
+
+            switch ($this->parametro) {
+                case 'codigo': {
+                        for ($i = 0; $i < count($filters); $i++) {
+                            if ($filters[$i] != "") {
+                                if ($i == 0) {
+                                    $sql = $sql . "m.codigo_lib_material LIKE '%" . $filters[$i] . "%'";
+                                } else {
+                                    $sql = $sql . " OR m.codigo_lib_material LIKE '%" . $filters[$i] . "%'";
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'titulos': {
+                        for ($i = 0; $i < count($filters); $i++) {
+                            if ($filters[$i] != "") {
+                                if ($i == 0) {
+                                    $sql = $sql . "m.titulo LIKE '%" . $filters[$i] . "%'";
+                                    $sql = $sql . " OR m.sub_titulo LIKE '%" . $filters[$i] . "%'";
+                                } else {
+                                    $sql = $sql . " OR m.titulo LIKE '%" . $filters[$i] . "%'";
+                                    $sql = $sql . " OR m.sub_titulo LIKE '%" . $filters[$i] . "%'";
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'autores': {
+                        for ($i = 0; $i < count($filters); $i++) {
+                            if ($filters[$i] != "") {
+                                if ($i == 0) {
+                                    $sql = $sql . "m.autores LIKE '%" . $filters[$i] . "%'";
+                                } else {
+                                    $sql = $sql . " OR m.autores LIKE '%" . $filters[$i] . "%'";
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'editorial': {
+                        for ($i = 0; $i < count($filters); $i++) {
+                            if ($filters[$i] != "") {
+                                if ($i == 0) {
+                                    $sql = $sql . "m.editorial LIKE '%" . $filters[$i] . "%'";
+                                } else {
+                                    $sql = $sql . " OR m.editorial LIKE '%" . $filters[$i] . "%'";
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case 'temas': {
+                        for ($i = 0; $i < count($filters); $i++) {
+                            if ($filters[$i] != "") {
+                                if ($i == 0) {
+                                    $sql = $sql . "m.temas LIKE '%" . $filters[$i] . "%'";
+                                } else {
+                                    $sql = $sql . " OR m.temas LIKE '%" . $filters[$i] . "%'";
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
+            ;
+
+            $q->andWhere($sql);
+
+            $pager = new Doctrine_Pager($q, $this->page, $this->limit);
+
+            $this->lib_materials = $pager->execute();
+
+            $this->lastPage = $pager->getLastPage();
+            
+            $this->materialsShowed = $pager->getResultsInPage();
+            
+            $this->total = $pager->getNumResults();
+            
+            $this->indicePrimero=$pager->getFirstIndice();
+            
+            $this->indiceUltimo=$pager->getLastIndice();
+        }
     }
 
 }

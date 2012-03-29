@@ -120,6 +120,7 @@ slot('title', 'Ver Material Bibliográfico')
         $('#verTemas img').attr('src','/images/iconos/seePlus.png');
     }
     
+    <?php if($sf_user->hasCredential('bibliotecario')){ ?>
     function administrarShow(){
         $('.administracion').show('normal');
         //        $('.administracion').css('display', 'inline');
@@ -133,11 +134,17 @@ slot('title', 'Ver Material Bibliográfico')
         $('#botonAdmin').attr('href', 'javascript:administrarShow()');
         $('#botonAdmin span').html('Activar Administración');
     }
+    <?php } ?>
 </script>
 
 <h1>Ver Material Bibliográfico</h1>
-<a href="<?php echo url_for('libMaterial/index') ?>" class="button back">Volver</a>
-<a id="botonAdmin" href="javascript:administrarShow()" class="button tool"></img>Activar Administración</a>
+<?php if ($isSearch != "1") { ?>
+    <a href="<?php echo url_for('libMaterial/index') ?>" class="button back">Volver</a>
+<?php } ?>
+
+<?php if ($sf_user->hasCredential('bibliotecario')) { ?>
+    <a id="botonAdmin" href="javascript:administrarShow()" class="button tool">Activar Administración</a>
+<?php } ?>
 <br />
 <br />
 <table class="ver">
@@ -189,15 +196,15 @@ slot('title', 'Ver Material Bibliográfico')
                 <a id="verTemas" class="tip" title="Ver +/- Temas" href="javascript:verMasTemas()" style="float: right"><img src="/images/iconos/seePlus.png" /></a>
             </td>
         </tr>
-        <?php if($material->getIsReferencia()==1){ ?>
-        <tr>
-            <th colspan="2"><label>Material solo de referencia</label></th>
-        </tr>
+        <?php if ($material->getIsReferencia() == 1) { ?>
+            <tr>
+                <th colspan="2"><label>Material solo de referencia</label></th>
+            </tr>
         <?php } ?>
-        <?php if($material->getIsSoloProfesor()==1){ ?>
-        <tr>
-            <th colspan="2"><label>Material solo para profesores</label></th>
-        </tr>
+        <?php if ($material->getIsSoloProfesor() == 1) { ?>
+            <tr>
+                <th colspan="2"><label>Material solo para profesores</label></th>
+            </tr>
         <?php } ?>
     </tbody>
 </table>
@@ -207,7 +214,11 @@ slot('title', 'Ver Material Bibliográfico')
     <?php
     if (count($material->getLibItem()) == 0) {
         ?>
-    <?php echo link_to('Eliminar Material',url_for('libMaterial/delete?codigo_lib_material=' . $material->getCodigoLibMaterial()),array('class'=>'button delete','confirm'=>'Esta seguro de querer eliminar el siguiente material?\n\n ['.$material->getCodigoLibMaterial().'] '.$material->getTitulo().'\n\nEste proceso es irreversible.','method' => 'delete')) ?>
+        <?php 
+        if($sf_user->hasCredential('bibliotecario')){
+            echo link_to('Eliminar Material', url_for('libMaterial/delete?codigo_lib_material=' . $material->getCodigoLibMaterial()), array('class' => 'button delete', 'confirm' => 'Esta seguro de querer eliminar el siguiente material?\n\n [' . $material->getCodigoLibMaterial() . '] ' . $material->getTitulo() . '\n\nEste proceso es irreversible.', 'method' => 'delete'));
+        } 
+        ?>
     </div>
     <br />
     <br />
@@ -242,18 +253,22 @@ slot('title', 'Ver Material Bibliográfico')
                     <td>
                         <?php echo $item->getLibEstado() ?>
                     </td>
+                    <?php if($sf_user->hasCredential('bibliotecario')){ ?>
                     <td class="administracion">
                         <a class="administracion tip" title="Editar Copia <?php echo $item->getSerialLibItem() ?>" href="<?php echo url_for('libMaterial/editItem?serial_lib_item=' . $item->getSerialLibItem()) ?>"><img src="/images/iconos/editSmall.png"></img></a>
-                        <?php echo link_to('<img src="/images/iconos/removeSmall.png"></img>',url_for('libMaterial/deleteItem?serial_lib_item=' . $item->getSerialLibItem()),array('title'=>'Eliminar Copia '. $item->getSerialLibItem(),'class'=>'tip','confirm'=>'Esta seguro de querer eliminar la siguiente copia?\n\n '.$item->getSerialLibItem().'\n\nEste proceso es irreversible.','method' => 'delete')) ?>
+                        <?php echo link_to('<img src="/images/iconos/removeSmall.png"></img>', url_for('libMaterial/deleteItem?serial_lib_item=' . $item->getSerialLibItem()), array('title' => 'Eliminar Copia ' . $item->getSerialLibItem(), 'class' => 'tip', 'confirm' => 'Esta seguro de querer eliminar la siguiente copia?\n\n ' . $item->getSerialLibItem() . '\n\nEste proceso es irreversible.', 'method' => 'delete')) ?>
                     </td>
+                    <?php } ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 <?php } ?>
 <br />
+<?php if($sf_user->hasCredential('bibliotecario')){ ?>
 <div class="administracion">
-<a class="button add" href="<?php echo url_for('libMaterial/addItem?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>">Agregar Copia</a>
+    <a class="button add" href="<?php echo url_for('libMaterial/addItem?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>">Agregar Copia</a>
 </div>
+<?php } ?>
 <br />
 <br />

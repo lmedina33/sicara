@@ -77,6 +77,15 @@ $menu->addChild("LibTipoMaterial_Lista", $menu_item);
 
 $root->addChild("LibMaterial",$menu);
 
+//Buscar Material:
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Buscar Material Bibliográfico")->setUrl("libMaterial/buscar")->setCredentials(array('bibliotecario'));
+$root->addChild("LibCategoria_Buscar", $menu_item);
+
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Buscar Material Bibliográfico")->setUrl("libMaterial/buscar")->setCredentials(array('estudiante'));
+$root->addChild("LibCategoria_Buscar", $menu_item);
+
 //SALIR:
 $menu_item = new pmSuperfishMenuItem();
 $menu_item->setName("Salir")->setUrl(url_for("sf_guard_signout"));
