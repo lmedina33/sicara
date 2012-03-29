@@ -833,6 +833,13 @@ LibItem:
       primary: false
       notnull: false
       autoincrement: false
+    is_prestado:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
     id_lib_estado:
       type: integer(4)
       fixed: false

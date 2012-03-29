@@ -10,6 +10,7 @@ Doctrine_Manager::getInstance()->bindComponent('LibItem', 'doctrine');
  * @property string $serial_lib_item
  * @property string $descripcion
  * @property date $fecha_actualizacion
+ * @property integer $is_prestado
  * @property integer $id_lib_estado
  * @property string $codigo_lib_material
  * @property LibEstado $LibEstado
@@ -20,6 +21,7 @@ Doctrine_Manager::getInstance()->bindComponent('LibItem', 'doctrine');
  * @method string              getSerialLibItem()       Returns the current record's "serial_lib_item" value
  * @method string              getDescripcion()         Returns the current record's "descripcion" value
  * @method date                getFechaActualizacion()  Returns the current record's "fecha_actualizacion" value
+ * @method integer             getIsPrestado()          Returns the current record's "is_prestado" value
  * @method integer             getIdLibEstado()         Returns the current record's "id_lib_estado" value
  * @method string              getCodigoLibMaterial()   Returns the current record's "codigo_lib_material" value
  * @method LibEstado           getLibEstado()           Returns the current record's "LibEstado" value
@@ -29,6 +31,7 @@ Doctrine_Manager::getInstance()->bindComponent('LibItem', 'doctrine');
  * @method LibItem             setSerialLibItem()       Sets the current record's "serial_lib_item" value
  * @method LibItem             setDescripcion()         Sets the current record's "descripcion" value
  * @method LibItem             setFechaActualizacion()  Sets the current record's "fecha_actualizacion" value
+ * @method LibItem             setIsPrestado()          Sets the current record's "is_prestado" value
  * @method LibItem             setIdLibEstado()         Sets the current record's "id_lib_estado" value
  * @method LibItem             setCodigoLibMaterial()   Sets the current record's "codigo_lib_material" value
  * @method LibItem             setLibEstado()           Sets the current record's "LibEstado" value
@@ -71,6 +74,15 @@ abstract class BaseLibItem extends sfDoctrineRecord
              'notnull' => false,
              'autoincrement' => false,
              'length' => 25,
+             ));
+        $this->hasColumn('is_prestado', 'integer', 1, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 1,
              ));
         $this->hasColumn('id_lib_estado', 'integer', 4, array(
              'type' => 'integer',

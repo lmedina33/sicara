@@ -5,6 +5,15 @@ body{
     /*    color: #0A246A;*/
 }
 
+hr{
+    background-color: #fff;
+    border-bottom: 1px dashed #aaa;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    color: #fff;
+}
+
 /*Super Head*/
 div.super-head{
     height: 17px;
@@ -492,4 +501,60 @@ table.verHorizontal td ul{
     /*    font-weight: bolder;*/
     color: #555;
 
+}
+
+/*Pager Básico*/
+.page{
+    clear:both;
+}
+
+.page .itemMaterial{
+    border: 1px dashed #ddd;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 25px;
+    width: 500px;
+}
+
+.pagingBar{
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.pagingBar a{
+    text-decoration: none;
+    color: #007;
+}
+
+.pagingBar .pageBack{
+    border: 1px solid #ccc;
+    background-color: #fff;
+    float: left;
+    margin-right: 5px;
+    padding: 2px 10px;
+}
+
+.pagingBar .pageNum{
+    border: 1px solid #ccc;
+    background-color: #fff;
+    float: left;
+    margin-right: 5px;
+    padding: 2px 10px;
+}
+
+.pagingBar .pageActual{
+    border: 1px solid #ccc;
+    background-color: #eee;
+    float: left;
+    margin-right: 5px;
+    padding: 2px 10px;
+}
+
+.pagingBar .pageNext{
+    border: 1px solid #ccc;
+    background-color: #fff;
+    float: left;
+    margin-right: 5px;
+    padding: 2px 10px;
 }
