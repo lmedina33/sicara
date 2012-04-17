@@ -178,6 +178,15 @@ slot('title', 'Agregar Copia de Material Bibliográfico')
         </tr>
         <tr>
             <th>
+                <?php echo $formItem['ubicacion']->renderLabel() ?>
+                <?php echo $formItem['ubicacion']->renderError() ?>
+            </th>
+            <td>
+                <?php echo $formItem['ubicacion'] ?>
+            </td>
+        </tr>
+        <tr>
+            <th>
         <div class="tip" title="Esta es la fecha donde esta copia fué <b>creada</b> o recibió su <b>última actualización</b>."></div>
         <?php echo $formItem['fecha_actualizacion']->renderLabel() ?>
         <?php echo $formItem['fecha_actualizacion']->renderError() ?>

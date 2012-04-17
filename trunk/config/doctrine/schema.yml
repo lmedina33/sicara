@@ -826,6 +826,13 @@ LibItem:
       primary: false
       notnull: false
       autoincrement: false
+    ubicacion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
     fecha_actualizacion:
       type: date(25)
       fixed: false

@@ -17,6 +17,7 @@ abstract class BaseLibItemForm extends BaseFormDoctrine
     $this->setWidgets(array(
       'serial_lib_item'     => new sfWidgetFormInputHidden(),
       'descripcion'         => new sfWidgetFormTextarea(),
+      'ubicacion'           => new sfWidgetFormTextarea(),
       'fecha_actualizacion' => new sfWidgetFormDate(),
       'is_prestado'         => new sfWidgetFormInputText(),
       'id_lib_estado'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibEstado'), 'add_empty' => false)),
@@ -26,6 +27,7 @@ abstract class BaseLibItemForm extends BaseFormDoctrine
     $this->setValidators(array(
       'serial_lib_item'     => new sfValidatorChoice(array('choices' => array($this->getObject()->get('serial_lib_item')), 'empty_value' => $this->getObject()->get('serial_lib_item'), 'required' => false)),
       'descripcion'         => new sfValidatorString(array('required' => false)),
+      'ubicacion'           => new sfValidatorString(array('required' => false)),
       'fecha_actualizacion' => new sfValidatorDate(array('required' => false)),
       'is_prestado'         => new sfValidatorInteger(),
       'id_lib_estado'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibEstado'))),

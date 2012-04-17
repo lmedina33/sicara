@@ -20,6 +20,7 @@ class LibItemForm extends BaseLibItemForm
                 ($this->getObject()->isNew()? '' : 'readonly') => ($this->getObject()->isNew()? '' : 'readonly')
             )),
       'descripcion'         => new sfWidgetFormTextarea(array('label'=>'Descripción')),
+      'ubicacion'         => new sfWidgetFormTextarea(array('label'=>'Ubicación')),
       'fecha_actualizacion' => new sfWidgetFormJQueryDate(array(
                 'label' => 'Fecha de Actualización',
                 'image' => '/images/iconos/calendar.png',
@@ -40,6 +41,7 @@ class LibItemForm extends BaseLibItemForm
     $this->setValidators(array(
       'serial_lib_item'     => new sfValidatorPass(),
       'descripcion'         => new sfValidatorString(array('required' => false)),
+      'ubicacion'         => new sfValidatorString(array('required' => false)),
       'fecha_actualizacion' => new sfValidatorDate(array('required' => false)),
       'id_lib_estado'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibEstado'))),
       'codigo_lib_material' => new sfValidatorPass(),
