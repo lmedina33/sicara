@@ -80,11 +80,11 @@ $root->addChild("LibMaterial",$menu);
 //Buscar Material:
 $menu_item = new pmSuperfishMenuItem();
 $menu_item->setName("Buscar Material Bibliográfico")->setUrl("libMaterial/buscar")->setCredentials(array('bibliotecario'));
-$root->addChild("LibCategoria_Buscar", $menu_item);
+$root->addChild("LibCategoria_Buscar_Bibliotecario", $menu_item);
 
 $menu_item = new pmSuperfishMenuItem();
 $menu_item->setName("Buscar Material Bibliográfico")->setUrl("libMaterial/buscar")->setCredentials(array('estudiante'));
-$root->addChild("LibCategoria_Buscar", $menu_item);
+$root->addChild("LibCategoria_Buscar_Estudiante", $menu_item);
 
 //SALIR:
 $menu_item = new pmSuperfishMenuItem();

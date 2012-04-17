@@ -9,6 +9,7 @@ Doctrine_Manager::getInstance()->bindComponent('LibItem', 'doctrine');
  * 
  * @property string $serial_lib_item
  * @property string $descripcion
+ * @property string $ubicacion
  * @property date $fecha_actualizacion
  * @property integer $is_prestado
  * @property integer $id_lib_estado
@@ -20,6 +21,7 @@ Doctrine_Manager::getInstance()->bindComponent('LibItem', 'doctrine');
  * 
  * @method string              getSerialLibItem()       Returns the current record's "serial_lib_item" value
  * @method string              getDescripcion()         Returns the current record's "descripcion" value
+ * @method string              getUbicacion()           Returns the current record's "ubicacion" value
  * @method date                getFechaActualizacion()  Returns the current record's "fecha_actualizacion" value
  * @method integer             getIsPrestado()          Returns the current record's "is_prestado" value
  * @method integer             getIdLibEstado()         Returns the current record's "id_lib_estado" value
@@ -30,6 +32,7 @@ Doctrine_Manager::getInstance()->bindComponent('LibItem', 'doctrine');
  * @method Doctrine_Collection getLibSancion()          Returns the current record's "LibSancion" collection
  * @method LibItem             setSerialLibItem()       Sets the current record's "serial_lib_item" value
  * @method LibItem             setDescripcion()         Sets the current record's "descripcion" value
+ * @method LibItem             setUbicacion()           Sets the current record's "ubicacion" value
  * @method LibItem             setFechaActualizacion()  Sets the current record's "fecha_actualizacion" value
  * @method LibItem             setIsPrestado()          Sets the current record's "is_prestado" value
  * @method LibItem             setIdLibEstado()         Sets the current record's "id_lib_estado" value
@@ -58,6 +61,15 @@ abstract class BaseLibItem extends sfDoctrineRecord
              'length' => 25,
              ));
         $this->hasColumn('descripcion', 'string', null, array(
+             'type' => 'string',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'length' => '',
+             ));
+        $this->hasColumn('ubicacion', 'string', null, array(
              'type' => 'string',
              'fixed' => 0,
              'unsigned' => false,

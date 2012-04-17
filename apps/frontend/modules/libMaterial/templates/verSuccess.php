@@ -235,6 +235,7 @@ slot('title', 'Ver Material Bibliográfico')
             <tr>
                 <th>Serial</th>
                 <th>Descripción</th>
+                <th>Ubicación</th>
                 <th>Fecha de Actualización</th>
                 <th>Estado</th>
                 <th class="administracion"></th>
@@ -246,6 +247,9 @@ slot('title', 'Ver Material Bibliográfico')
                     </td>
                     <td>
                         <?php echo $item->getDescripcion() ?>
+                    </td>
+                    <td>
+                        <?php echo $item->getUbicacion() ?>
                     </td>
                     <td>
                         <?php echo $item->getFechaActualizacion() ?>
