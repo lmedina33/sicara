@@ -1,3 +1,6 @@
+<?php
+slot('title', 'Buscar Material Bibliográfico')
+?>
 <script>
     $(function() {
         jQuery("#form").validationEngine();
@@ -21,7 +24,7 @@
     
     function verMasTemas(id){
         $('#verTemas_'+id+' img').attr('src','/images/iconos/seeMinus.png');
-        $('#verTemas_'+id).attr('href','javascript:verMenosTemas('+id+')');
+        $('#verTemas_'+id).attr('href','javascript:verMenosTemas("'+id+'")');
         $('#temas_'+id+' div').each(function(){
             $(this).css('display','inline');
         });
@@ -29,7 +32,7 @@
     
     function verMenosTemas(id){
         $('#verTemas_'+id+' img').attr('src','/images/iconos/seePlus.png');
-        $('#verTemas_'+id).attr('href','javascript:verMasTemas('+id+')');
+        $('#verTemas_'+id).attr('href','javascript:verMasTemas("'+id+'")');
         $('#temas_'+id+' div').each(function(){
             $(this).css('display','none');
         });
