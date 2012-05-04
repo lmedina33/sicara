@@ -140,7 +140,7 @@ if ($lib_materials != null) {
                 ?>
                 <div class="itemMaterial">
                     <div>
-                        <img src="/images/iconos/listarSmall.png" onClick='javascript:newwindow=window.open("<?php echo url_for('libMaterial/ver?codigo_lib_material=' . $material->getCodigoLibMaterial() . '&search=1') ?>","VerMaterial","scrollbars=1,width=600,height=500")' /> <b>Código:</b> <?php echo $material->getCodigoLibMaterial() ?></div>
+                        <img src="/images/iconos/listarSmall.png" onClick='javascript:newwindow=window.open("<?php echo url_for('libMaterial/ver?id_lib_material=' . $material->getIdLibMaterial() . '&search=1') ?>","VerMaterial","scrollbars=1,width=600,height=500")' /> <b>Código:</b> <?php echo $material->getCodigoLibMaterial() ?></div>
                     <div style="margin-left: 5px;"><b>Título:</b> <?php echo $material->getTitulo() ?></div>
                     <?php if ($material->getSubTitulo() != null && $material->getSubTitulo() != "") { ?>
                         <div style="margin-left: 10px;"><small><b>Sub titulo:</b> <?php echo $material->getSubTitulo() ?></small></div>
@@ -228,8 +228,8 @@ if ($lib_materials != null) {
                     <div style="margin-left: 5px;">
                         <b>Número de Copias:</b> <?php echo count($material->getLibItem()) ?>
                     </div>
-                    <div id="temas_<?php echo $material->getCodigoLibMaterial() ?>" class="temas" style="margin-left: 5px;">
-                        <a id="verTemas_<?php echo $material->getCodigoLibMaterial() ?>" class="tip" title="Ver +/- Temas" href="javascript:verMasTemas('<?php echo $material->getCodigoLibMaterial() ?>')"><img src="/images/iconos/seePlus.png" /></a>
+                    <div id="temas_<?php echo $material->getIdLibMaterial() ?>" class="temas" style="margin-left: 5px;">
+                        <a id="verTemas_<?php echo $material->getIdLibMaterial() ?>" class="tip" title="Ver +/- Temas" href="javascript:verMasTemas('<?php echo $material->getIdLibMaterial() ?>')"><img src="/images/iconos/seePlus.png" /></a>
                         <br />
                         <?php
                         $temas = explode("\n", $material->getTemas());

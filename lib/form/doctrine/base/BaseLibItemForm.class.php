@@ -21,7 +21,7 @@ abstract class BaseLibItemForm extends BaseFormDoctrine
       'fecha_actualizacion' => new sfWidgetFormDate(),
       'is_prestado'         => new sfWidgetFormInputText(),
       'id_lib_estado'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibEstado'), 'add_empty' => false)),
-      'codigo_lib_material' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibMaterial'), 'add_empty' => false)),
+      'id_lib_material'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibMaterial'), 'add_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -31,7 +31,7 @@ abstract class BaseLibItemForm extends BaseFormDoctrine
       'fecha_actualizacion' => new sfValidatorDate(array('required' => false)),
       'is_prestado'         => new sfValidatorInteger(),
       'id_lib_estado'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibEstado'))),
-      'codigo_lib_material' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibMaterial'))),
+      'id_lib_material'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibMaterial'))),
     ));
 
     $this->widgetSchema->setNameFormat('lib_item[%s]');

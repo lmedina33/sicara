@@ -210,13 +210,13 @@ slot('title', 'Ver Material Bibliográfico')
 </table>
 <br />
 <div class="administracion ">
-    <a class="button edit" href="<?php echo url_for('libMaterial/edit?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>">Editar Material</a>
+    <a class="button edit" href="<?php echo url_for('libMaterial/edit?id_lib_material=' . $material->getIdLibMaterial()) ?>">Editar Material</a>
     <?php
     if (count($material->getLibItem()) == 0) {
         ?>
         <?php 
         if($sf_user->hasCredential('bibliotecario')){
-            echo link_to('Eliminar Material', url_for('libMaterial/delete?codigo_lib_material=' . $material->getCodigoLibMaterial()), array('class' => 'button delete', 'confirm' => 'Esta seguro de querer eliminar el siguiente material?\n\n [' . $material->getCodigoLibMaterial() . '] ' . $material->getTitulo() . '\n\nEste proceso es irreversible.', 'method' => 'delete'));
+            echo link_to('Eliminar Material', url_for('libMaterial/delete?id_lib_material=' . $material->getIdLibMaterial()), array('class' => 'button delete', 'confirm' => 'Esta seguro de querer eliminar el siguiente material?\n\n [' . $material->getCodigoLibMaterial() . '] ' . $material->getTitulo() . '\n\nEste proceso es irreversible.', 'method' => 'delete'));
         } 
         ?>
     </div>
@@ -271,7 +271,7 @@ slot('title', 'Ver Material Bibliográfico')
 <br />
 <?php if($sf_user->hasCredential('bibliotecario')){ ?>
 <div class="administracion">
-    <a class="button add" href="<?php echo url_for('libMaterial/addItem?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>">Agregar Copia</a>
+    <a class="button add" href="<?php echo url_for('libMaterial/addItem?id_lib_material=' . $material->getIdLibMaterial()) ?>">Agregar Copia</a>
 </div>
 <?php } ?>
 <br />

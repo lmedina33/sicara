@@ -31,13 +31,13 @@ class libMaterialActions extends sfActions {
     }
 
     public function executeEdit(sfWebRequest $request) {
-        $this->forward404Unless($lib_material = Doctrine_Core::getTable('LibMaterial')->find(array($request->getParameter('codigo_lib_material'))), sprintf('Object lib_material does not exist (%s).', $request->getParameter('codigo_lib_material')));
+        $this->forward404Unless($lib_material = Doctrine_Core::getTable('LibMaterial')->find(array($request->getParameter('id_lib_material'))), sprintf('Object lib_material does not exist (%s).', $request->getParameter('id_lib_material')));
         $this->form = new LibMaterialForm($lib_material);
     }
 
     public function executeUpdate(sfWebRequest $request) {
         $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
-        $this->forward404Unless($lib_material = Doctrine_Core::getTable('LibMaterial')->find(array($request->getParameter('codigo_lib_material'))), sprintf('Object lib_material does not exist (%s).', $request->getParameter('codigo_lib_material')));
+        $this->forward404Unless($lib_material = Doctrine_Core::getTable('LibMaterial')->find(array($request->getParameter('id_lib_material'))), sprintf('Object lib_material does not exist (%s).', $request->getParameter('id_lib_material')));
         $this->form = new LibMaterialForm($lib_material);
 
         $this->processForm($request, $this->form, true);
@@ -48,7 +48,7 @@ class libMaterialActions extends sfActions {
     public function executeDelete(sfWebRequest $request) {
         $request->checkCSRFProtection();
 
-        $this->forward404Unless($lib_material = Doctrine_Core::getTable('LibMaterial')->find(array($request->getParameter('codigo_lib_material'))), sprintf('Object lib_material does not exist (%s).', $request->getParameter('codigo_lib_material')));
+        $this->forward404Unless($lib_material = Doctrine_Core::getTable('LibMaterial')->find(array($request->getParameter('id_lib_material'))), sprintf('Object lib_material does not exist (%s).', $request->getParameter('id_lib_material')));
         $lib_material->delete();
 
         $this->getUser()->setAttribute('notice', 'El material dado ha sido completamente eliminado del sistema.');
@@ -92,7 +92,7 @@ class libMaterialActions extends sfActions {
     public function executeVer(sfWebRequest $request) {
         $this->isSearch=$request->getParameter('search');
         
-        $this->material = Doctrine_Core::getTable('LibMaterial')->find($request->getParameter('codigo_lib_material'));
+        $this->material = Doctrine_Core::getTable('LibMaterial')->find($request->getParameter('id_lib_material'));
 
         $this->items = $this->material->getLibItem();
 
@@ -129,7 +129,7 @@ class libMaterialActions extends sfActions {
     }
 
     public function executeAddItem(sfWebRequest $request) {
-        $this->material = Doctrine_Core::getTable('LibMaterial')->find($request->getParameter('codigo_lib_material'));
+        $this->material = Doctrine_Core::getTable('LibMaterial')->find($request->getParameter('id_lib_material'));
 
         $this->items = $this->material->getLibItem();
 
@@ -158,7 +158,7 @@ class libMaterialActions extends sfActions {
 
         $this->formItem = new LibItemForm();
         $this->formItem->setDefault('fecha_actualizacion', date('Y-m-d'));
-        $this->formItem->setDefault('codigo_lib_material', $this->material->getCodigoLibMaterial());
+        $this->formItem->setDefault('id_lib_material', $this->material->getIdLibMaterial());
     }
 
     public function executeCreateItem(sfWebRequest $request) {
@@ -172,7 +172,7 @@ class libMaterialActions extends sfActions {
     public function executeEditItem(sfWebRequest $request) {
         $this->forward404Unless($lib_item = Doctrine_Core::getTable('LibItem')->find(array($request->getParameter('serial_lib_item'))), sprintf('Object lib_item does not exist (%s).', $request->getParameter('serial_lib_item')));
 
-        $this->material = Doctrine_Core::getTable('LibMaterial')->find($lib_item->getCodigoLibMaterial());
+        $this->material = Doctrine_Core::getTable('LibMaterial')->find($lib_item->getIdLibMaterial());
 
         $this->items = $this->material->getLibItem();
 
@@ -225,7 +225,7 @@ class libMaterialActions extends sfActions {
                 $this->getUser()->setAttribute('error', 'La nueva copia no ha podido ser creada.');
         }
 
-        $this->redirect('libMaterial/ver?codigo_lib_material=' . $form->getValue('codigo_lib_material'));
+        $this->redirect('libMaterial/ver?id_lib_material=' . $form->getValue('id_lib_material'));
     }
 
     public function executeDeleteItem(sfWebRequest $request) {
@@ -233,13 +233,13 @@ class libMaterialActions extends sfActions {
 
         $this->forward404Unless($lib_item = Doctrine_Core::getTable('LibItem')->find(array($request->getParameter('serial_lib_item'))), sprintf('Object lib_item does not exist (%s).', $request->getParameter('serial_lib_item')));
 
-        $codMaterial = $lib_item->getCodigoLibMaterial();
+        $codMaterial = $lib_item->getIdLibMaterial();
 
         $lib_item->delete();
 
         $this->getUser()->setAttribute('notice', 'La copia dada ha sido completamente eliminada del sistema.');
 
-        $this->redirect('libMaterial/ver?codigo_lib_material=' . $codMaterial);
+        $this->redirect('libMaterial/ver?id_lib_material=' . $codMaterial);
     }
 
     public function executeValidarSerialItem(sfWebRequest $request) {
@@ -259,11 +259,12 @@ class libMaterialActions extends sfActions {
 
     public function executeGetDataPaging($request) {
         //*Se construye el arreglo que contiene los campos a mostrarse con este datatable
-        $aColumns = array('codigo_lib_material', 'titulo', 'sub_titulo', 'autores', 'c.nombre', 't.nombre');
+        $aColumns = array('id_lib_material','codigo_lib_material', 'titulo', 'sub_titulo', 'autores', 'c.nombre', 't.nombre');
 
         //*Se seleeciona la tabla y los campos que se van a mostrar en este datatables
         $q = Doctrine_Query::create()
-                ->select('m.codigo_lib_material,
+                ->select('m.id_lib_material,
+                    m.codigo_lib_material,
                     m.titulo,
                     m.sub_titulo,
                     m.autores,
@@ -335,6 +336,7 @@ class libMaterialActions extends sfActions {
 
         //*Llenado de la matriz de datos:
         for ($i = 0; $i < count($rows); $i++) {
+            $id = "";
             $codigo = "";
             $titulo = "";
             $subTitulo = "";
@@ -344,6 +346,9 @@ class libMaterialActions extends sfActions {
             $items = "0";
 
             //*Se evalúa si el dato a insertar existe
+            if (isset($rows[$i]['id_lib_material']))
+                $id = $rows[$i]['id_lib_material'];
+            
             if (isset($rows[$i]['codigo_lib_material']))
                 $codigo = $rows[$i]['codigo_lib_material'];
 
@@ -365,15 +370,15 @@ class libMaterialActions extends sfActions {
             $rows2 = Doctrine_Core::getTable('LibItem')
                     ->createQuery('i')
                     ->select('COUNT(i.serial_lib_item) AS nitems')
-                    ->groupBy('i.codigo_lib_material')
-                    ->having('i.codigo_lib_material = ?', array($codigo))
+                    ->groupBy('i.id_lib_material')
+                    ->having('i.id_lib_material = ?', array($codigo))
                     ->fetchArray();
 
             if (isset($rows2[0]['nitems']))
                 $items = $rows2[0]['nitems'];
 
             //*Se agregan los datos en la matriz
-            $data[$i] = array('Codigo' => $codigo, 'Titulo' => $titulo, 'SubTitulo' => $subTitulo, 'Autor' => $autor, 'Categoria' => $categoria, 'Tipo' => $tipo, 'NItems' => $items);
+            $data[$i] = array('Id' => $id,'Codigo' => $codigo, 'Titulo' => $titulo, 'SubTitulo' => $subTitulo, 'Autor' => $autor, 'Categoria' => $categoria, 'Tipo' => $tipo, 'NItems' => $items);
         }
 
         //*Calculo del total de registros en la BD si no se usaran los filtros de busqueda

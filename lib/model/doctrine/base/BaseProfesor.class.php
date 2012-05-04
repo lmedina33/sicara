@@ -12,23 +12,23 @@ Doctrine_Manager::getInstance()->bindComponent('Profesor', 'doctrine');
  * @property date $fecha_retiro
  * @property integer $id_usuario
  * @property Usuario $Usuario
- * @property Doctrine_Collection $Certificacion
  * @property Doctrine_Collection $Grupo
+ * @property Doctrine_Collection $CertificacionDocente
  * 
- * @method string              getCodigoProfesor()  Returns the current record's "codigo_profesor" value
- * @method date                getFechaIngreso()    Returns the current record's "fecha_ingreso" value
- * @method date                getFechaRetiro()     Returns the current record's "fecha_retiro" value
- * @method integer             getIdUsuario()       Returns the current record's "id_usuario" value
- * @method Usuario             getUsuario()         Returns the current record's "Usuario" value
- * @method Doctrine_Collection getCertificacion()   Returns the current record's "Certificacion" collection
- * @method Doctrine_Collection getGrupo()           Returns the current record's "Grupo" collection
- * @method Profesor            setCodigoProfesor()  Sets the current record's "codigo_profesor" value
- * @method Profesor            setFechaIngreso()    Sets the current record's "fecha_ingreso" value
- * @method Profesor            setFechaRetiro()     Sets the current record's "fecha_retiro" value
- * @method Profesor            setIdUsuario()       Sets the current record's "id_usuario" value
- * @method Profesor            setUsuario()         Sets the current record's "Usuario" value
- * @method Profesor            setCertificacion()   Sets the current record's "Certificacion" collection
- * @method Profesor            setGrupo()           Sets the current record's "Grupo" collection
+ * @method string              getCodigoProfesor()       Returns the current record's "codigo_profesor" value
+ * @method date                getFechaIngreso()         Returns the current record's "fecha_ingreso" value
+ * @method date                getFechaRetiro()          Returns the current record's "fecha_retiro" value
+ * @method integer             getIdUsuario()            Returns the current record's "id_usuario" value
+ * @method Usuario             getUsuario()              Returns the current record's "Usuario" value
+ * @method Doctrine_Collection getGrupo()                Returns the current record's "Grupo" collection
+ * @method Doctrine_Collection getCertificacionDocente() Returns the current record's "CertificacionDocente" collection
+ * @method Profesor            setCodigoProfesor()       Sets the current record's "codigo_profesor" value
+ * @method Profesor            setFechaIngreso()         Sets the current record's "fecha_ingreso" value
+ * @method Profesor            setFechaRetiro()          Sets the current record's "fecha_retiro" value
+ * @method Profesor            setIdUsuario()            Sets the current record's "id_usuario" value
+ * @method Profesor            setUsuario()              Sets the current record's "Usuario" value
+ * @method Profesor            setGrupo()                Sets the current record's "Grupo" collection
+ * @method Profesor            setCertificacionDocente() Sets the current record's "CertificacionDocente" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -84,11 +84,11 @@ abstract class BaseProfesor extends sfDoctrineRecord
              'local' => 'id_usuario',
              'foreign' => 'id_usuario'));
 
-        $this->hasMany('Certificacion', array(
+        $this->hasMany('Grupo', array(
              'local' => 'codigo_profesor',
              'foreign' => 'codigo_profesor'));
 
-        $this->hasMany('Grupo', array(
+        $this->hasMany('CertificacionDocente', array(
              'local' => 'codigo_profesor',
              'foreign' => 'codigo_profesor'));
     }

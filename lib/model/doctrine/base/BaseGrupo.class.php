@@ -19,46 +19,43 @@ Doctrine_Manager::getInstance()->bindComponent('Grupo', 'doctrine');
  * @property string $codigo_profesor
  * @property timestamp $inicio_calificacion
  * @property timestamp $fin_calificacion
- * @property Certificacion $Certificacion
- * @property Certificacion $Certificacion_2
  * @property Asignatura $Asignatura
  * @property Profesor $Profesor
  * @property Doctrine_Collection $GrupoHasEstudiante
+ * @property CertificacionDocente $CertificacionDocente
  * 
- * @method integer             getIdGrupo()                  Returns the current record's "id_grupo" value
- * @method string              getNombre()                   Returns the current record's "nombre" value
- * @method integer             getIdPeriodo()                Returns the current record's "id_periodo" value
- * @method integer             getCertificacionPrimaria()    Returns the current record's "certificacion_primaria" value
- * @method integer             getCertificacionSecundaria()  Returns the current record's "certificacion_secundaria" value
- * @method date                getFechaInicio()              Returns the current record's "fecha_inicio" value
- * @method date                getFechaFin()                 Returns the current record's "fecha_fin" value
- * @method string              getObservaciones()            Returns the current record's "observaciones" value
- * @method string              getCodigoAsignatura()         Returns the current record's "codigo_asignatura" value
- * @method string              getCodigoProfesor()           Returns the current record's "codigo_profesor" value
- * @method timestamp           getInicioCalificacion()       Returns the current record's "inicio_calificacion" value
- * @method timestamp           getFinCalificacion()          Returns the current record's "fin_calificacion" value
- * @method Certificacion       getCertificacion()            Returns the current record's "Certificacion" value
- * @method Certificacion       getCertificacion2()           Returns the current record's "Certificacion_2" value
- * @method Asignatura          getAsignatura()               Returns the current record's "Asignatura" value
- * @method Profesor            getProfesor()                 Returns the current record's "Profesor" value
- * @method Doctrine_Collection getGrupoHasEstudiante()       Returns the current record's "GrupoHasEstudiante" collection
- * @method Grupo               setIdGrupo()                  Sets the current record's "id_grupo" value
- * @method Grupo               setNombre()                   Sets the current record's "nombre" value
- * @method Grupo               setIdPeriodo()                Sets the current record's "id_periodo" value
- * @method Grupo               setCertificacionPrimaria()    Sets the current record's "certificacion_primaria" value
- * @method Grupo               setCertificacionSecundaria()  Sets the current record's "certificacion_secundaria" value
- * @method Grupo               setFechaInicio()              Sets the current record's "fecha_inicio" value
- * @method Grupo               setFechaFin()                 Sets the current record's "fecha_fin" value
- * @method Grupo               setObservaciones()            Sets the current record's "observaciones" value
- * @method Grupo               setCodigoAsignatura()         Sets the current record's "codigo_asignatura" value
- * @method Grupo               setCodigoProfesor()           Sets the current record's "codigo_profesor" value
- * @method Grupo               setInicioCalificacion()       Sets the current record's "inicio_calificacion" value
- * @method Grupo               setFinCalificacion()          Sets the current record's "fin_calificacion" value
- * @method Grupo               setCertificacion()            Sets the current record's "Certificacion" value
- * @method Grupo               setCertificacion2()           Sets the current record's "Certificacion_2" value
- * @method Grupo               setAsignatura()               Sets the current record's "Asignatura" value
- * @method Grupo               setProfesor()                 Sets the current record's "Profesor" value
- * @method Grupo               setGrupoHasEstudiante()       Sets the current record's "GrupoHasEstudiante" collection
+ * @method integer              getIdGrupo()                  Returns the current record's "id_grupo" value
+ * @method string               getNombre()                   Returns the current record's "nombre" value
+ * @method integer              getIdPeriodo()                Returns the current record's "id_periodo" value
+ * @method integer              getCertificacionPrimaria()    Returns the current record's "certificacion_primaria" value
+ * @method integer              getCertificacionSecundaria()  Returns the current record's "certificacion_secundaria" value
+ * @method date                 getFechaInicio()              Returns the current record's "fecha_inicio" value
+ * @method date                 getFechaFin()                 Returns the current record's "fecha_fin" value
+ * @method string               getObservaciones()            Returns the current record's "observaciones" value
+ * @method string               getCodigoAsignatura()         Returns the current record's "codigo_asignatura" value
+ * @method string               getCodigoProfesor()           Returns the current record's "codigo_profesor" value
+ * @method timestamp            getInicioCalificacion()       Returns the current record's "inicio_calificacion" value
+ * @method timestamp            getFinCalificacion()          Returns the current record's "fin_calificacion" value
+ * @method Asignatura           getAsignatura()               Returns the current record's "Asignatura" value
+ * @method Profesor             getProfesor()                 Returns the current record's "Profesor" value
+ * @method Doctrine_Collection  getGrupoHasEstudiante()       Returns the current record's "GrupoHasEstudiante" collection
+ * @method CertificacionDocente getCertificacionDocente()     Returns the current record's "CertificacionDocente" value
+ * @method Grupo                setIdGrupo()                  Sets the current record's "id_grupo" value
+ * @method Grupo                setNombre()                   Sets the current record's "nombre" value
+ * @method Grupo                setIdPeriodo()                Sets the current record's "id_periodo" value
+ * @method Grupo                setCertificacionPrimaria()    Sets the current record's "certificacion_primaria" value
+ * @method Grupo                setCertificacionSecundaria()  Sets the current record's "certificacion_secundaria" value
+ * @method Grupo                setFechaInicio()              Sets the current record's "fecha_inicio" value
+ * @method Grupo                setFechaFin()                 Sets the current record's "fecha_fin" value
+ * @method Grupo                setObservaciones()            Sets the current record's "observaciones" value
+ * @method Grupo                setCodigoAsignatura()         Sets the current record's "codigo_asignatura" value
+ * @method Grupo                setCodigoProfesor()           Sets the current record's "codigo_profesor" value
+ * @method Grupo                setInicioCalificacion()       Sets the current record's "inicio_calificacion" value
+ * @method Grupo                setFinCalificacion()          Sets the current record's "fin_calificacion" value
+ * @method Grupo                setAsignatura()               Sets the current record's "Asignatura" value
+ * @method Grupo                setProfesor()                 Sets the current record's "Profesor" value
+ * @method Grupo                setGrupoHasEstudiante()       Sets the current record's "GrupoHasEstudiante" collection
+ * @method Grupo                setCertificacionDocente()     Sets the current record's "CertificacionDocente" value
  * 
  * @package    sicara2
  * @subpackage model
@@ -182,14 +179,6 @@ abstract class BaseGrupo extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasOne('Certificacion', array(
-             'local' => 'certificacion_primaria',
-             'foreign' => 'id_certificacion'));
-
-        $this->hasOne('Certificacion as Certificacion_2', array(
-             'local' => 'certificacion_secundaria',
-             'foreign' => 'id_certificacion'));
-
         $this->hasOne('Asignatura', array(
              'local' => 'codigo_asignatura',
              'foreign' => 'codigo_asignatura'));
@@ -201,5 +190,9 @@ abstract class BaseGrupo extends sfDoctrineRecord
         $this->hasMany('GrupoHasEstudiante', array(
              'local' => 'id_grupo',
              'foreign' => 'id_grupo'));
+
+        $this->hasOne('CertificacionDocente', array(
+             'local' => 'certificacion_primaria',
+             'foreign' => 'id_certificacion_docente'));
     }
 }

@@ -140,7 +140,7 @@ slot('title', 'Agregar Copia de Material Bibliográfico')
     <br />
     <small>[<?php echo $material->getCodigoLibMaterial() ?>]</small> <?php echo $material->getTitulo() ?>
 </h1>
-<a href="<?php echo url_for('libMaterial/ver?codigo_lib_material=' . $material->getCodigoLibMaterial()) ?>" class="button back">Volver</a>
+<a href="<?php echo url_for('libMaterial/ver?id_lib_material=' . $material->getIdLibMaterial()) ?>" class="button back">Volver</a>
 <br />
 <br />
 <form id="formItem" action="<?php echo url_for('libMaterial/createItem') ?>" method="post" <?php $formItem->isMultipart() and print 'enctype="multipart/form-data" ' ?>>

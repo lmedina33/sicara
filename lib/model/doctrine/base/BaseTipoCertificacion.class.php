@@ -10,16 +10,16 @@ Doctrine_Manager::getInstance()->bindComponent('TipoCertificacion', 'doctrine');
  * @property integer $id_tipo_certificacion
  * @property string $nombre
  * @property string $descripcion
- * @property Doctrine_Collection $Certificacion
+ * @property Doctrine_Collection $CertificacionDocente
  * 
  * @method integer             getIdTipoCertificacion()   Returns the current record's "id_tipo_certificacion" value
  * @method string              getNombre()                Returns the current record's "nombre" value
  * @method string              getDescripcion()           Returns the current record's "descripcion" value
- * @method Doctrine_Collection getCertificacion()         Returns the current record's "Certificacion" collection
+ * @method Doctrine_Collection getCertificacionDocente()  Returns the current record's "CertificacionDocente" collection
  * @method TipoCertificacion   setIdTipoCertificacion()   Sets the current record's "id_tipo_certificacion" value
  * @method TipoCertificacion   setNombre()                Sets the current record's "nombre" value
  * @method TipoCertificacion   setDescripcion()           Sets the current record's "descripcion" value
- * @method TipoCertificacion   setCertificacion()         Sets the current record's "Certificacion" collection
+ * @method TipoCertificacion   setCertificacionDocente()  Sets the current record's "CertificacionDocente" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -62,7 +62,7 @@ abstract class BaseTipoCertificacion extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Certificacion', array(
+        $this->hasMany('CertificacionDocente', array(
              'local' => 'id_tipo_certificacion',
              'foreign' => 'id_tipo_certificacion'));
     }
