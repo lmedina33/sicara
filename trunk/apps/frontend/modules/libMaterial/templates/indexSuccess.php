@@ -14,6 +14,7 @@ slot('title', 'Listar Material Bibliográfico')
             "bServerSide": true,
             "sAjaxSource": "<?php echo url_for('libMaterial/getDataPaging') ?>",
             "aoColumns": [
+                { "mDataProp": "Id", 'bVisible': false },
                 { "mDataProp": "Codigo" },
                 { "mDataProp": "Titulo" },
                 { "mDataProp": "SubTitulo" },
@@ -32,9 +33,9 @@ slot('title', 'Listar Material Bibliográfico')
                         
                         datos = oTable.fnGetData( this );
                         
-                        codMaterial=datos.Codigo;
+                        idMaterial=datos.Id;
             
-                        $('#detallar').attr('href', '<?php echo url_for('libMaterial/ver?codigo_lib_material=') ?>'+codMaterial);
+                        $('#detallar').attr('href', '<?php echo url_for('libMaterial/ver?id_lib_material=') ?>'+idMaterial);
                         $('#detallar img').attr('src', '/images/iconos/listarSmall.png');
                     } );
                 } );
@@ -72,6 +73,7 @@ slot('title', 'Listar Material Bibliográfico')
 <table class="dataTable">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Código</th>
             <th>Título</th>
             <th>Subtítulo</th>

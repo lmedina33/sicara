@@ -13,7 +13,7 @@ Doctrine_Manager::getInstance()->bindComponent('LibItem', 'doctrine');
  * @property date $fecha_actualizacion
  * @property integer $is_prestado
  * @property integer $id_lib_estado
- * @property string $codigo_lib_material
+ * @property integer $id_lib_material
  * @property LibEstado $LibEstado
  * @property LibMaterial $LibMaterial
  * @property Doctrine_Collection $LibPrestamo
@@ -25,7 +25,7 @@ Doctrine_Manager::getInstance()->bindComponent('LibItem', 'doctrine');
  * @method date                getFechaActualizacion()  Returns the current record's "fecha_actualizacion" value
  * @method integer             getIsPrestado()          Returns the current record's "is_prestado" value
  * @method integer             getIdLibEstado()         Returns the current record's "id_lib_estado" value
- * @method string              getCodigoLibMaterial()   Returns the current record's "codigo_lib_material" value
+ * @method integer             getIdLibMaterial()       Returns the current record's "id_lib_material" value
  * @method LibEstado           getLibEstado()           Returns the current record's "LibEstado" value
  * @method LibMaterial         getLibMaterial()         Returns the current record's "LibMaterial" value
  * @method Doctrine_Collection getLibPrestamo()         Returns the current record's "LibPrestamo" collection
@@ -36,7 +36,7 @@ Doctrine_Manager::getInstance()->bindComponent('LibItem', 'doctrine');
  * @method LibItem             setFechaActualizacion()  Sets the current record's "fecha_actualizacion" value
  * @method LibItem             setIsPrestado()          Sets the current record's "is_prestado" value
  * @method LibItem             setIdLibEstado()         Sets the current record's "id_lib_estado" value
- * @method LibItem             setCodigoLibMaterial()   Sets the current record's "codigo_lib_material" value
+ * @method LibItem             setIdLibMaterial()       Sets the current record's "id_lib_material" value
  * @method LibItem             setLibEstado()           Sets the current record's "LibEstado" value
  * @method LibItem             setLibMaterial()         Sets the current record's "LibMaterial" value
  * @method LibItem             setLibPrestamo()         Sets the current record's "LibPrestamo" collection
@@ -105,14 +105,14 @@ abstract class BaseLibItem extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 4,
              ));
-        $this->hasColumn('codigo_lib_material', 'string', 25, array(
-             'type' => 'string',
+        $this->hasColumn('id_lib_material', 'integer', 4, array(
+             'type' => 'integer',
              'fixed' => 0,
-             'unsigned' => false,
+             'unsigned' => true,
              'primary' => false,
              'notnull' => true,
              'autoincrement' => false,
-             'length' => 25,
+             'length' => 4,
              ));
     }
 
@@ -124,8 +124,8 @@ abstract class BaseLibItem extends sfDoctrineRecord
              'foreign' => 'id_lib_estado'));
 
         $this->hasOne('LibMaterial', array(
-             'local' => 'codigo_lib_material',
-             'foreign' => 'codigo_lib_material'));
+             'local' => 'id_lib_material',
+             'foreign' => 'id_lib_material'));
 
         $this->hasMany('LibPrestamo', array(
              'local' => 'serial_lib_item',

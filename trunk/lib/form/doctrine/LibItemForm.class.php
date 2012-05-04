@@ -35,7 +35,7 @@ class LibItemForm extends BaseLibItemForm
                     ),
                     array('class' => 'validate[required,custom[date]]')),
       'id_lib_estado'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibEstado'), 'add_empty' => 'Seleccione...', 'label' => 'Estado'),array('class' => 'validate[required]')),
-      'codigo_lib_material' => new sfWidgetFormInputHidden(),
+      'id_lib_material' => new sfWidgetFormInputHidden(),
     ));
 
     $this->setValidators(array(
@@ -44,7 +44,7 @@ class LibItemForm extends BaseLibItemForm
       'ubicacion'         => new sfValidatorString(array('required' => false)),
       'fecha_actualizacion' => new sfValidatorDate(array('required' => false)),
       'id_lib_estado'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibEstado'))),
-      'codigo_lib_material' => new sfValidatorPass(),
+      'id_lib_material' => new sfValidatorPass(),
     ));
 
     $this->widgetSchema->setNameFormat('lib_item[%s]');

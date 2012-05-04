@@ -15,11 +15,12 @@ abstract class BaseLibMaterialForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'codigo_lib_material'  => new sfWidgetFormInputHidden(),
-      'titulo'               => new sfWidgetFormInputText(),
-      'sub_titulo'           => new sfWidgetFormInputText(),
+      'id_lib_material'      => new sfWidgetFormInputHidden(),
+      'codigo_lib_material'  => new sfWidgetFormInputText(),
+      'titulo'               => new sfWidgetFormTextarea(),
+      'sub_titulo'           => new sfWidgetFormTextarea(),
       'autores'              => new sfWidgetFormTextarea(),
-      'editorial'            => new sfWidgetFormInputText(),
+      'editorial'            => new sfWidgetFormTextarea(),
       'fecha_publicacion'    => new sfWidgetFormDate(),
       'fecha_actualizacion'  => new sfWidgetFormDate(),
       'descripcion'          => new sfWidgetFormTextarea(),
@@ -32,11 +33,12 @@ abstract class BaseLibMaterialForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'codigo_lib_material'  => new sfValidatorChoice(array('choices' => array($this->getObject()->get('codigo_lib_material')), 'empty_value' => $this->getObject()->get('codigo_lib_material'), 'required' => false)),
-      'titulo'               => new sfValidatorString(array('max_length' => 45)),
-      'sub_titulo'           => new sfValidatorString(array('max_length' => 45, 'required' => false)),
+      'id_lib_material'      => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id_lib_material')), 'empty_value' => $this->getObject()->get('id_lib_material'), 'required' => false)),
+      'codigo_lib_material'  => new sfValidatorString(array('max_length' => 25, 'required' => false)),
+      'titulo'               => new sfValidatorString(),
+      'sub_titulo'           => new sfValidatorString(array('required' => false)),
       'autores'              => new sfValidatorString(),
-      'editorial'            => new sfValidatorString(array('max_length' => 45)),
+      'editorial'            => new sfValidatorString(),
       'fecha_publicacion'    => new sfValidatorDate(),
       'fecha_actualizacion'  => new sfValidatorDate(array('required' => false)),
       'descripcion'          => new sfValidatorString(array('required' => false)),

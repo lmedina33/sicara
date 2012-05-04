@@ -13,6 +13,7 @@ abstract class BaseLibMaterialFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
+      'codigo_lib_material'  => new sfWidgetFormFilterInput(),
       'titulo'               => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'sub_titulo'           => new sfWidgetFormFilterInput(),
       'autores'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
@@ -29,6 +30,7 @@ abstract class BaseLibMaterialFormFilter extends BaseFormFilterDoctrine
     ));
 
     $this->setValidators(array(
+      'codigo_lib_material'  => new sfValidatorPass(array('required' => false)),
       'titulo'               => new sfValidatorPass(array('required' => false)),
       'sub_titulo'           => new sfValidatorPass(array('required' => false)),
       'autores'              => new sfValidatorPass(array('required' => false)),
@@ -61,6 +63,7 @@ abstract class BaseLibMaterialFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
+      'id_lib_material'      => 'Number',
       'codigo_lib_material'  => 'Text',
       'titulo'               => 'Text',
       'sub_titulo'           => 'Text',
