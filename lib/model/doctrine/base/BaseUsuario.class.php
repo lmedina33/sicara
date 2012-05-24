@@ -32,11 +32,15 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @property Doctrine_Collection $FotoUsuario
  * @property Doctrine_Collection $Inscrito
  * @property Doctrine_Collection $LibPrestamo
- * @property Doctrine_Collection $LibPrestamo_3
+ * @property Doctrine_Collection $LibPrestamo_2
  * @property Doctrine_Collection $LibSancion
  * @property Doctrine_Collection $LibSancion_2
  * @property Doctrine_Collection $Parcial
  * @property Doctrine_Collection $Profesor
+ * @property Doctrine_Collection $UsuarioHasRefElemento
+ * @property Doctrine_Collection $RefPrestamo
+ * @property Doctrine_Collection $RefPrestamo_2
+ * @property Doctrine_Collection $RefSancion
  * 
  * @method integer             getIdUsuario()                Returns the current record's "id_usuario" value
  * @method string              getPrimerNombre()             Returns the current record's "primer_nombre" value
@@ -63,11 +67,15 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method Doctrine_Collection getFotoUsuario()              Returns the current record's "FotoUsuario" collection
  * @method Doctrine_Collection getInscrito()                 Returns the current record's "Inscrito" collection
  * @method Doctrine_Collection getLibPrestamo()              Returns the current record's "LibPrestamo" collection
- * @method Doctrine_Collection getLibPrestamo3()             Returns the current record's "LibPrestamo_3" collection
+ * @method Doctrine_Collection getLibPrestamo2()             Returns the current record's "LibPrestamo_2" collection
  * @method Doctrine_Collection getLibSancion()               Returns the current record's "LibSancion" collection
  * @method Doctrine_Collection getLibSancion2()              Returns the current record's "LibSancion_2" collection
  * @method Doctrine_Collection getParcial()                  Returns the current record's "Parcial" collection
  * @method Doctrine_Collection getProfesor()                 Returns the current record's "Profesor" collection
+ * @method Doctrine_Collection getUsuarioHasRefElemento()    Returns the current record's "UsuarioHasRefElemento" collection
+ * @method Doctrine_Collection getRefPrestamo()              Returns the current record's "RefPrestamo" collection
+ * @method Doctrine_Collection getRefPrestamo2()             Returns the current record's "RefPrestamo_2" collection
+ * @method Doctrine_Collection getRefSancion()               Returns the current record's "RefSancion" collection
  * @method Usuario             setIdUsuario()                Sets the current record's "id_usuario" value
  * @method Usuario             setPrimerNombre()             Sets the current record's "primer_nombre" value
  * @method Usuario             setSegundoNombre()            Sets the current record's "segundo_nombre" value
@@ -93,11 +101,15 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method Usuario             setFotoUsuario()              Sets the current record's "FotoUsuario" collection
  * @method Usuario             setInscrito()                 Sets the current record's "Inscrito" collection
  * @method Usuario             setLibPrestamo()              Sets the current record's "LibPrestamo" collection
- * @method Usuario             setLibPrestamo3()             Sets the current record's "LibPrestamo_3" collection
+ * @method Usuario             setLibPrestamo2()             Sets the current record's "LibPrestamo_2" collection
  * @method Usuario             setLibSancion()               Sets the current record's "LibSancion" collection
  * @method Usuario             setLibSancion2()              Sets the current record's "LibSancion_2" collection
  * @method Usuario             setParcial()                  Sets the current record's "Parcial" collection
  * @method Usuario             setProfesor()                 Sets the current record's "Profesor" collection
+ * @method Usuario             setUsuarioHasRefElemento()    Sets the current record's "UsuarioHasRefElemento" collection
+ * @method Usuario             setRefPrestamo()              Sets the current record's "RefPrestamo" collection
+ * @method Usuario             setRefPrestamo2()             Sets the current record's "RefPrestamo_2" collection
+ * @method Usuario             setRefSancion()               Sets the current record's "RefSancion" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -308,7 +320,7 @@ abstract class BaseUsuario extends sfDoctrineRecord
              'local' => 'id_usuario',
              'foreign' => 'id_prestamista'));
 
-        $this->hasMany('LibPrestamo as LibPrestamo_3', array(
+        $this->hasMany('LibPrestamo as LibPrestamo_2', array(
              'local' => 'id_usuario',
              'foreign' => 'id_solicitante'));
 
@@ -327,5 +339,21 @@ abstract class BaseUsuario extends sfDoctrineRecord
         $this->hasMany('Profesor', array(
              'local' => 'id_usuario',
              'foreign' => 'id_usuario'));
+
+        $this->hasMany('UsuarioHasRefElemento', array(
+             'local' => 'id_usuario',
+             'foreign' => 'id_usuario'));
+
+        $this->hasMany('RefPrestamo', array(
+             'local' => 'id_usuario',
+             'foreign' => 'id_prestamista'));
+
+        $this->hasMany('RefPrestamo as RefPrestamo_2', array(
+             'local' => 'id_usuario',
+             'foreign' => 'id_solicitante'));
+
+        $this->hasMany('RefSancion', array(
+             'local' => 'id_usuario',
+             'foreign' => 'id_ejecutor'));
     }
 }
