@@ -594,7 +594,7 @@ Jornada:
       fixed: false
       unsigned: true
       primary: true
-      autoincrement: false
+      autoincrement: true
     nombre:
       type: string(45)
       fixed: false
@@ -1122,7 +1122,7 @@ LibTipoSancion:
       fixed: false
       unsigned: true
       primary: true
-      autoincrement: false
+      autoincrement: true
     nombre:
       type: string(50)
       fixed: false
@@ -1221,7 +1221,7 @@ Parcial:
       fixed: false
       unsigned: true
       primary: true
-      autoincrement: false
+      autoincrement: true
     porcentaje:
       type: float(18)
       fixed: false
@@ -1510,7 +1510,7 @@ TipoPago:
       fixed: false
       unsigned: true
       primary: true
-      autoincrement: false
+      autoincrement: true
     nombre:
       type: string(45)
       fixed: false
@@ -1688,7 +1688,7 @@ Usuario:
       local: id_usuario
       foreign: id_prestamista
       type: many
-    LibPrestamo_3:
+    LibPrestamo_2:
       class: LibPrestamo
       local: id_usuario
       foreign: id_solicitante
@@ -1710,3 +1710,576 @@ Usuario:
       local: id_usuario
       foreign: id_usuario
       type: many
+    UsuarioHasRefElemento:
+      local: id_usuario
+      foreign: id_usuario
+      type: many
+    RefPrestamo:
+      local: id_usuario
+      foreign: id_prestamista
+      type: many
+    RefPrestamo_2:
+      class: RefPrestamo
+      local: id_usuario
+      foreign: id_solicitante
+      type: many
+    RefSancion:
+      local: id_usuario
+      foreign: id_ejecutor
+      type: many
+    RefSancion_2:
+      class: RegSancion
+      local: id_usuario
+      foreign: id_sancionado
+      type: many
+      
+#Modulo para REcursos Físicos: REF
+RefTipoElemento:
+  connection: doctrine
+  tableName: ref_tipo_elemento
+  columns:
+    id_ref_tipo_elemento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    RefElemento:
+      local: id_ref_tipo_elemento
+      foreign: id_ref_elemento
+      type: many
+
+RefTipoLugar:
+  connection: doctrine
+  tableName: ref_tipo_lugar
+  columns:
+    id_ref_tipo_lugar:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    RefLugar:
+      local: id_ref_tipo_lugar
+      foreign: id_ref_tipo_lugar
+      type: many
+
+RefTipoSancion:
+  connection: doctrine
+  tableName: ref_tipo_sancion
+  columns:
+    id_ref_tipo_sancion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    RefSancion:
+      local: id_ref_tipo_sancion
+      foreign: id_ref_tipo_sancion
+      type: many
+
+RefEstadoElemento:
+  connection: doctrine
+  tableName: ref_estado_elemento
+  columns:
+    id_ref_estado_elemento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    RefElemento:
+      local: id_ref_estado_elemento
+      foreign: id_ref_estado_elemento
+      type: many
+
+RefLugar:
+  connection: doctrine
+  tableName: ref_lugar
+  actAs: [Timestampable]
+  columns:
+    id_ref_lugar:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    capacidad_personas:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      autoincrement: false
+    ubicacion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_ref_lugar_contenedor:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_ref_tipo_lugar:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    RefTipoLugar:
+      local: id_ref_tipo_lugar
+      foreign: id_ref_tipo_lugar
+      type: one
+    RefElemento:
+      local: id_ref_lugar
+      foreign: id_ref_lugar
+      type: many
+
+RefElemento:
+  connection: doctrine
+  tableName: ref_elemento
+  actAs: [Timestampable]
+  columns:
+    id_ref_elemento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    serial:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    serial_interno:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    nombre:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    marca:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    modelo:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    cantidad_sancion:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    ubicacion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    is_prestable:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    id_ref_tipo_elemento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_ref_lugar:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_ref_estado_elemento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_ref_tipo_sancion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    RefTipoElemento:
+      local: id_ref_tipo_elemento
+      foreign: id_ref_tipo_elemento
+      type: one
+    RefEstadoElemento:
+      local: id_ref_estado_elemento
+      foreign: id_ref_estado_elemento
+      type: one
+    RefLugar:
+      local: id_ref_lugar
+      foreign: id_ref_lugar
+      type: one
+    RefHojaVida:
+      local: id_ref_elemento
+      foreign: id_ref_elemento
+      type: many
+    UsuarioHasRefElemento:
+      local: id_ref_elemento
+      foreign: id_ref_elemento
+      type: many
+    RefPrestamo:
+      local: id_ref_elemento
+      foreign: id_ref_elemento
+      type: many
+    RefSancion:
+      local: id_ref_elemento
+      foreign: id_ref_elemento
+      type: many
+
+RefHojaVida:
+  connection: doctrine
+  tableName: ref_hoja_vida
+  actAs: [Timestampable]
+  columns:
+    id_ref_hoja_vida:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_ref_elemento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    created_by_sf_guard_user:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    RefElemento:
+      local: id_ref_elemento
+      foreign: id_ref_elemento
+      type: one
+
+RefSancion:
+  connection: doctrine
+  tableName: ref_sancion
+  columns:
+    id_ref_sancion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    cantidad:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_ref_elemento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      autoincrement: false
+    fecha_imposicion:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_inicio:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_fin:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    observaciones:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_sancionado:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_ejecutor:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_ref_tipo_sancion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    RefTipoSancion:
+      local: id_ref_tipo_sancion
+      foreign: id_ref_tipo_sancion
+      type: one
+    Usuario:
+      local: id_ejecutor
+      foreign: id_usuario
+      type: one
+    Usuario_2:
+      class: Usuario
+      local: id_sancionado
+      foreign: id_usuario
+      type: one
+    RefElemento:
+      local: id_ref_elemento
+      foreign: id_ref_elemento
+      type: one
+
+RefPrestamo:
+  connection: doctrine
+  tableName: ref_prestamo
+  columns:
+    id_ref_prestamo:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    id_prestamista:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_solicitante:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_solicitud:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_entrega:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_retorno:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_devolucion:
+      type: timestamp(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    observaciones:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_ref_elemento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      autoincrement: false
+  relations:
+    RefElemento:
+      local: id_ref_elemento
+      foreign: id_ref_elemento
+      type: one
+    Usuario:
+      local: id_prestamista
+      foreign: id_usuario
+      type: one
+    Usuario_3:
+      class: Usuario
+      local: id_solicitante
+      foreign: id_usuario
+      type: one
+
+UsuarioHasRefElemento:
+  connection: doctrine
+  tableName: usuario_has_ref_elemento
+  columns:
+    id_usuario:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    id_ref_elemento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+  relations:
+    Usuario:
+      local: id_usuario
+      foreign: id_usuario
+      type: one
+    RefElemento:
+      local: id_ref_elemento
+      foreign: id_ref_elemento
+      type: one

@@ -45,7 +45,7 @@ abstract class BaseParcial extends sfDoctrineRecord
              'fixed' => 0,
              'unsigned' => true,
              'primary' => true,
-             'autoincrement' => false,
+             'autoincrement' => true,
              'length' => 4,
              ));
         $this->hasColumn('porcentaje', 'float', 18, array(

@@ -42,7 +42,7 @@ abstract class BaseLibTipoSancion extends sfDoctrineRecord
              'fixed' => 0,
              'unsigned' => true,
              'primary' => true,
-             'autoincrement' => false,
+             'autoincrement' => true,
              'length' => 4,
              ));
         $this->hasColumn('nombre', 'string', 50, array(
