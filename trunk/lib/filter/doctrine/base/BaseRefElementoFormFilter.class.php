@@ -25,7 +25,8 @@ abstract class BaseRefElementoFormFilter extends BaseFormFilterDoctrine
       'id_ref_tipo_elemento'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('RefTipoElemento'), 'add_empty' => true)),
       'id_ref_lugar'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('RefLugar'), 'add_empty' => true)),
       'id_ref_estado_elemento' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('RefEstadoElemento'), 'add_empty' => true)),
-      'id_ref_tipo_sancion'    => new sfWidgetFormFilterInput(),
+      'id_ref_tipo_sancion'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('RefTipoSancion'), 'add_empty' => true)),
+      'id_usuario_responsable' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('UsuarioResponsable'), 'add_empty' => true)),
       'created_at'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'updated_at'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
     ));
@@ -43,7 +44,8 @@ abstract class BaseRefElementoFormFilter extends BaseFormFilterDoctrine
       'id_ref_tipo_elemento'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('RefTipoElemento'), 'column' => 'id_ref_tipo_elemento')),
       'id_ref_lugar'           => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('RefLugar'), 'column' => 'id_ref_lugar')),
       'id_ref_estado_elemento' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('RefEstadoElemento'), 'column' => 'id_ref_estado_elemento')),
-      'id_ref_tipo_sancion'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'id_ref_tipo_sancion'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('RefTipoSancion'), 'column' => 'id_ref_tipo_sancion')),
+      'id_usuario_responsable' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('UsuarioResponsable'), 'column' => 'id_usuario')),
       'created_at'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
       'updated_at'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
     ));
@@ -78,7 +80,8 @@ abstract class BaseRefElementoFormFilter extends BaseFormFilterDoctrine
       'id_ref_tipo_elemento'   => 'ForeignKey',
       'id_ref_lugar'           => 'ForeignKey',
       'id_ref_estado_elemento' => 'ForeignKey',
-      'id_ref_tipo_sancion'    => 'Number',
+      'id_ref_tipo_sancion'    => 'ForeignKey',
+      'id_usuario_responsable' => 'ForeignKey',
       'created_at'             => 'Date',
       'updated_at'             => 'Date',
     );

@@ -16,4 +16,9 @@ class UsuarioTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Usuario');
     }
+    
+    function getById($id){
+        return Doctrine_Core::getTable('Usuario')
+                ->find($id);
+    }
 }

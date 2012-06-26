@@ -28,7 +28,8 @@ abstract class BaseRefElementoForm extends BaseFormDoctrine
       'id_ref_tipo_elemento'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('RefTipoElemento'), 'add_empty' => false)),
       'id_ref_lugar'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('RefLugar'), 'add_empty' => true)),
       'id_ref_estado_elemento' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('RefEstadoElemento'), 'add_empty' => false)),
-      'id_ref_tipo_sancion'    => new sfWidgetFormInputText(),
+      'id_ref_tipo_sancion'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('RefTipoSancion'), 'add_empty' => true)),
+      'id_usuario_responsable' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('UsuarioResponsable'), 'add_empty' => true)),
       'created_at'             => new sfWidgetFormDateTime(),
       'updated_at'             => new sfWidgetFormDateTime(),
     ));
@@ -47,7 +48,8 @@ abstract class BaseRefElementoForm extends BaseFormDoctrine
       'id_ref_tipo_elemento'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('RefTipoElemento'))),
       'id_ref_lugar'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('RefLugar'), 'required' => false)),
       'id_ref_estado_elemento' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('RefEstadoElemento'))),
-      'id_ref_tipo_sancion'    => new sfValidatorInteger(array('required' => false)),
+      'id_ref_tipo_sancion'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('RefTipoSancion'), 'required' => false)),
+      'id_usuario_responsable' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('UsuarioResponsable'), 'required' => false)),
       'created_at'             => new sfValidatorDateTime(),
       'updated_at'             => new sfValidatorDateTime(),
     ));

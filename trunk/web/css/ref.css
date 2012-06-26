@@ -1,0 +1,42 @@
+/* 
+    Document   : ref
+    Created on : 23-jun-2012, 22:10:15
+    Author     : Robinson
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.registro_ref_hoja_vida{
+    border: 1px dashed #aaa;
+    width: 600px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+.creador{
+    position: relative;
+    top: -13px;
+    background-color: #fff;
+    padding-left: 4px;
+    padding-right: 4px;
+    color: #555;
+    font-size: 11px;
+    float: left;
+}
+
+.fecha{
+    position: relative;
+    top: -13px;
+    background-color: #fff;
+    padding-left: 4px;
+    padding-right: 4px;
+    color: #555;
+    font-size: 11px;
+    float: right;
+}
+
+.descripcion{
+    clear: both;
+}
+

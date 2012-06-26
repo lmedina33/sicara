@@ -1,0 +1,3 @@
+default:
+  stylesheets:    [  ]
+  javascripts:    [ /js/jquery-1.7.1.js, /js/jquery.treeview/jquery.treeview.js ]

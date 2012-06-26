@@ -21,13 +21,17 @@ Doctrine_Manager::getInstance()->bindComponent('RefElemento', 'doctrine');
  * @property integer $id_ref_lugar
  * @property integer $id_ref_estado_elemento
  * @property integer $id_ref_tipo_sancion
+ * @property integer $id_usuario_responsable
  * @property RefTipoElemento $RefTipoElemento
  * @property RefEstadoElemento $RefEstadoElemento
  * @property RefLugar $RefLugar
+ * @property RefTipoSancion $RefTipoSancion
+ * @property Usuario $UsuarioResponsable
  * @property Doctrine_Collection $RefHojaVida
  * @property Doctrine_Collection $UsuarioHasRefElemento
  * @property Doctrine_Collection $RefPrestamo
  * @property Doctrine_Collection $RefSancion
+ * @property Doctrine_Collection $RefFotoElemento
  * 
  * @method integer             getIdRefElemento()          Returns the current record's "id_ref_elemento" value
  * @method string              getSerial()                 Returns the current record's "serial" value
@@ -43,13 +47,17 @@ Doctrine_Manager::getInstance()->bindComponent('RefElemento', 'doctrine');
  * @method integer             getIdRefLugar()             Returns the current record's "id_ref_lugar" value
  * @method integer             getIdRefEstadoElemento()    Returns the current record's "id_ref_estado_elemento" value
  * @method integer             getIdRefTipoSancion()       Returns the current record's "id_ref_tipo_sancion" value
+ * @method integer             getIdUsuarioResponsable()   Returns the current record's "id_usuario_responsable" value
  * @method RefTipoElemento     getRefTipoElemento()        Returns the current record's "RefTipoElemento" value
  * @method RefEstadoElemento   getRefEstadoElemento()      Returns the current record's "RefEstadoElemento" value
  * @method RefLugar            getRefLugar()               Returns the current record's "RefLugar" value
+ * @method RefTipoSancion      getRefTipoSancion()         Returns the current record's "RefTipoSancion" value
+ * @method Usuario             getUsuarioResponsable()     Returns the current record's "UsuarioResponsable" value
  * @method Doctrine_Collection getRefHojaVida()            Returns the current record's "RefHojaVida" collection
  * @method Doctrine_Collection getUsuarioHasRefElemento()  Returns the current record's "UsuarioHasRefElemento" collection
  * @method Doctrine_Collection getRefPrestamo()            Returns the current record's "RefPrestamo" collection
  * @method Doctrine_Collection getRefSancion()             Returns the current record's "RefSancion" collection
+ * @method Doctrine_Collection getRefFotoElemento()        Returns the current record's "RefFotoElemento" collection
  * @method RefElemento         setIdRefElemento()          Sets the current record's "id_ref_elemento" value
  * @method RefElemento         setSerial()                 Sets the current record's "serial" value
  * @method RefElemento         setSerialInterno()          Sets the current record's "serial_interno" value
@@ -64,13 +72,17 @@ Doctrine_Manager::getInstance()->bindComponent('RefElemento', 'doctrine');
  * @method RefElemento         setIdRefLugar()             Sets the current record's "id_ref_lugar" value
  * @method RefElemento         setIdRefEstadoElemento()    Sets the current record's "id_ref_estado_elemento" value
  * @method RefElemento         setIdRefTipoSancion()       Sets the current record's "id_ref_tipo_sancion" value
+ * @method RefElemento         setIdUsuarioResponsable()   Sets the current record's "id_usuario_responsable" value
  * @method RefElemento         setRefTipoElemento()        Sets the current record's "RefTipoElemento" value
  * @method RefElemento         setRefEstadoElemento()      Sets the current record's "RefEstadoElemento" value
  * @method RefElemento         setRefLugar()               Sets the current record's "RefLugar" value
+ * @method RefElemento         setRefTipoSancion()         Sets the current record's "RefTipoSancion" value
+ * @method RefElemento         setUsuarioResponsable()     Sets the current record's "UsuarioResponsable" value
  * @method RefElemento         setRefHojaVida()            Sets the current record's "RefHojaVida" collection
  * @method RefElemento         setUsuarioHasRefElemento()  Sets the current record's "UsuarioHasRefElemento" collection
  * @method RefElemento         setRefPrestamo()            Sets the current record's "RefPrestamo" collection
  * @method RefElemento         setRefSancion()             Sets the current record's "RefSancion" collection
+ * @method RefElemento         setRefFotoElemento()        Sets the current record's "RefFotoElemento" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -208,6 +220,15 @@ abstract class BaseRefElemento extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 4,
              ));
+        $this->hasColumn('id_usuario_responsable', 'integer', 4, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => true,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -225,6 +246,14 @@ abstract class BaseRefElemento extends sfDoctrineRecord
              'local' => 'id_ref_lugar',
              'foreign' => 'id_ref_lugar'));
 
+        $this->hasOne('RefTipoSancion', array(
+             'local' => 'id_ref_tipo_sancion',
+             'foreign' => 'id_ref_tipo_sancion'));
+
+        $this->hasOne('Usuario as UsuarioResponsable', array(
+             'local' => 'id_usuario_responsable',
+             'foreign' => 'id_usuario'));
+
         $this->hasMany('RefHojaVida', array(
              'local' => 'id_ref_elemento',
              'foreign' => 'id_ref_elemento'));
@@ -238,6 +267,10 @@ abstract class BaseRefElemento extends sfDoctrineRecord
              'foreign' => 'id_ref_elemento'));
 
         $this->hasMany('RefSancion', array(
+             'local' => 'id_ref_elemento',
+             'foreign' => 'id_ref_elemento'));
+
+        $this->hasMany('RefFotoElemento', array(
              'local' => 'id_ref_elemento',
              'foreign' => 'id_ref_elemento'));
 

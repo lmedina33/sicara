@@ -12,5 +12,8 @@
  */
 class RefElemento extends BaseRefElemento
 {
+    function __toString(){
+        return $this->getIdRefElemento();
+    }
 
 }

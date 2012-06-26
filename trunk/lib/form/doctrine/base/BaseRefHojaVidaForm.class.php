@@ -15,21 +15,21 @@ abstract class BaseRefHojaVidaForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id_ref_hoja_vida'         => new sfWidgetFormInputHidden(),
-      'descripcion'              => new sfWidgetFormTextarea(),
-      'id_ref_elemento'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('RefElemento'), 'add_empty' => false)),
-      'created_by_sf_guard_user' => new sfWidgetFormInputText(),
-      'created_at'               => new sfWidgetFormDateTime(),
-      'updated_at'               => new sfWidgetFormDateTime(),
+      'id_ref_hoja_vida'   => new sfWidgetFormInputHidden(),
+      'descripcion'        => new sfWidgetFormTextarea(),
+      'id_ref_elemento'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('RefElemento'), 'add_empty' => false)),
+      'id_usuario_creador' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('UsuarioCreador'), 'add_empty' => false)),
+      'created_at'         => new sfWidgetFormDateTime(),
+      'updated_at'         => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
-      'id_ref_hoja_vida'         => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id_ref_hoja_vida')), 'empty_value' => $this->getObject()->get('id_ref_hoja_vida'), 'required' => false)),
-      'descripcion'              => new sfValidatorString(array('required' => false)),
-      'id_ref_elemento'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('RefElemento'))),
-      'created_by_sf_guard_user' => new sfValidatorInteger(),
-      'created_at'               => new sfValidatorDateTime(),
-      'updated_at'               => new sfValidatorDateTime(),
+      'id_ref_hoja_vida'   => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id_ref_hoja_vida')), 'empty_value' => $this->getObject()->get('id_ref_hoja_vida'), 'required' => false)),
+      'descripcion'        => new sfValidatorString(array('required' => false)),
+      'id_ref_elemento'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('RefElemento'))),
+      'id_usuario_creador' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('UsuarioCreador'))),
+      'created_at'         => new sfValidatorDateTime(),
+      'updated_at'         => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('ref_hoja_vida[%s]');

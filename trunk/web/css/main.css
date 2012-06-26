@@ -558,3 +558,19 @@ table.verHorizontal td ul{
     margin-right: 5px;
     padding: 2px 10px;
 }
+
+/*Resultados de los autocompleters*/
+li.ac_even.ac_over{
+    color:black;
+    background-color: #CFDEFF;
+}
+
+li.ac_odd.ac_over{
+    color:black;
+    background-color: #CFDEFF;
+}
+
+/*Configuración de los árboles*/
+.treeview ul{
+    background-color: transparent;
+}
