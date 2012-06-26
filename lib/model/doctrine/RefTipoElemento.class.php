@@ -12,5 +12,8 @@
  */
 class RefTipoElemento extends BaseRefTipoElemento
 {
+    function __toString(){
+        return $this->nombre;
+    }
 
 }

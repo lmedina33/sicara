@@ -1732,6 +1732,10 @@ Usuario:
       local: id_usuario
       foreign: id_sancionado
       type: many
+    RefHojaVida:
+      local: id_usuario
+      foreign: id_usuario_creador
+      type: many
       
 #Modulo para REcursos Físicos: REF
 RefTipoElemento:
@@ -1823,6 +1827,10 @@ RefTipoSancion:
       local: id_ref_tipo_sancion
       foreign: id_ref_tipo_sancion
       type: many
+    RefElemento:
+      local: id_ref_tipo_sancion
+      foreign: id_ref_tipo_sancion
+      type: many
 
 RefEstadoElemento:
   connection: doctrine
@@ -1910,6 +1918,11 @@ RefLugar:
     RefTipoLugar:
       local: id_ref_tipo_lugar
       foreign: id_ref_tipo_lugar
+      type: one
+    LugarContenedor:
+      class: RefLugar
+      local: id_ref_lugar_contenedor
+      foreign: id_ref_lugar
       type: one
     RefElemento:
       local: id_ref_lugar
@@ -2019,6 +2032,13 @@ RefElemento:
       primary: false
       notnull: false
       autoincrement: false
+    id_usuario_responsable:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
   relations:
     RefTipoElemento:
       local: id_ref_tipo_elemento
@@ -2031,6 +2051,15 @@ RefElemento:
     RefLugar:
       local: id_ref_lugar
       foreign: id_ref_lugar
+      type: one
+    RefTipoSancion:
+      local: id_ref_tipo_sancion
+      foreign: id_ref_tipo_sancion
+      type: one
+    UsuarioResponsable:
+      class: Usuario
+      local: id_usuario_responsable
+      foreign: id_usuario
       type: one
     RefHojaVida:
       local: id_ref_elemento
@@ -2048,6 +2077,48 @@ RefElemento:
       local: id_ref_elemento
       foreign: id_ref_elemento
       type: many
+    RefFotoElemento:
+      local: id_ref_elemento
+      foreign: id_ref_elemento
+      type: many
+
+RefFotoElemento:
+  connection: doctrine
+  tableName: ref_foto_elemento
+  actAs: [Timestampable]
+  columns:
+    id_ref_foto_elemento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    path:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_ref_elemento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    RefElemento:
+      local: id_ref_elemento
+      foreign: id_ref_elemento
+      type: one
 
 RefHojaVida:
   connection: doctrine
@@ -2074,7 +2145,7 @@ RefHojaVida:
       primary: false
       notnull: true
       autoincrement: false
-    created_by_sf_guard_user:
+    id_usuario_creador:
       type: integer(4)
       fixed: false
       unsigned: true
@@ -2085,6 +2156,11 @@ RefHojaVida:
     RefElemento:
       local: id_ref_elemento
       foreign: id_ref_elemento
+      type: one
+    UsuarioCreador:
+      class: Usuario
+      local: id_usuario_creador
+      foreign: id_usuario
       type: one
 
 RefSancion:

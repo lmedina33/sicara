@@ -11,15 +11,18 @@ Doctrine_Manager::getInstance()->bindComponent('RefTipoSancion', 'doctrine');
  * @property string $nombre
  * @property string $descripcion
  * @property Doctrine_Collection $RefSancion
+ * @property Doctrine_Collection $RefElemento
  * 
  * @method integer             getIdRefTipoSancion()    Returns the current record's "id_ref_tipo_sancion" value
  * @method string              getNombre()              Returns the current record's "nombre" value
  * @method string              getDescripcion()         Returns the current record's "descripcion" value
  * @method Doctrine_Collection getRefSancion()          Returns the current record's "RefSancion" collection
+ * @method Doctrine_Collection getRefElemento()         Returns the current record's "RefElemento" collection
  * @method RefTipoSancion      setIdRefTipoSancion()    Sets the current record's "id_ref_tipo_sancion" value
  * @method RefTipoSancion      setNombre()              Sets the current record's "nombre" value
  * @method RefTipoSancion      setDescripcion()         Sets the current record's "descripcion" value
  * @method RefTipoSancion      setRefSancion()          Sets the current record's "RefSancion" collection
+ * @method RefTipoSancion      setRefElemento()         Sets the current record's "RefElemento" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -63,6 +66,10 @@ abstract class BaseRefTipoSancion extends sfDoctrineRecord
     {
         parent::setUp();
         $this->hasMany('RefSancion', array(
+             'local' => 'id_ref_tipo_sancion',
+             'foreign' => 'id_ref_tipo_sancion'));
+
+        $this->hasMany('RefElemento', array(
              'local' => 'id_ref_tipo_sancion',
              'foreign' => 'id_ref_tipo_sancion'));
     }

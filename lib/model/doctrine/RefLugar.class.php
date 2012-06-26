@@ -12,5 +12,15 @@
  */
 class RefLugar extends BaseRefLugar
 {
-
+    function __toString(){
+        return $this->nombre;
+    }
+    
+    function getPath($path=""){
+        if($this->getIdRefLugarContenedor()!=null){
+            return $this->getLugarContenedor()->getPath($path)." -> ".$this->getNombre();
+        }
+        
+        return $this->getNombre();
+    }
 }

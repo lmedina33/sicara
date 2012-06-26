@@ -15,7 +15,9 @@ Doctrine_Manager::getInstance()->bindComponent('RefLugar', 'doctrine');
  * @property integer $id_ref_lugar_contenedor
  * @property integer $id_ref_tipo_lugar
  * @property RefTipoLugar $RefTipoLugar
+ * @property RefLugar $LugarContenedor
  * @property Doctrine_Collection $RefElemento
+ * @property Doctrine_Collection $RefLugar
  * 
  * @method integer             getIdRefLugar()              Returns the current record's "id_ref_lugar" value
  * @method string              getNombre()                  Returns the current record's "nombre" value
@@ -25,7 +27,9 @@ Doctrine_Manager::getInstance()->bindComponent('RefLugar', 'doctrine');
  * @method integer             getIdRefLugarContenedor()    Returns the current record's "id_ref_lugar_contenedor" value
  * @method integer             getIdRefTipoLugar()          Returns the current record's "id_ref_tipo_lugar" value
  * @method RefTipoLugar        getRefTipoLugar()            Returns the current record's "RefTipoLugar" value
+ * @method RefLugar            getLugarContenedor()         Returns the current record's "LugarContenedor" value
  * @method Doctrine_Collection getRefElemento()             Returns the current record's "RefElemento" collection
+ * @method Doctrine_Collection getRefLugar()                Returns the current record's "RefLugar" collection
  * @method RefLugar            setIdRefLugar()              Sets the current record's "id_ref_lugar" value
  * @method RefLugar            setNombre()                  Sets the current record's "nombre" value
  * @method RefLugar            setDescripcion()             Sets the current record's "descripcion" value
@@ -34,7 +38,9 @@ Doctrine_Manager::getInstance()->bindComponent('RefLugar', 'doctrine');
  * @method RefLugar            setIdRefLugarContenedor()    Sets the current record's "id_ref_lugar_contenedor" value
  * @method RefLugar            setIdRefTipoLugar()          Sets the current record's "id_ref_tipo_lugar" value
  * @method RefLugar            setRefTipoLugar()            Sets the current record's "RefTipoLugar" value
+ * @method RefLugar            setLugarContenedor()         Sets the current record's "LugarContenedor" value
  * @method RefLugar            setRefElemento()             Sets the current record's "RefElemento" collection
+ * @method RefLugar            setRefLugar()                Sets the current record's "RefLugar" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -116,9 +122,17 @@ abstract class BaseRefLugar extends sfDoctrineRecord
              'local' => 'id_ref_tipo_lugar',
              'foreign' => 'id_ref_tipo_lugar'));
 
+        $this->hasOne('RefLugar as LugarContenedor', array(
+             'local' => 'id_ref_lugar_contenedor',
+             'foreign' => 'id_ref_lugar'));
+
         $this->hasMany('RefElemento', array(
              'local' => 'id_ref_lugar',
              'foreign' => 'id_ref_lugar'));
+
+        $this->hasMany('RefLugar', array(
+             'local' => 'id_ref_lugar',
+             'foreign' => 'id_ref_lugar_contenedor'));
 
         $timestampable0 = new Doctrine_Template_Timestampable(array(
              ));

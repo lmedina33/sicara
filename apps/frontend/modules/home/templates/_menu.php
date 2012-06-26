@@ -55,7 +55,7 @@ $root->addChild("Inscritos",$menu);
 //BIBLIOTECA:
 //Material:
 $menu = new pmSuperfishMenu();
-$menu->setName("Administrar Material")->setCredentials(array("bibliotecario"));
+$menu->setName("Material Bibliográfico")->setCredentials(array("bibliotecario"));
 
 $menu_item = new pmSuperfishMenuItem();
 $menu_item->setName("Listar Material")->setUrl("libMaterial/index");
@@ -85,6 +85,32 @@ $root->addChild("LibCategoria_Buscar_Bibliotecario", $menu_item);
 $menu_item = new pmSuperfishMenuItem();
 $menu_item->setName("Buscar Material Bibliográfico")->setUrl("libMaterial/buscar")->setCredentials(array('estudiante'));
 $root->addChild("LibCategoria_Buscar_Estudiante", $menu_item);
+
+//RECURSOS FISICOS
+
+$menu = new pmSuperfishMenu();
+$menu->setName("Recursos Físicos")->setCredentials(array("recursosFisicos"));
+
+//Listar
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Listar Recursos Físicos")->setUrl("refElemento/index")->setCredentials(array('recursosFisicos'));
+
+$menu->addChild("RefElemento_Listar", $menu_item);
+
+//Crear
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Registrar Recurso Físico")->setUrl("refElemento/new")->setCredentials(array('recursosFisicos'));
+
+$menu->addChild("RefElemento_Nuevo", $menu_item);
+
+$root->addChild("RecursosFisicos", $menu);
+
+//Lugares
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Gestión de Lugares")->setUrl("refLugar/index")->setCredentials(array('recursosFisicos'));
+
+
+$root->addChild("Lugares", $menu_item);
 
 //SALIR:
 $menu_item = new pmSuperfishMenuItem();

@@ -12,5 +12,7 @@
  */
 class RefEstadoElemento extends BaseRefEstadoElemento
 {
-
+    function __toString(){
+        return $this->nombre;
+    }
 }

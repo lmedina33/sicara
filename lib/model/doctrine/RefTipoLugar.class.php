@@ -12,5 +12,8 @@
  */
 class RefTipoLugar extends BaseRefTipoLugar
 {
+    function __toString(){
+        return $this->nombre;
+    }
 
 }

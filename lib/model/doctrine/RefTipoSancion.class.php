@@ -12,5 +12,8 @@
  */
 class RefTipoSancion extends BaseRefTipoSancion
 {
+    function __toString(){
+        return $this->getNombre();
+    }
 
 }
