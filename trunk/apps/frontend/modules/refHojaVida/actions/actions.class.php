@@ -74,14 +74,14 @@ class refHojaVidaActions extends sfActions {
 
         $this->page = 1;
         $this->limit = 5;
-        
-        if($request->getParameter('page') != null)
+
+        if ($request->getParameter('page') != null)
             $this->page = $request->getParameter('page');
 
         $q = Doctrine_Core::getTable('RefHojaVida')
                 ->createQuery('hv')
                 ->select('descripcion')
-                ->where('id_ref_elemento = ?',$request->getParameter('idEle'))
+                ->where('id_ref_elemento = ?', $request->getParameter('idEle'))
                 ->orderBy('updated_at DESC');
 
         $pager = new Doctrine_Pager($q, $this->page, $this->limit);
@@ -97,15 +97,32 @@ class refHojaVidaActions extends sfActions {
         $this->indicePrimero = $pager->getFirstIndice();
 
         $this->indiceUltimo = $pager->getLastIndice();
-        
+
         //Se carga la foto del elemento si existe
-        $foto=Doctrine_Core::getTable('RefFotoElemento')->findBy('id_ref_elemento',$this->elemento->getIdRefElemento())->getFirst();
-        
-        $this->id_foto="";
-        
-        if($foto!=null){
-            $this->id_foto=$foto->getIdRefFotoElemento();
+        $foto = Doctrine_Core::getTable('RefFotoElemento')->findBy('id_ref_elemento', $this->elemento->getIdRefElemento())->getFirst();
+
+        $this->id_foto = "";
+
+        if ($foto != null) {
+            $this->id_foto = $foto->getIdRefFotoElemento();
         }
+    }
+
+    public function executeGenerarHojaVida(sfWebRequest $request) {
+
+        $elemento = Doctrine_Core::getTable('RefElemento')->find($request->getParameter('idElem'));
+
+
+        sfConfig::set('sf_web_debug', false);
+        
+        $pdf = new HojaVidaPdf();
+
+        $pdf->setElemento($elemento);
+        $pdf->generar();
+        $pdf->Output();
+
+
+        throw new sfStopException();
     }
 
 }

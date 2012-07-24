@@ -11,9 +11,26 @@
 class refElementoActions extends sfActions {
 
     public function executeIndex(sfWebRequest $request) {
-        $this->ref_elementos = Doctrine_Core::getTable('RefElemento')
-                ->createQuery('a')
-                ->execute();
+        /* $this->ref_elementos = Doctrine_Core::getTable('RefElemento')
+          ->createQuery('a')
+          ->execute(); */
+        
+        $this->filtroTipo = "0";
+        $this->filtroEstado = "0";
+        $this->filtroUsuario = "0";
+        
+        $this->form= new FiltroRefElementoForm();
+        $this->form->bind($request->getParameter($this->form->getName()));
+        $data= $request->getParameter($this->form->getName());
+        
+        if($data['id_ref_tipo_elemento']!="")
+            $this->filtroTipo = $data['id_ref_tipo_elemento'];
+        
+        if($data['id_ref_estado_elemento'])
+            $this->filtroEstado = $data['id_ref_estado_elemento'];
+        
+        if($data['id_usuario_responsable'])
+            $this->filtroUsuario = $data['id_usuario_responsable'];
     }
 
     public function executeNew(sfWebRequest $request) {
@@ -57,20 +74,20 @@ class refElementoActions extends sfActions {
     protected function processForm(sfWebRequest $request, sfForm $form) {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
 
-        if ($form->isValid() ) {
+        if ($form->isValid()) {
             $form->save();
-            
+
             $this->redirect('refElemento/index');
         }
     }
-    
+
     public function executeAddFoto(sfWebRequest $request) {
         $formFoto = new RefFotoElementoForm();
-        
+
         $formFoto->bind($request->getParameter($formFoto->getName()), $request->getFiles($formFoto->getName()));
 
         if ($formFoto->isValid()) {
-            
+
             $file = $formFoto->getValue('file');
 
             $filename = sha1(date('Y-m-d H:i:s'));
@@ -87,19 +104,17 @@ class refElementoActions extends sfActions {
             $foto->save();
 
             $this->getUser()->setAttribute('notice', 'La fotografía ha sido cargada con éxito.');
-            
-            
-        }else{
+        } else {
             $this->getUser()->setAttribute('error', 'La fotografía no pudo ser guardada.');
             $this->setTemplate('ver');
         }
-        
-        $this->redirect('refElemento/ver?id_ref_elemento='.$request->getParameter('idEle'));
+
+        $this->redirect('refElemento/ver?id_ref_elemento=' . $request->getParameter('idEle'));
     }
-    
-    public function executeGetDataPaging($request) {
+
+    public function executeGetDataPaging(sfWebRequest $request) {
         //*Se construye el arreglo que contiene los campos a mostrarse con este datatable
-        $aColumns = array('id_ref_elemento','t.nombre','serial', 'serial_interno', 'nombre', 'marca', 'modelo', 'is_prestable', 'l.nombre', 'CONCAT(u.primer_apellido," ",u.segundo_apellido," ",u.primer_nombre," ",u.segundo_nombre)','es.nombre');
+        $aColumns = array('id_ref_elemento', 't.nombre', 'serial', 'serial_interno', 'nombre', 'marca', 'modelo', 'is_prestable', 'l.nombre', 'CONCAT(u.primer_apellido," ",u.segundo_apellido," ",u.primer_nombre," ",u.segundo_nombre)', 'es.nombre');
 
         //*Se seleeciona la tabla y los campos que se van a mostrar en este datatables
         $q = Doctrine_Query::create()
@@ -111,6 +126,7 @@ class refElementoActions extends sfActions {
                     e.marca,
                     e.modelo,
                     e.is_prestable,
+                    e.id_ref_tipo_elemento,
                     es.nombre AS estado,
                     l.nombre AS lugar,
                     CONCAT(u.primer_apellido," ",u.segundo_apellido," ",u.primer_nombre," ",u.segundo_nombre) AS usuario')
@@ -166,6 +182,31 @@ class refElementoActions extends sfActions {
             }
         }
 
+        if ($request->hasParameter('fTip') && $request->getParameter('fTip') != "0") {
+            if ($bWhere)
+                $q->andWhere('e.id_ref_tipo_elemento = ?', $request->getParameter('fTip'));
+            else{
+                $q->where('e.id_ref_tipo_elemento = ?', $request->getParameter('fTip'));
+                $bWhere=true;
+            }
+        }
+        if ($request->hasParameter('fEst') && $request->getParameter('fEst') != "0") {
+            if ($bWhere)
+                $q->andWhere('e.id_ref_estado_elemento = ?', $request->getParameter('fEst'));
+            else{
+                $q->where('e.id_ref_estado_elemento = ?', $request->getParameter('fEst'));
+                $bWhere=true;
+            }
+        }
+        if ($request->hasParameter('fUsu') && $request->getParameter('fUsu') != "0") {
+            if ($bWhere)
+                $q->andWhere('e.id_usuario_responsable = ?', $request->getParameter('fUsu'));
+            else{
+                $q->where('e.id_usuario_responsable = ?', $request->getParameter('fUsu'));
+                $bWhere=true;
+            }
+        }
+
         //Construccion de la paginación:
         //Se calcula la página actual en la que se encuentra el datatables, a partir de un simple calculo matemático
         $paginaActual = (intval($offset / $limit)) + 1;
@@ -198,10 +239,10 @@ class refElementoActions extends sfActions {
             //*Se evalúa si el dato a insertar existe
             if (isset($rows[$i]['id_ref_elemento']))
                 $id = $rows[$i]['id_ref_elemento'];
-            
+
             if (isset($rows[$i]['tipo']))
                 $tipo = $rows[$i]['tipo'];
-            
+
             if (isset($rows[$i]['serial']))
                 $serial = $rows[$i]['serial'];
 
@@ -225,17 +266,17 @@ class refElementoActions extends sfActions {
 
             if (isset($rows[$i]['is_prestable']))
                 $prestable = $rows[$i]['is_prestable'];
-            
+
             $rows2 = Doctrine_Core::getTable('RefFotoElemento')
                     ->createQuery('f')
                     ->select('id_ref_foto_elemento')
-                    ->where('f.id_ref_elemento = ?',$id)
+                    ->where('f.id_ref_elemento = ?', $id)
                     ->execute()
                     ->getFirst();
-            if($rows2!=null){
-                $id_foto=$rows2['id_ref_foto_elemento'];
+            if ($rows2 != null) {
+                $id_foto = $rows2['id_ref_foto_elemento'];
             }
-            
+
             if (isset($rows[$i]['estado']))
                 $estado = $rows[$i]['estado'];
 
@@ -262,23 +303,23 @@ class refElementoActions extends sfActions {
         //Envío del mensaje JSON
         return $this->renderText(json_encode($output));
     }
-    
+
     public function executeVer(sfWebRequest $request) {
-        $this->isSearch=$request->getParameter('search');
-        
+        $this->isSearch = $request->getParameter('search');
+
         $this->formFoto = new RefFotoElementoForm();
-        
+
         $this->elemento = Doctrine_Core::getTable('RefElemento')->find($request->getParameter('id_ref_elemento'));
-        
-        $foto=Doctrine_Core::getTable('RefFotoElemento')->findBy('id_ref_elemento',$this->elemento->getIdRefElemento())->getFirst();
-        
-        $this->id_foto="";
-        
-        if($foto!=null){
-            $this->id_foto=$foto->getIdRefFotoElemento();
+
+        $foto = Doctrine_Core::getTable('RefFotoElemento')->findBy('id_ref_elemento', $this->elemento->getIdRefElemento())->getFirst();
+
+        $this->id_foto = "";
+
+        if ($foto != null) {
+            $this->id_foto = $foto->getIdRefFotoElemento();
         }
-        
-        if($this->isSearch=="1"){
+
+        if ($this->isSearch == "1") {
             $this->setLayout('vacio');
         }
     }
@@ -371,14 +412,14 @@ class refElementoActions extends sfActions {
             @ImageDestroy($im);
         }
 
-        return sfView::NONE ;
+        return sfView::NONE;
     }
-    
-    public function executeShowFoto(sfWebRequest $request){
-        $this->id=$request->getParameter('id');
-        
+
+    public function executeShowFoto(sfWebRequest $request) {
+        $this->id = $request->getParameter('id');
+
         sfConfig::set('sf_web_debug', false);
-        
+
         return $this->setLayout(false);
     }
 
@@ -392,13 +433,13 @@ class refElementoActions extends sfActions {
             if (file_exists($path)) {
                 unlink($path);
             }
-            
+
             $this->getUser()->setAttribute('notice', 'La fotografía ha sido eliminada con éxito.');
-        }else{
+        } else {
             $this->getUser()->setAttribute('error', 'La fotografía no pudo ser eliminada.');
         }
 
-        $this->redirect('refElemento/ver?id_ref_elemento='.$request->getParameter('idEle'));
+        $this->redirect('refElemento/ver?id_ref_elemento=' . $request->getParameter('idEle'));
     }
 
 }
