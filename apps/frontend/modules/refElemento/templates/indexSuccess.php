@@ -1,6 +1,8 @@
 <?php
 slot('title', 'Listar Material Bibliográfico')
 ?>
+<?php use_stylesheets_for_form($form) ?>
+<?php use_javascripts_for_form($form) ?>
 <?php use_helper("DataTable") ?>
 <script type="text/javascript">
     
@@ -12,7 +14,7 @@ slot('title', 'Listar Material Bibliográfico')
             "oLanguage": <?php echo getLenguageEs(); ?>,
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": "<?php echo url_for('refElemento/getDataPaging') ?>",
+            "sAjaxSource": "<?php echo url_for('refElemento/getDataPaging?fTip='.$filtroTipo.'&fEst='.$filtroEstado.'&fUsu='.$filtroUsuario) ?>",
             "aoColumns": [
                 { "mDataProp": "Id", 'bVisible': false },
                 { "mDataProp": "Tipo" },
@@ -89,7 +91,23 @@ slot('title', 'Listar Material Bibliográfico')
     });
 </script>
 <h1>Listar Recursos Físicos</h1>
-
+<br />
+<form id="form" action="<?php echo url_for('refElemento/index') ?>" method="post">
+&nbsp;&nbsp;&nbsp;
+<?php echo $form->renderHiddenFields(false) ?>
+<?php echo $form['id_ref_tipo_elemento']->renderError() ?>
+<?php echo $form['id_ref_tipo_elemento']->renderLabel() ?>
+<?php echo $form['id_ref_tipo_elemento'] ?>&nbsp;&nbsp;&nbsp;
+<?php echo $form['id_ref_estado_elemento']->renderError() ?>
+<?php echo $form['id_ref_estado_elemento']->renderLabel() ?>
+<?php echo $form['id_ref_estado_elemento'] ?>&nbsp;&nbsp;&nbsp;
+<?php echo $form['id_usuario_responsable']->renderError() ?>
+<?php echo $form['id_usuario_responsable']->renderLabel() ?>
+<?php echo $form['id_usuario_responsable'] ?>&nbsp;&nbsp;&nbsp;
+<input type="submit" value="Filtrar" />
+</form>
+<br />
+<br />
 <table class="dataTable">
     <thead>
         <tr>

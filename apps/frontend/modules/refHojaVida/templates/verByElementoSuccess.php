@@ -165,6 +165,7 @@ slot('title', 'Ver Hoja de Vida')
 <div style="clear:both"></div>
 <br />
 <a id="button_add" class="button add" href="#form_add" onClick="javascript: showAdd()">Agregar Registro</a>
+<a class="button" href="<?php echo url_for("refHojaVida/generarHojaVida?idElem=".$elemento->getIdRefElemento()) ?>" target="_blank"><img src="/images/iconos/pdfSmall.png" /> Generar PDF</a>
 <div id="form_add">
     <h2>Registro Nuevo</h2>
     <form id="form" action="<?php echo url_for('refHojaVida/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id_ref_hoja_vida='.$form->getObject()->getIdRefHojaVida() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>

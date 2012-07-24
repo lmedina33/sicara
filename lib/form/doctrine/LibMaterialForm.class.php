@@ -18,7 +18,7 @@ class LibMaterialForm extends BaseLibMaterialForm {
                 'class' => ($this->getObject()->isNew()? 'validate[required,maxSize[25],ajax[ajaxLibMaterialCallPhp_' . sfConfig::get('sf_environment') . ']]' : ''),
                 ($this->getObject()->isNew()? '' : 'readonly') => ($this->getObject()->isNew()? '' : 'readonly')
             )),
-            'titulo' => new sfWidgetFormInputText(array('label' => 'Título'), array('class' => 'validate[required,maxSize[45]]')),
+            'titulo' => new sfWidgetFormInputText(array('label' => 'Título'), array('class' => 'validate[required]')),
             'sub_titulo' => new sfWidgetFormInputText(array('label' => 'Sub Título')),
             'autores' => new sfWidgetFormTextarea(array(), array('class' => 'validate[required]')),
             'editorial' => new sfWidgetFormInputText(array(), array('class' => 'validate[required,maxSize[45]]')),
