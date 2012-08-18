@@ -293,7 +293,7 @@ abstract class BaseUsuario extends sfDoctrineRecord
              'fixed' => 0,
              'unsigned' => true,
              'primary' => false,
-             'notnull' => true,
+             'notnull' => false,
              'autoincrement' => false,
              'length' => 4,
              ));

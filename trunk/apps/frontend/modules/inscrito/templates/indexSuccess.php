@@ -41,135 +41,15 @@
     <tbody>
         <?php foreach ($inscritos as $inscrito): ?>
             <tr>
-                <td><a href="<?php echo url_for('inscrito/edit?id_inscrito=' . $inscrito->getIdInscrito()) ?>"><?php echo $inscrito->getIdInscrito() ?></a></td>
+                <td><a href="<?php echo url_for('inscrito/edit?numero_formulario=' . $inscrito->getNumeroFormulario()) ?>"><?php echo $inscrito->getNumeroFormulario() ?></a></td>
                 <td><?php echo $inscrito->getNumeroFormulario() ?></td>
                 <td><?php echo $inscrito->getIdJornada() ?></td>
                 <td><?php echo $inscrito->getIdTipoPago() ?></td>
                 <td><?php echo $inscrito->getIdPeriodo() ?></td>
                 <td><?php echo $inscrito->getIdUsuario() ?></td>
-                <td><?php echo $inscrito->getMatriculado() ?></td>
+                <td><?php echo $inscrito->getIsMatriculado() ?></td>
                 <td><?php echo $inscrito->getFechaInscripcion() ?></td>
             </tr>
-        <?php endforeach; ?>
-        <tr>
-            <td><a href="<?php ?>">33</a></td>
-            <td>123</td>
-            <td>mañana</td>
-            <td>contado</td>
-            <td>2012-5</td>
-            <td>Peter Pitaquiva</td>
-            <td>Nop</td>
-            <td>123010</td>
-        </tr>
-        <tr>
-            <td><a href="<?php ?>">2</a></td>
-            <td>123</td>
-            <td>mañana</td>
-            <td>contado</td>
-            <td>2012-5</td>
-            <td>Peter Simbacocha</td>
-            <td>Nop</td>
-            <td>123010</td>
-        </tr>
-        <tr>
-            <td><a href="<?php ?>">12</a></td>
-            <td>123</td>
-            <td>mañana</td>
-            <td>contado</td>
-            <td>2012-5</td>
-            <td>Peter Pitaquiva</td>
-            <td>Nop</td>
-            <td>123010</td>
-        </tr>
-        <tr>
-            <td><a href="<?php ?>">12</a></td>
-            <td>123</td>
-            <td>mañana</td>
-            <td>contado</td>
-            <td>2012-5</td>
-            <td>Peter Pitaquiva</td>
-            <td>Nop</td>
-            <td>123010</td>
-        </tr>
-        <tr>
-            <td><a href="<?php ?>">12</a></td>
-            <td>123</td>
-            <td>mañana</td>
-            <td>contado</td>
-            <td>2012-5</td>
-            <td>Peter Pitaquiva</td>
-            <td>Nop</td>
-            <td>123010</td>
-        </tr>
-        <tr>
-            <td><a href="<?php ?>">12</a></td>
-            <td>123</td>
-            <td>mañana</td>
-            <td>contado</td>
-            <td>2012-5</td>
-            <td>Peter Pitaquiva</td>
-            <td>Nop</td>
-            <td>123010</td>
-        </tr>
-        <tr>
-            <td><a href="<?php ?>">12</a></td>
-            <td>123</td>
-            <td>mañana</td>
-            <td>contado</td>
-            <td>2012-5</td>
-            <td>Peter Pitaquiva</td>
-            <td>Nop</td>
-            <td>123010</td>
-        </tr>
-        <tr>
-            <td><a href="<?php ?>">12</a></td>
-            <td>123</td>
-            <td>mañana</td>
-            <td>contado</td>
-            <td>2012-5</td>
-            <td>Peter Pitaquiva</td>
-            <td>Nop</td>
-            <td>123010</td>
-        </tr>
-        <tr>
-            <td><a href="<?php ?>">12</a></td>
-            <td>123</td>
-            <td>mañana</td>
-            <td>contado</td>
-            <td>2012-5</td>
-            <td>Peter Simba</td>
-            <td>Nop</td>
-            <td>123010</td>
-        </tr>
-        <tr>
-            <td><a href="<?php ?>">12</a></td>
-            <td>123</td>
-            <td>mañana</td>
-            <td>contado</td>
-            <td>2012-5</td>
-            <td>Peter Pitaquiva</td>
-            <td>Nop</td>
-            <td>123010</td>
-        </tr>
-        <tr>
-            <td><a href="<?php ?>">12</a></td>
-            <td>123</td>
-            <td>mañana</td>
-            <td>contado</td>
-            <td>2012-5</td>
-            <td>Peter Pitaquiva</td>
-            <td>Nop</td>
-            <td>123010</td>
-        </tr>
-        <tr>
-            <td><a href="<?php ?>">12</a></td>
-            <td>123</td>
-            <td>mañana</td>
-            <td>contado</td>
-            <td>2012-5</td>
-            <td>Peter Pitaquiva</td>
-            <td>Nop</td>
-            <td>123010</td>
-        </tr>
+        <?php endforeach; ?>        
     </tbody>
 </table>

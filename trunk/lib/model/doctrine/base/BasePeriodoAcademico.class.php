@@ -15,35 +15,41 @@ Doctrine_Manager::getInstance()->bindComponent('PeriodoAcademico', 'doctrine');
  * @property string $codigo_pensum
  * @property integer $id_predecesor
  * @property string $observacion
+ * @property integer $is_inscribible
  * @property Pensum $Pensum
  * @property Doctrine_Collection $AsignaturaCursada
  * @property Doctrine_Collection $Inscrito
  * @property Doctrine_Collection $Matricula
+ * @property Doctrine_Collection $FormularioInscripcion
  * 
- * @method integer             getIdPeriodoAcademico()   Returns the current record's "id_periodo_academico" value
- * @method string              getPeriodo()              Returns the current record's "periodo" value
- * @method date                getFechaInicio()          Returns the current record's "fecha_inicio" value
- * @method date                getFechaFin()             Returns the current record's "fecha_fin" value
- * @method integer             getEstado()               Returns the current record's "estado" value
- * @method string              getCodigoPensum()         Returns the current record's "codigo_pensum" value
- * @method integer             getIdPredecesor()         Returns the current record's "id_predecesor" value
- * @method string              getObservacion()          Returns the current record's "observacion" value
- * @method Pensum              getPensum()               Returns the current record's "Pensum" value
- * @method Doctrine_Collection getAsignaturaCursada()    Returns the current record's "AsignaturaCursada" collection
- * @method Doctrine_Collection getInscrito()             Returns the current record's "Inscrito" collection
- * @method Doctrine_Collection getMatricula()            Returns the current record's "Matricula" collection
- * @method PeriodoAcademico    setIdPeriodoAcademico()   Sets the current record's "id_periodo_academico" value
- * @method PeriodoAcademico    setPeriodo()              Sets the current record's "periodo" value
- * @method PeriodoAcademico    setFechaInicio()          Sets the current record's "fecha_inicio" value
- * @method PeriodoAcademico    setFechaFin()             Sets the current record's "fecha_fin" value
- * @method PeriodoAcademico    setEstado()               Sets the current record's "estado" value
- * @method PeriodoAcademico    setCodigoPensum()         Sets the current record's "codigo_pensum" value
- * @method PeriodoAcademico    setIdPredecesor()         Sets the current record's "id_predecesor" value
- * @method PeriodoAcademico    setObservacion()          Sets the current record's "observacion" value
- * @method PeriodoAcademico    setPensum()               Sets the current record's "Pensum" value
- * @method PeriodoAcademico    setAsignaturaCursada()    Sets the current record's "AsignaturaCursada" collection
- * @method PeriodoAcademico    setInscrito()             Sets the current record's "Inscrito" collection
- * @method PeriodoAcademico    setMatricula()            Sets the current record's "Matricula" collection
+ * @method integer             getIdPeriodoAcademico()    Returns the current record's "id_periodo_academico" value
+ * @method string              getPeriodo()               Returns the current record's "periodo" value
+ * @method date                getFechaInicio()           Returns the current record's "fecha_inicio" value
+ * @method date                getFechaFin()              Returns the current record's "fecha_fin" value
+ * @method integer             getEstado()                Returns the current record's "estado" value
+ * @method string              getCodigoPensum()          Returns the current record's "codigo_pensum" value
+ * @method integer             getIdPredecesor()          Returns the current record's "id_predecesor" value
+ * @method string              getObservacion()           Returns the current record's "observacion" value
+ * @method integer             getIsInscribible()         Returns the current record's "is_inscribible" value
+ * @method Pensum              getPensum()                Returns the current record's "Pensum" value
+ * @method Doctrine_Collection getAsignaturaCursada()     Returns the current record's "AsignaturaCursada" collection
+ * @method Doctrine_Collection getInscrito()              Returns the current record's "Inscrito" collection
+ * @method Doctrine_Collection getMatricula()             Returns the current record's "Matricula" collection
+ * @method Doctrine_Collection getFormularioInscripcion() Returns the current record's "FormularioInscripcion" collection
+ * @method PeriodoAcademico    setIdPeriodoAcademico()    Sets the current record's "id_periodo_academico" value
+ * @method PeriodoAcademico    setPeriodo()               Sets the current record's "periodo" value
+ * @method PeriodoAcademico    setFechaInicio()           Sets the current record's "fecha_inicio" value
+ * @method PeriodoAcademico    setFechaFin()              Sets the current record's "fecha_fin" value
+ * @method PeriodoAcademico    setEstado()                Sets the current record's "estado" value
+ * @method PeriodoAcademico    setCodigoPensum()          Sets the current record's "codigo_pensum" value
+ * @method PeriodoAcademico    setIdPredecesor()          Sets the current record's "id_predecesor" value
+ * @method PeriodoAcademico    setObservacion()           Sets the current record's "observacion" value
+ * @method PeriodoAcademico    setIsInscribible()         Sets the current record's "is_inscribible" value
+ * @method PeriodoAcademico    setPensum()                Sets the current record's "Pensum" value
+ * @method PeriodoAcademico    setAsignaturaCursada()     Sets the current record's "AsignaturaCursada" collection
+ * @method PeriodoAcademico    setInscrito()              Sets the current record's "Inscrito" collection
+ * @method PeriodoAcademico    setMatricula()             Sets the current record's "Matricula" collection
+ * @method PeriodoAcademico    setFormularioInscripcion() Sets the current record's "FormularioInscripcion" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -127,6 +133,16 @@ abstract class BasePeriodoAcademico extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => '',
              ));
+        $this->hasColumn('is_inscribible', 'integer', 1, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'default' => '0',
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 1,
+             ));
     }
 
     public function setUp()
@@ -145,6 +161,10 @@ abstract class BasePeriodoAcademico extends sfDoctrineRecord
              'foreign' => 'id_periodo'));
 
         $this->hasMany('Matricula', array(
+             'local' => 'id_periodo_academico',
+             'foreign' => 'id_periodo'));
+
+        $this->hasMany('FormularioInscripcion', array(
              'local' => 'id_periodo_academico',
              'foreign' => 'id_periodo'));
     }

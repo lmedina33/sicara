@@ -16,4 +16,13 @@ class PensumTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Pensum');
     }
+    
+    public function getInscribibles(){
+        $result = Doctrine_Core::getTable('Pensum')
+                ->createQuery('p')
+                ->where('is_inscribible = ?','1')
+                ->execute();
+        
+        return $result;
+    }
 }

@@ -10,3 +10,18 @@ all:
   sf_guard_plugin:
     success_signout_url: sfGuardAuth/signin
     success_signin_url: home/index
+  sf_captchagd:
+        image_width:                100 # image width in pixels
+        image_height:               40 # image height in pixels
+        chars:                      "123456789" # possible chars in captcha
+        length:                     4 # length of captcha
+        font_size:                  18 # font size
+        force_new_captcha:          false # if true - captcha regenerated EVERY request, even if user input true value before
+
+        # possible chars colors
+        font_color:                 ["252525", "8b8787", "550707", "3526E6", "88531E"]
+
+        # chars fonts
+        fonts:                      ["akbar/akbar.ttf", "brushcut/BRUSHCUT.TTF", "molten/molten.ttf", "planet_benson/Planetbe.ttf", "whoobub/WHOOBUB_.TTF"] 
+        background_color:           ffffff # image background color
+        border_color:               cccccc # image border color

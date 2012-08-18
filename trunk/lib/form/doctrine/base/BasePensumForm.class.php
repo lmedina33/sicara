@@ -15,13 +15,15 @@ abstract class BasePensumForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'codigo_pensum' => new sfWidgetFormInputHidden(),
-      'nombre'        => new sfWidgetFormInputText(),
+      'codigo_pensum'  => new sfWidgetFormInputHidden(),
+      'nombre'         => new sfWidgetFormInputText(),
+      'is_inscribible' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
-      'codigo_pensum' => new sfValidatorChoice(array('choices' => array($this->getObject()->get('codigo_pensum')), 'empty_value' => $this->getObject()->get('codigo_pensum'), 'required' => false)),
-      'nombre'        => new sfValidatorString(array('max_length' => 250)),
+      'codigo_pensum'  => new sfValidatorChoice(array('choices' => array($this->getObject()->get('codigo_pensum')), 'empty_value' => $this->getObject()->get('codigo_pensum'), 'required' => false)),
+      'nombre'         => new sfValidatorString(array('max_length' => 250)),
+      'is_inscribible' => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('pensum[%s]');

@@ -12,5 +12,8 @@
  */
 class PeriodoAcademico extends BasePeriodoAcademico
 {
+    function __toString(){
+        return $this->getPeriodo()." - ".$this->getPensum()->getNombre();
+    }
 
 }

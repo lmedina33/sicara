@@ -11,15 +11,18 @@ Doctrine_Manager::getInstance()->bindComponent('TipoPago', 'doctrine');
  * @property string $nombre
  * @property Doctrine_Collection $Inscrito
  * @property Doctrine_Collection $Matricula
+ * @property Doctrine_Collection $FormularioInscripcion
  * 
- * @method integer             getIdTipoPago()   Returns the current record's "id_tipo_pago" value
- * @method string              getNombre()       Returns the current record's "nombre" value
- * @method Doctrine_Collection getInscrito()     Returns the current record's "Inscrito" collection
- * @method Doctrine_Collection getMatricula()    Returns the current record's "Matricula" collection
- * @method TipoPago            setIdTipoPago()   Sets the current record's "id_tipo_pago" value
- * @method TipoPago            setNombre()       Sets the current record's "nombre" value
- * @method TipoPago            setInscrito()     Sets the current record's "Inscrito" collection
- * @method TipoPago            setMatricula()    Sets the current record's "Matricula" collection
+ * @method integer             getIdTipoPago()            Returns the current record's "id_tipo_pago" value
+ * @method string              getNombre()                Returns the current record's "nombre" value
+ * @method Doctrine_Collection getInscrito()              Returns the current record's "Inscrito" collection
+ * @method Doctrine_Collection getMatricula()             Returns the current record's "Matricula" collection
+ * @method Doctrine_Collection getFormularioInscripcion() Returns the current record's "FormularioInscripcion" collection
+ * @method TipoPago            setIdTipoPago()            Sets the current record's "id_tipo_pago" value
+ * @method TipoPago            setNombre()                Sets the current record's "nombre" value
+ * @method TipoPago            setInscrito()              Sets the current record's "Inscrito" collection
+ * @method TipoPago            setMatricula()             Sets the current record's "Matricula" collection
+ * @method TipoPago            setFormularioInscripcion() Sets the current record's "FormularioInscripcion" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -58,6 +61,10 @@ abstract class BaseTipoPago extends sfDoctrineRecord
              'foreign' => 'id_tipo_pago'));
 
         $this->hasMany('Matricula', array(
+             'local' => 'id_tipo_pago',
+             'foreign' => 'id_tipo_pago'));
+
+        $this->hasMany('FormularioInscripcion', array(
              'local' => 'id_tipo_pago',
              'foreign' => 'id_tipo_pago'));
     }

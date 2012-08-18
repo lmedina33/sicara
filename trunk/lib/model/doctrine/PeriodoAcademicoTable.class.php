@@ -16,4 +16,14 @@ class PeriodoAcademicoTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('PeriodoAcademico');
     }
+    
+    public function getInscribibles(){
+        $result = Doctrine_Core::getTable('PeriodoAcademico')
+                ->createQuery('p')
+                ->where('is_inscribible = ?','1')
+                ->andWhere('estado != 2')
+                ->execute();
+        
+        return $result;
+    }
 }

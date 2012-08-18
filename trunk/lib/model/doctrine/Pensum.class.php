@@ -12,5 +12,8 @@
  */
 class Pensum extends BasePensum
 {
+    function __toString(){
+        return $this->getCodigoPensum()." - ".$this->nombre;
+    }
 
 }

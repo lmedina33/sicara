@@ -1,0 +1,34 @@
+## YAML Template.
+all:
+  is_secure: true
+  credentials: admisiones
+
+new:
+  is_secure: false
+
+create:
+  is_secure: false
+
+showConfirm:
+  is_secure: false
+
+generarFormulario:
+  is_secure: false
+
+getPensum:
+  is_secure: false
+
+actualizarFormulario:
+  is_secure: false
+
+editFormulario:
+  is_secure: false
+
+updateFormulario:
+  is_secure: false
+
+renderFoto:
+  is_secure: false
+  
+removeFoto:
+  is_secure: false

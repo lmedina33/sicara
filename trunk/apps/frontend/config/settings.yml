@@ -39,7 +39,11 @@ all:
     default_culture: es_ES
     
     #Habilitar sfguardplugin
-    enabled_modules: [default, sfGuardAuth]
+    enabled_modules: [default, sfGuardAuth, sfCaptchaGD]
+    
+    #Hactivar plugin de captcha
+    standard_helpers:     [Partial, Cache, I18N]
+    i18n:                 true
     
     #Habilitar sfguardplugin
   .actions:

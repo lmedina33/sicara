@@ -12,5 +12,7 @@
  */
 class TipoDocumento extends BaseTipoDocumento
 {
-
+    function __toString(){
+        return $this->nombre;
+    }
 }

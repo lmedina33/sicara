@@ -152,7 +152,7 @@
                     "alertText": "* No puede usar este codigo",
                     "alertTextLoad": "* Validando, por favor espere..."
                 },
-                "ajaxLibCategariaCallPhp_prod": {
+                "ajaxLibCategoriaCallPhp_prod": {
                     "url": '/frontend.php/libCategoria/validarCodigo',
                     "alertTextOk": "* Este codigo se encuentra disponible",
                     "alertText": "* No puede usar este codigo",
