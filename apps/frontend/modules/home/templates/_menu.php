@@ -52,6 +52,21 @@ $menu->addChild("Inscritos_Registrar", $menu_item);
 
 $root->addChild("Inscritos",$menu);
 
+//ADMISIONES: Formulario Inscripcion
+
+$menu = new pmSuperfishMenu();
+$menu->setName("Formularios de Inscripción")->setCredentials(array("admisiones"));
+
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Listar")->setUrl("formularioInscripcion/index");
+$menu->addChild("FormularioInscripcion_Lista", $menu_item);
+
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Registrar")->setUrl("formularioInscripcion/new");
+$menu->addChild("FormularioInscripcion_Registrar", $menu_item);
+
+$root->addChild("FormularioInscripcion",$menu);
+
 //BIBLIOTECA:
 //Material:
 $menu = new pmSuperfishMenu();

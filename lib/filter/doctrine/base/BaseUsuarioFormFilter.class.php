@@ -30,7 +30,7 @@ abstract class BaseUsuarioFormFilter extends BaseFormFilterDoctrine
       'telefono_acudiente2'      => new sfWidgetFormFilterInput(),
       'especificaciones_medicas' => new sfWidgetFormFilterInput(),
       'observaciones'            => new sfWidgetFormFilterInput(),
-      'id_sf_guard_user'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'id_sf_guard_user'         => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(

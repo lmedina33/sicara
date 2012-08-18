@@ -20,6 +20,7 @@ abstract class BasePeriodoAcademicoFormFilter extends BaseFormFilterDoctrine
       'codigo_pensum'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Pensum'), 'add_empty' => true)),
       'id_predecesor'        => new sfWidgetFormFilterInput(),
       'observacion'          => new sfWidgetFormFilterInput(),
+      'is_inscribible'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -30,6 +31,7 @@ abstract class BasePeriodoAcademicoFormFilter extends BaseFormFilterDoctrine
       'codigo_pensum'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Pensum'), 'column' => 'codigo_pensum')),
       'id_predecesor'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'observacion'          => new sfValidatorPass(array('required' => false)),
+      'is_inscribible'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('periodo_academico_filters[%s]');
@@ -57,6 +59,7 @@ abstract class BasePeriodoAcademicoFormFilter extends BaseFormFilterDoctrine
       'codigo_pensum'        => 'ForeignKey',
       'id_predecesor'        => 'Number',
       'observacion'          => 'Text',
+      'is_inscribible'       => 'Number',
     );
   }
 }

@@ -55,7 +55,7 @@ abstract class BaseUsuarioForm extends BaseFormDoctrine
       'telefono_acudiente2'      => new sfValidatorString(array('max_length' => 25, 'required' => false)),
       'especificaciones_medicas' => new sfValidatorString(array('required' => false)),
       'observaciones'            => new sfValidatorString(array('required' => false)),
-      'id_sf_guard_user'         => new sfValidatorInteger(),
+      'id_sf_guard_user'         => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('usuario[%s]');

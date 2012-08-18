@@ -10,13 +10,16 @@ Doctrine_Manager::getInstance()->bindComponent('TipoDocumento', 'doctrine');
  * @property integer $id_tipo_documento
  * @property string $nombre
  * @property Doctrine_Collection $Usuario
+ * @property Doctrine_Collection $FormularioInscripcion
  * 
- * @method integer             getIdTipoDocumento()   Returns the current record's "id_tipo_documento" value
- * @method string              getNombre()            Returns the current record's "nombre" value
- * @method Doctrine_Collection getUsuario()           Returns the current record's "Usuario" collection
- * @method TipoDocumento       setIdTipoDocumento()   Sets the current record's "id_tipo_documento" value
- * @method TipoDocumento       setNombre()            Sets the current record's "nombre" value
- * @method TipoDocumento       setUsuario()           Sets the current record's "Usuario" collection
+ * @method integer             getIdTipoDocumento()       Returns the current record's "id_tipo_documento" value
+ * @method string              getNombre()                Returns the current record's "nombre" value
+ * @method Doctrine_Collection getUsuario()               Returns the current record's "Usuario" collection
+ * @method Doctrine_Collection getFormularioInscripcion() Returns the current record's "FormularioInscripcion" collection
+ * @method TipoDocumento       setIdTipoDocumento()       Sets the current record's "id_tipo_documento" value
+ * @method TipoDocumento       setNombre()                Sets the current record's "nombre" value
+ * @method TipoDocumento       setUsuario()               Sets the current record's "Usuario" collection
+ * @method TipoDocumento       setFormularioInscripcion() Sets the current record's "FormularioInscripcion" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -51,6 +54,10 @@ abstract class BaseTipoDocumento extends sfDoctrineRecord
     {
         parent::setUp();
         $this->hasMany('Usuario', array(
+             'local' => 'id_tipo_documento',
+             'foreign' => 'id_tipo_documento'));
+
+        $this->hasMany('FormularioInscripcion', array(
              'local' => 'id_tipo_documento',
              'foreign' => 'id_tipo_documento'));
     }

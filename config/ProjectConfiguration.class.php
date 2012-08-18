@@ -11,6 +11,6 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enablePlugins('sfDoctrineGuardPlugin');
     $this->enablePlugins('pmSuperfishMenuPlugin');
     $this->enablePlugins('sfFormExtraPlugin');
-
+    $this->enablePlugins('sfCaptchaGDPlugin');
   }
 }

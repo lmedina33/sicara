@@ -23,6 +23,7 @@ abstract class BasePeriodoAcademicoForm extends BaseFormDoctrine
       'codigo_pensum'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Pensum'), 'add_empty' => false)),
       'id_predecesor'        => new sfWidgetFormInputText(),
       'observacion'          => new sfWidgetFormTextarea(),
+      'is_inscribible'       => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -34,6 +35,7 @@ abstract class BasePeriodoAcademicoForm extends BaseFormDoctrine
       'codigo_pensum'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Pensum'))),
       'id_predecesor'        => new sfValidatorInteger(array('required' => false)),
       'observacion'          => new sfValidatorString(array('required' => false)),
+      'is_inscribible'       => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('periodo_academico[%s]');

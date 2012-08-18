@@ -9,20 +9,26 @@ Doctrine_Manager::getInstance()->bindComponent('Pensum', 'doctrine');
  * 
  * @property string $codigo_pensum
  * @property string $nombre
+ * @property integer $is_inscribible
  * @property Doctrine_Collection $Estudiante
  * @property Doctrine_Collection $PeriodoAcademico
  * @property Doctrine_Collection $Semestre
+ * @property Doctrine_Collection $FormularioInscripcion
  * 
- * @method string              getCodigoPensum()     Returns the current record's "codigo_pensum" value
- * @method string              getNombre()           Returns the current record's "nombre" value
- * @method Doctrine_Collection getEstudiante()       Returns the current record's "Estudiante" collection
- * @method Doctrine_Collection getPeriodoAcademico() Returns the current record's "PeriodoAcademico" collection
- * @method Doctrine_Collection getSemestre()         Returns the current record's "Semestre" collection
- * @method Pensum              setCodigoPensum()     Sets the current record's "codigo_pensum" value
- * @method Pensum              setNombre()           Sets the current record's "nombre" value
- * @method Pensum              setEstudiante()       Sets the current record's "Estudiante" collection
- * @method Pensum              setPeriodoAcademico() Sets the current record's "PeriodoAcademico" collection
- * @method Pensum              setSemestre()         Sets the current record's "Semestre" collection
+ * @method string              getCodigoPensum()          Returns the current record's "codigo_pensum" value
+ * @method string              getNombre()                Returns the current record's "nombre" value
+ * @method integer             getIsInscribible()         Returns the current record's "is_inscribible" value
+ * @method Doctrine_Collection getEstudiante()            Returns the current record's "Estudiante" collection
+ * @method Doctrine_Collection getPeriodoAcademico()      Returns the current record's "PeriodoAcademico" collection
+ * @method Doctrine_Collection getSemestre()              Returns the current record's "Semestre" collection
+ * @method Doctrine_Collection getFormularioInscripcion() Returns the current record's "FormularioInscripcion" collection
+ * @method Pensum              setCodigoPensum()          Sets the current record's "codigo_pensum" value
+ * @method Pensum              setNombre()                Sets the current record's "nombre" value
+ * @method Pensum              setIsInscribible()         Sets the current record's "is_inscribible" value
+ * @method Pensum              setEstudiante()            Sets the current record's "Estudiante" collection
+ * @method Pensum              setPeriodoAcademico()      Sets the current record's "PeriodoAcademico" collection
+ * @method Pensum              setSemestre()              Sets the current record's "Semestre" collection
+ * @method Pensum              setFormularioInscripcion() Sets the current record's "FormularioInscripcion" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -51,6 +57,16 @@ abstract class BasePensum extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 250,
              ));
+        $this->hasColumn('is_inscribible', 'integer', 1, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'default' => '0',
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 1,
+             ));
     }
 
     public function setUp()
@@ -65,6 +81,10 @@ abstract class BasePensum extends sfDoctrineRecord
              'foreign' => 'codigo_pensum'));
 
         $this->hasMany('Semestre', array(
+             'local' => 'codigo_pensum',
+             'foreign' => 'codigo_pensum'));
+
+        $this->hasMany('FormularioInscripcion', array(
              'local' => 'codigo_pensum',
              'foreign' => 'codigo_pensum'));
     }

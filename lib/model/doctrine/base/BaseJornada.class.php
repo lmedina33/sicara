@@ -9,17 +9,23 @@ Doctrine_Manager::getInstance()->bindComponent('Jornada', 'doctrine');
  * 
  * @property integer $id_jornada
  * @property string $nombre
+ * @property integer $is_inscribible
  * @property Doctrine_Collection $Inscrito
  * @property Doctrine_Collection $Matricula
+ * @property Doctrine_Collection $FormularioInscripcion
  * 
- * @method integer             getIdJornada()  Returns the current record's "id_jornada" value
- * @method string              getNombre()     Returns the current record's "nombre" value
- * @method Doctrine_Collection getInscrito()   Returns the current record's "Inscrito" collection
- * @method Doctrine_Collection getMatricula()  Returns the current record's "Matricula" collection
- * @method Jornada             setIdJornada()  Sets the current record's "id_jornada" value
- * @method Jornada             setNombre()     Sets the current record's "nombre" value
- * @method Jornada             setInscrito()   Sets the current record's "Inscrito" collection
- * @method Jornada             setMatricula()  Sets the current record's "Matricula" collection
+ * @method integer             getIdJornada()             Returns the current record's "id_jornada" value
+ * @method string              getNombre()                Returns the current record's "nombre" value
+ * @method integer             getIsInscribible()         Returns the current record's "is_inscribible" value
+ * @method Doctrine_Collection getInscrito()              Returns the current record's "Inscrito" collection
+ * @method Doctrine_Collection getMatricula()             Returns the current record's "Matricula" collection
+ * @method Doctrine_Collection getFormularioInscripcion() Returns the current record's "FormularioInscripcion" collection
+ * @method Jornada             setIdJornada()             Sets the current record's "id_jornada" value
+ * @method Jornada             setNombre()                Sets the current record's "nombre" value
+ * @method Jornada             setIsInscribible()         Sets the current record's "is_inscribible" value
+ * @method Jornada             setInscrito()              Sets the current record's "Inscrito" collection
+ * @method Jornada             setMatricula()             Sets the current record's "Matricula" collection
+ * @method Jornada             setFormularioInscripcion() Sets the current record's "FormularioInscripcion" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -48,6 +54,16 @@ abstract class BaseJornada extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 45,
              ));
+        $this->hasColumn('is_inscribible', 'integer', 1, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'default' => '0',
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 1,
+             ));
     }
 
     public function setUp()
@@ -58,6 +74,10 @@ abstract class BaseJornada extends sfDoctrineRecord
              'foreign' => 'id_jornada'));
 
         $this->hasMany('Matricula', array(
+             'local' => 'id_jornada',
+             'foreign' => 'id_jornada'));
+
+        $this->hasMany('FormularioInscripcion', array(
              'local' => 'id_jornada',
              'foreign' => 'id_jornada'));
     }

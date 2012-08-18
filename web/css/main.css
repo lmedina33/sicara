@@ -574,3 +574,30 @@ li.ac_odd.ac_over{
 .treeview ul{
     background-color: transparent;
 }
+
+/*Configuración para las tablas con relleno*/
+.table-fill th{
+    background-color: #eef;
+}
+
+.table-fill td{
+    background-color: #efefef;
+}
+
+.table-fill .none{
+    background-color: #fff;
+}
+
+.table-fill .h1{
+    text-align: center;
+    background-color: #fff;
+    border-bottom: dashed 1px #ccc;
+}
+
+/*Configuración del código captcha*/
+
+input.captcha{
+    position: relative;
+    top: -15px;
+    margin-right: 10px;
+}

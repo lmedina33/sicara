@@ -16,4 +16,13 @@ class JornadaTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('Jornada');
     }
+    
+    public function getInscribibles(){
+        $result = Doctrine_Core::getTable('Jornada')
+                ->createQuery('p')
+                ->where('is_inscribible = ?','1')
+                ->execute();
+        
+        return $result;
+    }
 }

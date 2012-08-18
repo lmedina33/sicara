@@ -1,0 +1,8 @@
+## YAML Template.
+all:
+  is_secure: true
+  credentials: admisiones
+  
+new:
+  is_secure: true
+  credentials: root

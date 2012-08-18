@@ -602,12 +602,24 @@ Jornada:
       primary: false
       notnull: true
       autoincrement: false
+    is_inscribible:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
   relations:
     Inscrito:
       local: id_jornada
       foreign: id_jornada
       type: many
     Matricula:
+      local: id_jornada
+      foreign: id_jornada
+      type: many
+    FormularioInscripcion:
       local: id_jornada
       foreign: id_jornada
       type: many
@@ -1276,6 +1288,14 @@ Pensum:
       primary: false
       notnull: true
       autoincrement: false
+    is_inscribible:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
   relations:
     Estudiante:
       local: codigo_pensum
@@ -1286,6 +1306,10 @@ Pensum:
       foreign: codigo_pensum
       type: many
     Semestre:
+      local: codigo_pensum
+      foreign: codigo_pensum
+      type: many
+    FormularioInscripcion:
       local: codigo_pensum
       foreign: codigo_pensum
       type: many
@@ -1349,6 +1373,14 @@ PeriodoAcademico:
       primary: false
       notnull: false
       autoincrement: false
+    is_inscribible:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
   relations:
     Pensum:
       local: codigo_pensum
@@ -1363,6 +1395,10 @@ PeriodoAcademico:
       foreign: id_periodo
       type: many
     Matricula:
+      local: id_periodo_academico
+      foreign: id_periodo
+      type: many
+    FormularioInscripcion:
       local: id_periodo_academico
       foreign: id_periodo
       type: many
@@ -1501,6 +1537,10 @@ TipoDocumento:
       local: id_tipo_documento
       foreign: id_tipo_documento
       type: many
+    FormularioInscripcion:
+      local: id_tipo_documento
+      foreign: id_tipo_documento
+      type: many
 TipoPago:
   connection: doctrine
   tableName: tipo_pago
@@ -1524,6 +1564,10 @@ TipoPago:
       foreign: id_tipo_pago
       type: many
     Matricula:
+      local: id_tipo_pago
+      foreign: id_tipo_pago
+      type: many
+    FormularioInscripcion:
       local: id_tipo_pago
       foreign: id_tipo_pago
       type: many
@@ -1661,7 +1705,7 @@ Usuario:
       fixed: false
       unsigned: true
       primary: false
-      notnull: true
+      notnull: false
       autoincrement: false
   relations:
     TipoDocumento:
@@ -1736,7 +1780,375 @@ Usuario:
       local: id_usuario
       foreign: id_usuario_creador
       type: many
-      
+
+FormularioInscripcion:
+  connection: doctrine
+  tableName: formulario_inscripcion
+  actAs: [Timestampable]
+  columns:
+    id_formulario_inscripcion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    numero:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    codigo:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    primer_nombre:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    segundo_nombre:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    primer_apellido:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    segundo_apellido:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    documento:
+      type: string(20)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_tipo_documento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    lugar_expedicion:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    lugar_nacimiento:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_nacimiento:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    libreta_militar:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    foto_path:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    es_trabajador:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    telefono1:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    telefono2:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    direccion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    correo:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    conocio:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_tipo_pago:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    edu_basica_ano:
+      type: string(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    edu_basica_institucion:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    edu_basica_lugar:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    edu_media_en_curso:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    edu_media_ano:
+      type: string(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    edu_media_institucion:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_media_titulo:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_media_lugar:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_superior1_en_curso:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    edu_superior1_ano:
+      type: string(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_superior1_institucion:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_superior1_titulo:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_superior1_lugar:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_superior2_en_curso:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    edu_superior2_ano:
+      type: string(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_superior2_institucion:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_superior2_titulo:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_superior2_lugar:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_superior3_en_curso:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    edu_superior3_ano:
+      type: string(4)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_superior3_institucion:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_superior3_titulo:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    edu_superior3_lugar:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    codigo_pensum:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_periodo:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_jornada:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    is_cerrado:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+  relations:
+    TipoDocumento:
+      local: id_tipo_documento
+      foreign: id_tipo_documento
+      type: one
+    Pensum:
+      local: codigo_pensum
+      foreign: codigo_pensum
+      type: one
+    PeriodoAcademico:
+      local: id_periodo
+      foreign: id_periodo_academico
+      type: one
+    Jornada:
+      local: id_jornada
+      foreign: id_jornada
+      type: one
+    TipoPago:
+      local: id_tipo_pago
+      foreign: id_tipo_pago
+      type: one
+
 #Modulo para REcursos Físicos: REF
 RefTipoElemento:
   connection: doctrine
@@ -2358,4 +2770,110 @@ UsuarioHasRefElemento:
     RefElemento:
       local: id_ref_elemento
       foreign: id_ref_elemento
+      type: one
+
+CurEmpresa:
+  connection: doctrine
+  tableName: cur_empresa
+  columns:
+    id_cur_empresa:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    nombre:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    CurCurso:
+      local: id_cur_empresa
+      foreign: id_cur_empresa
+      type: many
+
+CurCurso:
+  connection: doctrine
+  tableName: cur_curso
+  columns:
+    id_cur_curso:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: false
+    nombre:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    duracion:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    horario:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    inicio_calificacion:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fin_calificacion:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    is_inscribible:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    id_cur_empresa:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      autoincrement: false
+      notnull: true
+    codigo_profesor:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      autoincrement: false
+  relations:
+    CurEmpresa:
+      local: id_cur_empresa
+      foreign: id_cur_empresa
+      type: one
+    Profesor:
+      local: codigo_profesor
+      foreign: codigo_profesor
       type: one

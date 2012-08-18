@@ -35,7 +35,7 @@ class inscritoActions extends sfActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    $this->forward404Unless($inscrito = Doctrine_Core::getTable('inscrito')->find(array($request->getParameter('id_inscrito'))), sprintf('Object inscrito does not exist (%s).', $request->getParameter('id_inscrito')));
+    $this->forward404Unless($inscrito = Doctrine_Core::getTable('Inscrito')->find(array($request->getParameter('numero_formulario'))), sprintf('Object inscrito does not exist (%s).', $request->getParameter('numero_formulario')));
     $this->form = new inscritoForm($inscrito);
   }
 

@@ -14,6 +14,7 @@ Doctrine_Manager::getInstance()->bindComponent('Profesor', 'doctrine');
  * @property Usuario $Usuario
  * @property Doctrine_Collection $Grupo
  * @property Doctrine_Collection $CertificacionDocente
+ * @property Doctrine_Collection $CurCurso
  * 
  * @method string              getCodigoProfesor()       Returns the current record's "codigo_profesor" value
  * @method date                getFechaIngreso()         Returns the current record's "fecha_ingreso" value
@@ -22,6 +23,7 @@ Doctrine_Manager::getInstance()->bindComponent('Profesor', 'doctrine');
  * @method Usuario             getUsuario()              Returns the current record's "Usuario" value
  * @method Doctrine_Collection getGrupo()                Returns the current record's "Grupo" collection
  * @method Doctrine_Collection getCertificacionDocente() Returns the current record's "CertificacionDocente" collection
+ * @method Doctrine_Collection getCurCurso()             Returns the current record's "CurCurso" collection
  * @method Profesor            setCodigoProfesor()       Sets the current record's "codigo_profesor" value
  * @method Profesor            setFechaIngreso()         Sets the current record's "fecha_ingreso" value
  * @method Profesor            setFechaRetiro()          Sets the current record's "fecha_retiro" value
@@ -29,6 +31,7 @@ Doctrine_Manager::getInstance()->bindComponent('Profesor', 'doctrine');
  * @method Profesor            setUsuario()              Sets the current record's "Usuario" value
  * @method Profesor            setGrupo()                Sets the current record's "Grupo" collection
  * @method Profesor            setCertificacionDocente() Sets the current record's "CertificacionDocente" collection
+ * @method Profesor            setCurCurso()             Sets the current record's "CurCurso" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -89,6 +92,10 @@ abstract class BaseProfesor extends sfDoctrineRecord
              'foreign' => 'codigo_profesor'));
 
         $this->hasMany('CertificacionDocente', array(
+             'local' => 'codigo_profesor',
+             'foreign' => 'codigo_profesor'));
+
+        $this->hasMany('CurCurso', array(
              'local' => 'codigo_profesor',
              'foreign' => 'codigo_profesor'));
     }

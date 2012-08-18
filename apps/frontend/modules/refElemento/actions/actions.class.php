@@ -14,22 +14,22 @@ class refElementoActions extends sfActions {
         /* $this->ref_elementos = Doctrine_Core::getTable('RefElemento')
           ->createQuery('a')
           ->execute(); */
-        
+
         $this->filtroTipo = "0";
         $this->filtroEstado = "0";
         $this->filtroUsuario = "0";
-        
-        $this->form= new FiltroRefElementoForm();
+
+        $this->form = new FiltroRefElementoForm();
         $this->form->bind($request->getParameter($this->form->getName()));
-        $data= $request->getParameter($this->form->getName());
-        
-        if($data['id_ref_tipo_elemento']!="")
+        $data = $request->getParameter($this->form->getName());
+
+        if ($data['id_ref_tipo_elemento'] != "")
             $this->filtroTipo = $data['id_ref_tipo_elemento'];
-        
-        if($data['id_ref_estado_elemento'])
+
+        if ($data['id_ref_estado_elemento'])
             $this->filtroEstado = $data['id_ref_estado_elemento'];
-        
-        if($data['id_usuario_responsable'])
+
+        if ($data['id_usuario_responsable'])
             $this->filtroUsuario = $data['id_usuario_responsable'];
     }
 
@@ -57,7 +57,7 @@ class refElementoActions extends sfActions {
         $this->forward404Unless($ref_elemento = Doctrine_Core::getTable('RefElemento')->find(array($request->getParameter('id_ref_elemento'))), sprintf('Object ref_elemento does not exist (%s).', $request->getParameter('id_ref_elemento')));
         $this->form = new RefElementoForm($ref_elemento);
 
-        $this->processForm($request, $this->form);
+        $this->processForm($request, $this->form, true);
 
         $this->setTemplate('edit');
     }
@@ -71,10 +71,80 @@ class refElementoActions extends sfActions {
         $this->redirect('refElemento/index');
     }
 
-    protected function processForm(sfWebRequest $request, sfForm $form) {
+    protected function processForm(sfWebRequest $request, sfForm $form, $registar = false) {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
 
         if ($form->isValid()) {
+
+            if ($registar) {
+                $informe = "";
+                $elemento = Doctrine_Core::getTable('RefElemento')->find($form->getValue('id_ref_elemento'));
+
+                if ($elemento != null) {
+                    $tipo = Doctrine_Core::getTable('RefTipoElemento')->find($form->getValue('id_ref_tipo_elemento'));
+                    if ($elemento->getIdRefTipoElemento() != $form->getValue('id_ref_tipo_elemento')) {
+                        $informe = $informe . "<li>Se cambió el tipo de elemento: de '" . $elemento->getRefTipoElemento() . "' a '" . $tipo->getNombre() . "'</li>";
+                    }
+
+                    if ($elemento->getSerial() != $form->getValue('serial')) {
+                        $informe = $informe . "<li>Se cambió el serial: de '" . $elemento->getSerial() . "' a '" . $form->getValue('serial') . "'</li>";
+                    }
+                    if ($elemento->getSerialInterno() != $form->getValue('serial_interno')) {
+                        $informe = $informe . "<li>Se cambió el serial interno: de '" . $elemento->getSerialInterno() . "' a '" . $form->getValue('serial_interno') . "'</li>";
+                    }
+                    if ($elemento->getNombre() != $form->getValue('nombre')) {
+                        $informe = $informe . "<li>Se cambió el nombre: de '" . $elemento->getNombre() . "' a '" . $form->getValue('nombre') . "'</li>";
+                    }
+                    if ($elemento->getMarca() != $form->getValue('marca')) {
+                        $informe = $informe . "<li>Se cambió la marca: de '" . $elemento->getMarca() . "' a '" . $form->getValue('marca') . "'</li>";
+                    }
+                    if ($elemento->getModelo() != $form->getValue('modelo')) {
+                        $informe = $informe . "<li>Se cambió el modelo: de '" . $elemento->getModelo() . "' a '" . $form->getValue('modelo') . "'</li>";
+                    }
+
+                    $usuario = Doctrine_Core::getTable('Usuario')->find($form->getValue('id_usuario_responsable'));
+                    if ($elemento->getIdUsuarioResponsable() != $form->getValue('id_usuario_responsable')) {
+                        $informe = $informe . "<li>Se cambió el usuario responsable: de '" . $elemento->getUsuarioResponsable() . "' a '" . $usuario . "'</li>";
+                    }
+
+                    $estado = Doctrine_Core::getTable('RefEstadoElemento')->find($form->getValue('id_ref_estado_elemento'));
+                    if ($elemento->getIdRefEstadoElemento() != $form->getValue('id_ref_estado_elemento')) {
+                        $informe = $informe . "<li>Se cambió el estado del elemento: de '" . $elemento->getRefEstadoElemento() . "' a '" . $estado . "'</li>";
+                    }
+
+                    if ($elemento->getDescripcion() != $form->getValue('descripcion')) {
+                        $informe = $informe . "<li>Se cambió la descripcion: de '" . $elemento->getDescripcion() . "' a '" . $form->getValue('descripcion') . "'</li>";
+                    }
+                    if ($elemento->getIsPrestable() != $form->getValue('is_prestable')) {
+                        $informe = $informe . "<li>Se cambió la posibilidad de ser prestable: de '" . ($elemento->getIsPrestable() == 1 ? "Si" : "No") . "' a '" . ($form->getValue('is_prestable') == 1 ? "Si" : "No") . "'</li>";
+                    }
+
+                    $tipoSancion = Doctrine_Core::getTable('RefTipoSancion')->find($form->getValue('id_ref_tipo_sancion'));
+                    if ($elemento->getIdRefTipoSancion() != $form->getValue('id_ref_tipo_sancion')) {
+                        $informe = $informe . "<li>Se cambió el tipo de sanción: de '" . ($elemento->getRefTipoSancion() == null ? "" : $elemento->getRefTipoSancion()->getNombre()) . "' a '" . ($tipoSancion == null ? "" : $tipoSancion) . "'</li>";
+                    }
+                    if ($elemento->getCantidadSancion() != $form->getValue('cantidad_sancion')) {
+                        $informe = $informe . "<li>Se cambió la cantidad de la sancion: de '" . $elemento->getCantidadSancion() . "' a '" . $form->getValue('cantidad_sancion') . "'</li>";
+                    }
+
+                    $lugar = Doctrine_Core::getTable('RefLugar')->find($form->getValue('id_ref_lugar'));
+                    if ($elemento->getIdRefLugar() != $form->getValue('id_ref_lugar')) {
+                        $informe = $informe . "<li>Se cambió el lugar: de '" . $elemento->getRefLugar()->getPath() . "' a '" . $lugar->getPath() . "'</li>";
+                    }
+
+                    if (strlen($informe) != 0) {
+
+                        $informe = "Se realizaron los siguientes cambios sobre los datos propios del elemento: <br /><ul>" . $informe . "</ul>";
+
+                        $registro = new RefHojaVida();
+                        $registro->setDescripcion($informe);
+                        $registro->setIdRefElemento($elemento->getIdRefElemento());
+                        $registro->setIdUsuarioCreador($usuario = Doctrine_Core::getTable('Usuario')->findBy('id_sf_guard_user', $this->getUser()->getGuardUser()->getId())->getFirst()->getIdUsuario());
+                        $registro->save();
+                    }
+                }
+            }
+
             $form->save();
 
             $this->redirect('refElemento/index');
@@ -185,25 +255,25 @@ class refElementoActions extends sfActions {
         if ($request->hasParameter('fTip') && $request->getParameter('fTip') != "0") {
             if ($bWhere)
                 $q->andWhere('e.id_ref_tipo_elemento = ?', $request->getParameter('fTip'));
-            else{
+            else {
                 $q->where('e.id_ref_tipo_elemento = ?', $request->getParameter('fTip'));
-                $bWhere=true;
+                $bWhere = true;
             }
         }
         if ($request->hasParameter('fEst') && $request->getParameter('fEst') != "0") {
             if ($bWhere)
                 $q->andWhere('e.id_ref_estado_elemento = ?', $request->getParameter('fEst'));
-            else{
+            else {
                 $q->where('e.id_ref_estado_elemento = ?', $request->getParameter('fEst'));
-                $bWhere=true;
+                $bWhere = true;
             }
         }
         if ($request->hasParameter('fUsu') && $request->getParameter('fUsu') != "0") {
             if ($bWhere)
                 $q->andWhere('e.id_usuario_responsable = ?', $request->getParameter('fUsu'));
-            else{
+            else {
                 $q->where('e.id_usuario_responsable = ?', $request->getParameter('fUsu'));
-                $bWhere=true;
+                $bWhere = true;
             }
         }
 
@@ -399,11 +469,52 @@ class refElementoActions extends sfActions {
         $foto = Doctrine_Core::getTable('RefFotoElemento')->find($request->getParameter('id'));
 
         if ($foto != null) {
-            $im = imagecreatefromJPEG($foto->getPath());
-            // Aquí mostramos la imagen en nuestro navegador
-            @ImageJPEG($im);
-            // Destruimos la imagen para liberar espacio
-            @ImageDestroy($im);
+
+            $image_creators = array(
+                1 => "imagecreatefromgif",
+                2 => "imagecreatefromjpeg",
+                3 => "imagecreatefrompng",
+                6 => "imagecreatefromwbmp",
+                16 => "imagecreatefromxbm"
+            );
+
+            $image_size = getimagesize($foto->getPath());
+            if (is_array($image_size)) {
+                $file_type = $image_size[2];
+                switch ($file_type) {
+                    case 1: {
+                            $im = imagecreatefromgif($foto->getPath());
+                            // Aquí mostramos la imagen en nuestro navegador
+                            @ImageGIF($im);
+                            // Destruimos la imagen para liberar espacio
+                            @ImageDestroy($im);
+                        }break;
+                    case 2: {
+                            $im = imagecreatefromjpeg($foto->getPath());
+                            @ImageJPEG($im);
+                            @ImageDestroy($im);
+                        }break;
+                    case 3: {
+                            $im = imagecreatefrompng($foto->getPath());
+                            @ImagePNG($im);
+                            @ImageDestroy($im);
+                        }break;
+                    case 6: {
+                            $im = imagecreatefromwbmp($foto->getPath());
+                            @ImageWBMP($im);
+                            @ImageDestroy($im);
+                        }break;
+                    default: {
+                            $im = imagecreate('256', '192');
+                            // Aquí mostramos la imagen en nuestro navegador
+                            @ImageJPEG($im);
+                            // Destruimos la imagen para liberar espacio
+                            @ImageDestroy($im);
+                        }
+                }
+            } else {
+                die("imagecreatefrom: Not an array while calling getimagesize()!");
+            }
         } else {
             $im = imagecreate('256', '192');
             // Aquí mostramos la imagen en nuestro navegador
@@ -440,6 +551,44 @@ class refElementoActions extends sfActions {
         }
 
         $this->redirect('refElemento/ver?id_ref_elemento=' . $request->getParameter('idEle'));
+    }
+
+    public function executeVerListado(sfWebRequest $request) {
+
+        $this->elementos = Doctrine_Core::getTable('RefElemento')->createQuery('e')->orderBy('id_ref_lugar')->execute();
+
+        $this->getContext()->getResponse()->setHttpHeader('Content-Disposition', 'inline;filename=NDEP_DB_Export_' . date("Y-m-d_Hi") . '.csv;');
+
+        sfConfig::set('sf_web_debug', false);
+
+        $this->getResponse()->clearHttpHeaders();
+        $this->getResponse()->setHttpHeader('Content-Type', 'application/vnd.ms-excel');
+        $this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=listadoElementos.csv');
+
+        echo '"Serial","Serial Interno","Nombre","Marca","Modelo","'.utf8_decode('Descripción').'","Tipo","Lugar","'.utf8_decode('Ubicación').'","Prestable?","'.utf8_decode('Sanción').'","Cantidad '.utf8_decode('Sanción').'","Estado","Responsable"';
+
+        echo "\n";
+
+        foreach ($this->elementos as $elemento) {
+            echo '"' . utf8_decode(str_replace('"', '""', $elemento->getSerial())) . '","';
+            echo utf8_decode(str_replace('"', '""', $elemento->getSerialInterno())) . '","';
+            echo utf8_decode(str_replace('"', '""', $elemento->getNombre())) . '","';
+            echo utf8_decode(str_replace('"', '""', $elemento->getMarca())) . '","';
+            echo utf8_decode(str_replace('"', '""', $elemento->getModelo())) . '","';
+            echo utf8_decode(str_replace('"', '""', $elemento->getDescripcion())) . '","';
+            echo utf8_decode(str_replace('"', '""', $elemento->getRefTipoElemento())) . '","';
+            echo utf8_decode(str_replace('"', '""', $elemento->getRefLugar()->getPath())) . '","';
+            echo utf8_decode(str_replace('"', '""', $elemento->getUbicacion())) . '","';
+            echo ($elemento->getIsPrestable() == 1 ? "Si" : "No") . '","';
+            echo utf8_decode(str_replace('"', '""', $elemento->getRefTipoSancion()->getNombre())) . '","';
+            echo utf8_decode(str_replace('"', '""', $elemento->getCantidadSancion())) . '","';
+            echo utf8_decode(str_replace('"', '""', $elemento->getRefEstadoElemento())) . '","';
+            echo utf8_decode(str_replace('"', '""', $elemento->getUsuarioResponsable())) . '"';
+
+            echo "\n";
+        }
+
+        return sfView::NONE;
     }
 
 }
