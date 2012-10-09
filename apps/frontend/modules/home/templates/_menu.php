@@ -127,6 +127,16 @@ $menu_item->setName("Gestión de Lugares")->setUrl("refLugar/index")->setCredent
 
 $root->addChild("Lugares", $menu_item);
 
+
+//CURSOS EMPRESARIALES
+
+//Listar
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Cursos Empresariales")->setUrl("curCurso/index")->setCredentials(array('cursosEmpresariales'));
+
+
+$root->addChild("CursosEmpresariales", $menu_item);
+
 //SALIR:
 $menu_item = new pmSuperfishMenuItem();
 $menu_item->setName("Salir")->setUrl(url_for("sf_guard_signout"));

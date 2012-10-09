@@ -23,7 +23,7 @@
         
         if(confirm('Esta seguro de querer eliminar esta foto?\n\nEste proceso es irreversible.')){
             $.post('<?php echo url_for('formularioInscripcion/removeFoto') ?>',
-            { "id": <?php echo $form->getObject()->getIdFormularioInscripcion() ?>},
+            { "id": <?php echo ($form->getObject()->getIdFormularioInscripcion()=="" ? "0":$form->getObject()->getIdFormularioInscripcion()) ?>},
             function(data){
                 if(data){
                     $('#deleteFoto').hide();

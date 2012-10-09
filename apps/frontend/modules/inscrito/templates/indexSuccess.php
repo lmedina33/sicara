@@ -1,55 +1,113 @@
+<?php
+slot('title', 'Listar Inscritos')
+?>
 <?php use_helper("DataTable") ?>
-<script>
-    $(document).ready(function() {
-
-        $("#dataTable tbody tr").click( function( e ) {
-            if ( $(this).hasClass('row_selected') ) {
-                $(this).removeClass('row_selected');
-            }
-            else {
-                $('tr.row_selected').removeClass('row_selected');
-                $(this).addClass('row_selected');
+<script type="text/javascript">
+    
+    var oTable;
+    $(document).ready(function(){
+        
+        oTable=$('.dataTable').dataTable({
+            "sDom": 'lfT<"toolbar">trip<"foot">',
+            "oLanguage": <?php echo getLenguageEs(); ?>,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": "<?php echo url_for('inscrito/getDataPaging') ?>",
+            "aoColumns": [
+                { "mDataProp": "Numero" , "sWidth":"25px" },
+                { "mDataProp": "Nombre" , "sWidth":"250px" },
+                { "mDataProp": "TipoDoc" , "sClass": "small" },
+                { "mDataProp": "Documento" },
+                { "mDataProp": "Telefono" },
+                { "mDataProp": "Correo" },
+                { "mDataProp": "Pensum" , "sWidth":"250px" },
+                { "mDataProp": "Periodo" },
+                { "mDataProp": "Jornada" },
+                { "mDataProp": "Matriculado" , "sClass": "small" , "sWidth":"25px" , "fnRender": function ( o, val ) {
+                        if(val == "1"){
+                            return "<img src='/images/iconos/check.png' />";
+                        }else{
+                            return "";
+                        }
+                    } },
+                { "mDataProp": "IdForm", 'bVisible': false }
+            ],
+            "fnDrawCallback": function ( oSettings ) {
+                $('.dataTable tbody tr').each( function () {
+                    $(this).click( function () {
+                        $(oTable.fnSettings().aoData).each(function (){
+                            $(this.nTr).removeClass('row_selected');
+                        });
+                        $(this).addClass('row_selected');
+                        
+                        datos = oTable.fnGetData( this );
+                        
+                        numForm=datos.Numero;
+                        idForm=datos.IdForm;
+            
+                        $('#detallar').attr('href', '<?php echo url_for('inscrito/ver?id=') ?>'+numForm);
+                        $('#detallar img').attr('src', '/images/iconos/listarSmall.png');
+            
+                        $('#formulario').attr('href', '<?php echo url_for('formularioInscripcion/generarFormulario?id=') ?>'+idForm);
+                        $('#formulario img').attr('src', '/images/iconos/refHV.png');
+                    } );
+                } );
+            },
+            "oColVis": {
+                "buttonText": "Ver Columnas"
+            },
+            "oTableTools": {
+                "sSwfPath": "/js/DataTables-1.9.0/extras/TableTools/media/swf/copy_cvs_xls_pdf.swf",
+                "aButtons":[
+                    {
+                        "sExtends": "copy",
+                        "sButtonText": "",
+                        "sToolTip": "Copiar"
+                    },
+                    {
+                        "sExtends": "xls",
+                        "sButtonText": "",
+                        "sToolTip": "Exportar a Excel"
+                    },
+                    {
+                        "sExtends": "pdf",
+                        "sButtonText": "",
+                        "sToolTip": "Exportar a PDF"
+                    }
+                ]
             }
         });
         
-        oTable = $('#dataTable').dataTable({
-            "sDom": 'lf<"toolbar">tip<"foot">',
-            "oLanguage": <?php echo getLenguageEs(); ?>
-        });
-        
-        $("div.toolbar").html('&nbsp;&nbsp;&nbsp;<img src="/images/edit.png" />&nbsp;&nbsp;&nbsp;<img src="/images/view.png" />');
-    } );
+        $("div.toolbar").html('<a href="#" id="detallar" title="Ver Inscrito"><img src="/images/iconos/listarSmallGray.png"/></a>\n\
+            <a href="#" id="formulario" title="Ver Formulario" target="_blank"><img src="/images/iconos/refHVGray.png"/></a>');
+    });
     
+    function confirmFormalizar(){
+        return confirm('Si da este formulario por formalizado, no se podrá volver a modificar.\n\nEstá seguro de querer formalizar este formulario?');
+    }
     
+    function confirmInscribir(){
+        return confirm('Realmente desea inscribir al aspirante de este formulario?\n\nSi acepta, deberá terminar de diligenciar los datos de inscripción.');
+    }
 </script>
+<h1>Listar Inscritos</h1>
 
-<h1>Lista de Inscritos</h1>
-
-<table id="dataTable">
+<table class="dataTable">
     <thead>
         <tr>
-            <th>Id inscrito</th>
-            <th>Numero formulario</th>
-            <th>Id jornada</th>
-            <th>Id tipo pago</th>
-            <th>Id periodo</th>
-            <th>Id usuario</th>
+            <th class="small">Número Formulario</th>
+            <th>Nombre</th>
+            <th>Tipo de Documento</th>
+            <th>Documento</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Programa</th>
+            <th>Periodo</th>
+            <th>Jornada</th>
             <th>Matriculado</th>
-            <th>Fecha inscripcion</th>
+            <th>Id Form</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($inscritos as $inscrito): ?>
-            <tr>
-                <td><a href="<?php echo url_for('inscrito/edit?numero_formulario=' . $inscrito->getNumeroFormulario()) ?>"><?php echo $inscrito->getNumeroFormulario() ?></a></td>
-                <td><?php echo $inscrito->getNumeroFormulario() ?></td>
-                <td><?php echo $inscrito->getIdJornada() ?></td>
-                <td><?php echo $inscrito->getIdTipoPago() ?></td>
-                <td><?php echo $inscrito->getIdPeriodo() ?></td>
-                <td><?php echo $inscrito->getIdUsuario() ?></td>
-                <td><?php echo $inscrito->getIsMatriculado() ?></td>
-                <td><?php echo $inscrito->getFechaInscripcion() ?></td>
-            </tr>
-        <?php endforeach; ?>        
     </tbody>
 </table>

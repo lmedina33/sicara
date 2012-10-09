@@ -4,7 +4,24 @@
 slot('title', 'Ver Hoja de Vida')
 ?>
 <script>
+    var fechas;
     $(document).ready(function(){
+        
+        fechasProx=new Array();
+        fechasPas=new Array();
+        
+        <?php 
+        $i=0;
+        foreach($mantenimientosProx as $mantenimiento){ ?>
+        fechasProx[<?php echo $i ?>]= "<?php echo date("Y",strtotime ($mantenimiento->getFechaProgramada())) ?>"+"-"+"<?php echo intval(date("m",strtotime ($mantenimiento->getFechaProgramada())))-1 ?>"+"-"+"<?php echo intval(date("d",strtotime ($mantenimiento->getFechaProgramada()))) ?>";
+        <?php $i++; } ?>
+            
+        <?php 
+        $i=0;
+        foreach($mantenimientosPas as $mantenimiento){ ?>
+        fechasPas[<?php echo $i ?>]= "<?php echo date("Y",strtotime ($mantenimiento->getFechaProgramada())) ?>"+"-"+"<?php echo intval(date("m",strtotime ($mantenimiento->getFechaProgramada())))-1 ?>"+"-"+"<?php echo intval(date("d",strtotime ($mantenimiento->getFechaProgramada()))) ?>";
+        <?php $i++; } ?>
+        
         jQuery("#form").validationEngine();
         
         $('#form_add').hide();
@@ -16,6 +33,33 @@ slot('title', 'Ver Hoja de Vida')
             mode: "textareas",
             width: "400",
             height: "250"
+        });
+        
+        $( "#calMantenimiento" ).datepicker(
+        {
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            buttonText: ['Ver Calendario...'],
+            yearRange: 'c-1:c+2',
+            changeMonth: true,
+            changeYear: true,
+            beforeShowDay: function(date) {
+                data=new Array();
+                data[0]=true;
+                if(fechasProx.indexOf(date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate())!=-1){
+                    data[1]="manttoProx";
+                    data[2]="Mantenimiento próximo";
+                }else if(fechasPas.indexOf(date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate())!=-1){
+                    data[1]="manttoPas";
+                    data[2]="Mantenimiento pasado";
+                }else{
+                    data[1]="";
+                    data[2]="";
+                }
+                
+                return data;
+            }
         });
     });
     
@@ -104,18 +148,18 @@ slot('title', 'Ver Hoja de Vida')
             <th><label>Lugar:</label></th>
             <td>
                 <?php echo $elemento->getRefLugar()->getPath() ?>
-                
-                <?php if($elemento->getRefLugar()->getDescripcion()!="" || $elemento->getRefLugar()->getUbicacion()!=""){ ?>
-                <a href="#" id="button_detail_lugar" onClick="showDetailLugar()"><img src="/images/iconos/seePlus.png" /></a>
+
+                <?php if ($elemento->getRefLugar()->getDescripcion() != "" || $elemento->getRefLugar()->getUbicacion() != "") { ?>
+                    <a href="#" id="button_detail_lugar" onClick="showDetailLugar()"><img src="/images/iconos/seePlus.png" /></a>
                 <?php } ?>
                 <div id="detail_lugar">
                     <small>
-                    <?php if($elemento->getRefLugar()->getDescripcion()!=""){ ?>
-                    <b>Descripción:</b> <?php echo $elemento->getRefLugar()->getDescripcion() ?><br />
-                    <?php } ?>
-                    <?php if($elemento->getRefLugar()->getUbicacion()!=""){ ?>
-                    <b>Ubicación:</b> <?php echo $elemento->getRefLugar()->getUbicacion() ?>
-                    <?php } ?>
+                        <?php if ($elemento->getRefLugar()->getDescripcion() != "") { ?>
+                            <b>Descripción:</b> <?php echo $elemento->getRefLugar()->getDescripcion() ?><br />
+                        <?php } ?>
+                        <?php if ($elemento->getRefLugar()->getUbicacion() != "") { ?>
+                            <b>Ubicación:</b> <?php echo $elemento->getRefLugar()->getUbicacion() ?>
+                        <?php } ?>
                     </small>
                 </div>
             </td>
@@ -129,20 +173,20 @@ slot('title', 'Ver Hoja de Vida')
         <tr>
             <th><label>Prestable:</label></th>
             <td>
-                <?php echo ($elemento->getIsPrestable()=="1") ? "Si":"No" ?>
+                <?php echo ($elemento->getIsPrestable() == "1") ? "Si" : "No" ?>
             </td>
         </tr>
-        <?php if($elemento->getIsPrestable()=="1" && $elemento->getIdRefTipoSancion()!=null){ ?>
-        <tr>
-            <th><label>Tipo de Sanción:</label></th>
-            <td>
-                <?php echo $elemento->getRefTipoSancion() ?>
-            </td>
-        </tr>
-        <tr>
-            <th><label>Cantidad de Sanción:</label></th>
-            <td><?php echo $elemento->getCantidadSancion() ?></td>
-        </tr>
+        <?php if ($elemento->getIsPrestable() == "1" && $elemento->getIdRefTipoSancion() != null) { ?>
+            <tr>
+                <th><label>Tipo de Sanción:</label></th>
+                <td>
+                    <?php echo $elemento->getRefTipoSancion() ?>
+                </td>
+            </tr>
+            <tr>
+                <th><label>Cantidad de Sanción:</label></th>
+                <td><?php echo $elemento->getCantidadSancion() ?></td>
+            </tr>
         <?php } ?>
         <tr>
             <th><label>Responsable:</label></th>
@@ -152,50 +196,56 @@ slot('title', 'Ver Hoja de Vida')
         </tr>
     </tbody>
 </table>
-<?php if($id_foto!=""){ ?>
-<div style="float:left; margin-left: 20px; border: 1px dashed #ccc; padding: 5px;">
-    <a href="#" onClick="window.open('<?php echo url_for('refElemento/showFoto?id='.$id_foto) ?>','Foto de recurso','toolbar=0,location=0,status=0,menubar=0,scrollbars=1,resizable=1,width=700,height=600')"><img src="<?php echo url_for('refElemento/renderFoto?id='.$id_foto) ?>" width="256px" height="192px"/>
-</div>
-<div class="administracion" style="position: relative; top:-8px"><a onClick="javascript: return deleteFoto()" href="<?php echo url_for('refElemento/removeFoto?idEle='.$elemento->getIdRefElemento().'&id=').$id_foto ?>"><img src="/images/iconos/removeSmall.png" /></a></div>
-<?php }else{ ?>
-<div style="float:left; margin-left: 20px; border: 1px dashed #ccc; padding: 5px; width:256px; height:192px; color: #ccc;" >
-    <small>No hay foto disponible</small>
-</div>
+<?php if ($id_foto != "") { ?>
+    <div style="float:left; margin-left: 20px; border: 1px dashed #ccc; padding: 5px;">
+        <a href="#" onClick="window.open('<?php echo url_for('refElemento/showFoto?id=' . $id_foto) ?>','Foto de recurso','toolbar=0,location=0,status=0,menubar=0,scrollbars=1,resizable=1,width=700,height=600')"><img src="<?php echo url_for('refElemento/renderFoto?id=' . $id_foto) ?>" width="256px" height="192px"/>
+    </div>
+    <div class="administracion" style="position: relative; top:-8px"><a onClick="javascript: return deleteFoto()" href="<?php echo url_for('refElemento/removeFoto?idEle=' . $elemento->getIdRefElemento() . '&id=') . $id_foto ?>"><img src="/images/iconos/removeSmall.png" /></a></div>
+<?php } else { ?>
+    <div style="float:left; margin-left: 20px; border: 1px dashed #ccc; padding: 5px; width:256px; height:192px; color: #ccc;" >
+        <small>No hay foto disponible</small>
+    </div>
 <?php } ?>
 <div style="clear:both"></div>
 <br />
 <a id="button_add" class="button add" href="#form_add" onClick="javascript: showAdd()">Agregar Registro</a>
-<a class="button" href="<?php echo url_for("refHojaVida/generarHojaVida?idElem=".$elemento->getIdRefElemento()) ?>" target="_blank"><img src="/images/iconos/pdfSmall.png" /> Generar PDF</a>
+<a class="button" href="<?php echo url_for("refHojaVida/generarHojaVida?idElem=" . $elemento->getIdRefElemento()) ?>" target="_blank"><img src="/images/iconos/pdfSmall.png" /> Generar PDF</a>
+<h2>Mantenimientos Programados</h2>
+<div id="mantenimientos" >
+    Mantenimientos no disponibles
+</div>
+<div id="calMantenimiento"></div>
+<div style="clear:both"></div>
 <div id="form_add">
     <h2>Registro Nuevo</h2>
-    <form id="form" action="<?php echo url_for('refHojaVida/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id_ref_hoja_vida='.$form->getObject()->getIdRefHojaVida() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
-    <?php if (!$form->getObject()->isNew()): ?>
-    <input type="hidden" name="sf_method" value="put" />
-    <?php endif; ?>
-    <table width="100%">
-        <tfoot>
-        <tr>
-            <td>
-            <?php echo $form->renderHiddenFields(false) ?>
-            </td>
-            <td>
-            <input type="submit" value="Guardar" onClick="return confirm('Esta seguro de querer guardar este registro?, no podrá modificarlo.')" />
-            </td>
-        </tr>
-        </tfoot>
-        <tbody>
-        <?php echo $form->renderGlobalErrors() ?>
-        <tr>
-            <th>
-                <?php echo $form['descripcion']->renderLabel() ?><?php echo $form['descripcion']->renderError() ?>
-        <div class="tip" title="Esta debe ser una descripción relacionada con algún cambio en el elemento y no puede ser modificado una vez registrado.<br />En caso de requerir especificar un cambio, debe agregar un nuevo registro."></div>
+    <form id="form" action="<?php echo url_for('refHojaVida/' . ($form->getObject()->isNew() ? 'create' : 'update') . (!$form->getObject()->isNew() ? '?id_ref_hoja_vida=' . $form->getObject()->getIdRefHojaVida() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+        <?php if (!$form->getObject()->isNew()): ?>
+            <input type="hidden" name="sf_method" value="put" />
+        <?php endif; ?>
+        <table width="100%">
+            <tfoot>
+                <tr>
+                    <td>
+                        <?php echo $form->renderHiddenFields(false) ?>
+                    </td>
+                    <td>
+                        <input type="submit" value="Guardar" onClick="return confirm('Esta seguro de querer guardar este registro?, no podrá modificarlo.')" />
+                    </td>
+                </tr>
+            </tfoot>
+            <tbody>
+                <?php echo $form->renderGlobalErrors() ?>
+                <tr>
+                    <th>
+                        <?php echo $form['descripcion']->renderLabel() ?><?php echo $form['descripcion']->renderError() ?>
+            <div class="tip" title="Esta debe ser una descripción relacionada con algún cambio en el elemento y no puede ser modificado una vez registrado.<br />En caso de requerir especificar un cambio, debe agregar un nuevo registro."></div>
             </th>
             <td>
-            <?php echo $form['descripcion'] ?>
+                <?php echo $form['descripcion'] ?>
             </td>
-        </tr>
-        </tbody>
-    </table>
+            </tr>
+            </tbody>
+        </table>
     </form>
 </div>
 <br />
@@ -203,79 +253,81 @@ slot('title', 'Ver Hoja de Vida')
 
 <div id="lista_registros">
     <h2>Registros Disponibles</h2>
-    <?php if(count($registros)==0){ ?>
-    <div>Este elemento no tiene ningún registro aún.</div>
-    <br />
-    <br />
-    <?php }else{ ?>
-    <div class="pagingBar">
-        <?php
-        if ($page != 1) {
-            ?>
-            <a class="pageBack" href="<?php echo url_for('refHojaVida/verByElemento?idEle='. $elemento->getIdRefElemento() .'&page=' . ($page - 1)) ?>">Anterior</a>
+    <?php if (count($registros) == 0) { ?>
+        <div>Este elemento no tiene ningún registro aún.</div>
+        <br />
+        <br />
+    <?php } else { ?>
+        <div class="pagingBar">
             <?php
-        }
-        for ($i = 1; $i <= $lastPage; $i++) {
-            if ($page != $i) {
+            if ($page != 1) {
                 ?>
-                <a class="pageNum" href="<?php echo url_for('refHojaVida/verByElemento?idEle=' . $elemento->getIdRefElemento() . '&page=' . ($i)) ?>"><?php echo $i ?></a>
-                <?php
-            } else {
-                ?>
-                <div class="pageActual"><?php echo $i ?></div>
+                <a class="pageBack" href="<?php echo url_for('refHojaVida/verByElemento?idEle=' . $elemento->getIdRefElemento() . '&page=' . ($page - 1)) ?>">Anterior</a>
                 <?php
             }
-        }
-        if ($page < $lastPage) {
+            for ($i = 1; $i <= $lastPage; $i++) {
+                if ($page != $i) {
+                    ?>
+                    <a class="pageNum" href="<?php echo url_for('refHojaVida/verByElemento?idEle=' . $elemento->getIdRefElemento() . '&page=' . ($i)) ?>"><?php echo $i ?></a>
+                    <?php
+                } else {
+                    ?>
+                    <div class="pageActual"><?php echo $i ?></div>
+                    <?php
+                }
+            }
+            if ($page < $lastPage) {
+                ?>
+                <a class="pageNext" href="<?php echo url_for('refHojaVida/verByElemento?idEle=' . $elemento->getIdRefElemento() . '&page=' . ($page + 1)) ?>">Siguiente</a>
+                <?php
+            }
             ?>
-            <a class="pageNext" href="<?php echo url_for('refHojaVida/verByElemento?idEle=' . $elemento->getIdRefElemento() . '&page=' . ($page + 1)) ?>">Siguiente</a>
-            <?php
-        }
-        ?>
-        <div style="float:right; margin-left: 5px; color: #888;"> Mostrando <?php echo $indicePrimero ?> a <?php echo $indiceUltimo ?> elementos de <?php echo $total ?> encontrados</div>
-    </div>
-    <hr style="position: relative; top:7px;">
-    <br />
-    <div class="page">
-        <?php foreach($registros as $registro){ ?>
-        <div class="registro_ref_hoja_vida">
-            <div class="creador">Registrado por <?php echo $registro->getUsuarioCreador() ?></div>
-            <div class="fecha">Fecha y hora de registro: <?php echo $registro->getCreatedAt() ?></div>
-            <div class="descripcion">
-            <?php echo html_entity_decode($registro->getDescripcion()) ?>
-            </div>
+            <div style="float:right; margin-left: 5px; color: #888;"> Mostrando <?php echo $indicePrimero ?> a <?php echo $indiceUltimo ?> elementos de <?php echo $total ?> encontrados</div>
         </div>
-        <?php } ?>
-    </div>
-    <?php if ($materialsShowed > ($limit/2)) { ?>
-    <br />
-    <div class="pagingBar">
+        <hr style="position: relative; top:7px;">
+        <br />
+        <div class="page">
+            <?php foreach ($registros as $registro) { ?>
+                <div class="registro_ref_hoja_vida">
+                    <div class="creador">Registrado por <?php echo $registro->getUsuarioCreador() ?></div>
+                    <div class="fecha">Fecha y hora de registro: <?php echo $registro->getCreatedAt() ?></div>
+                    <div class="descripcion">
+                        <?php echo html_entity_decode($registro->getDescripcion()) ?>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+        <?php if ($materialsShowed > ($limit / 2)) { ?>
+            <br />
+            <div class="pagingBar">
+                <?php
+                if ($page != 1) {
+                    ?>
+                    <a class="pageBack" href="<?php echo url_for('refHojaVida/verByElemento?idEle=' . $elemento->getIdRefElemento() . '&page=' . ($page - 1)) ?>">Anterior</a>
+                    <?php
+                }
+                for ($i = 1; $i <= $lastPage; $i++) {
+                    if ($page != $i) {
+                        ?>
+                        <a class="pageNum" href="<?php echo url_for('refHojaVida/verByElemento?idEle=' . $elemento->getIdRefElemento() . '&page=' . ($i)) ?>"><?php echo $i ?></a>
+                        <?php
+                    } else {
+                        ?>
+                        <div class="pageActual"><?php echo $i ?></div>
+                        <?php
+                    }
+                }
+                if ($page < $lastPage) {
+                    ?>
+                    <a class="pageNext" href="<?php echo url_for('refHojaVida/verByElemento?idEle=' . $elemento->getIdRefElemento() . '&page=' . ($page + 1)) ?>">Siguiente</a>
+                    <?php
+                }
+                ?>
+                <div style="float:right; margin-left: 5px; color: #888;"> Mostrando <?php echo $indicePrimero ?> a <?php echo $indiceUltimo ?> elementos de <?php echo $total ?> encontrados</div>
+            </div>
+            <hr>
         <?php
-        if ($page != 1) {
-            ?>
-            <a class="pageBack" href="<?php echo url_for('refHojaVida/verByElemento?idEle='. $elemento->getIdRefElemento() .'&page=' . ($page - 1)) ?>">Anterior</a>
-            <?php
         }
-        for ($i = 1; $i <= $lastPage; $i++) {
-            if ($page != $i) {
-                ?>
-                <a class="pageNum" href="<?php echo url_for('refHojaVida/verByElemento?idEle=' . $elemento->getIdRefElemento() . '&page=' . ($i)) ?>"><?php echo $i ?></a>
-                <?php
-            } else {
-                ?>
-                <div class="pageActual"><?php echo $i ?></div>
-                <?php
-            }
-        }
-        if ($page < $lastPage) {
-            ?>
-            <a class="pageNext" href="<?php echo url_for('refHojaVida/verByElemento?idEle=' . $elemento->getIdRefElemento() . '&page=' . ($page + 1)) ?>">Siguiente</a>
-            <?php
-        }
-        ?>
-        <div style="float:right; margin-left: 5px; color: #888;"> Mostrando <?php echo $indicePrimero ?> a <?php echo $indiceUltimo ?> elementos de <?php echo $total ?> encontrados</div>
-    </div>
-    <hr>
-    <?php }
-    }?>
+    }
+    ?>
 </div>

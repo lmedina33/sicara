@@ -88,7 +88,7 @@ slot('title', 'Listar Material Bibliográfico')
         $("div.toolbar").html('<a href="#" id="detallar" title="Ver Material"><img src="/images/iconos/listarSmallGray.png"/></a>\n\
         <a id="foto" href="#" title="Ver Fotografía"><img src="/images/iconos/fotoGrey.png" /></a>\n\
         <a id="hv" href="#" title="Ver Hoja de Vida"><img src="/images/iconos/refHVGray.png" /></a>\n\
-        <a id="hv" href="<?php echo url_for('refElemento/verListado') ?>" title="Ver Listado de Elementos"><img src="/images/iconos/list.png" /></a>');
+        <a id="lista" href="<?php echo url_for('refElemento/verListado') ?>" title="Ver Listado de Elementos"><img src="/images/iconos/list.png" /></a>');
     });
 </script>
 <h1>Listar Recursos Físicos</h1>

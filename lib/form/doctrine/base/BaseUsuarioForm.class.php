@@ -33,6 +33,7 @@ abstract class BaseUsuarioForm extends BaseFormDoctrine
       'telefono_acudiente2'      => new sfWidgetFormInputText(),
       'especificaciones_medicas' => new sfWidgetFormTextarea(),
       'observaciones'            => new sfWidgetFormTextarea(),
+      'foto_path'                => new sfWidgetFormInputText(),
       'id_sf_guard_user'         => new sfWidgetFormInputText(),
     ));
 
@@ -55,6 +56,7 @@ abstract class BaseUsuarioForm extends BaseFormDoctrine
       'telefono_acudiente2'      => new sfValidatorString(array('max_length' => 25, 'required' => false)),
       'especificaciones_medicas' => new sfValidatorString(array('required' => false)),
       'observaciones'            => new sfValidatorString(array('required' => false)),
+      'foto_path'                => new sfValidatorString(array('max_length' => 150, 'required' => false)),
       'id_sf_guard_user'         => new sfValidatorInteger(array('required' => false)),
     ));
 

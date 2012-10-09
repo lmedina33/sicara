@@ -55,6 +55,7 @@ Doctrine_Manager::getInstance()->bindComponent('FormularioInscripcion', 'doctrin
  * @property integer $id_periodo
  * @property integer $id_jornada
  * @property integer $is_cerrado
+ * @property integer $is_inscrito
  * @property TipoDocumento $TipoDocumento
  * @property Pensum $Pensum
  * @property PeriodoAcademico $PeriodoAcademico
@@ -109,6 +110,7 @@ Doctrine_Manager::getInstance()->bindComponent('FormularioInscripcion', 'doctrin
  * @method integer               getIdPeriodo()                 Returns the current record's "id_periodo" value
  * @method integer               getIdJornada()                 Returns the current record's "id_jornada" value
  * @method integer               getIsCerrado()                 Returns the current record's "is_cerrado" value
+ * @method integer               getIsInscrito()                Returns the current record's "is_inscrito" value
  * @method TipoDocumento         getTipoDocumento()             Returns the current record's "TipoDocumento" value
  * @method Pensum                getPensum()                    Returns the current record's "Pensum" value
  * @method PeriodoAcademico      getPeriodoAcademico()          Returns the current record's "PeriodoAcademico" value
@@ -162,6 +164,7 @@ Doctrine_Manager::getInstance()->bindComponent('FormularioInscripcion', 'doctrin
  * @method FormularioInscripcion setIdPeriodo()                 Sets the current record's "id_periodo" value
  * @method FormularioInscripcion setIdJornada()                 Sets the current record's "id_jornada" value
  * @method FormularioInscripcion setIsCerrado()                 Sets the current record's "is_cerrado" value
+ * @method FormularioInscripcion setIsInscrito()                Sets the current record's "is_inscrito" value
  * @method FormularioInscripcion setTipoDocumento()             Sets the current record's "TipoDocumento" value
  * @method FormularioInscripcion setPensum()                    Sets the current record's "Pensum" value
  * @method FormularioInscripcion setPeriodoAcademico()          Sets the current record's "PeriodoAcademico" value
@@ -606,6 +609,16 @@ abstract class BaseFormularioInscripcion extends sfDoctrineRecord
              'length' => 4,
              ));
         $this->hasColumn('is_cerrado', 'integer', 1, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'default' => '0',
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 1,
+             ));
+        $this->hasColumn('is_inscrito', 'integer', 1, array(
              'type' => 'integer',
              'fixed' => 0,
              'unsigned' => false,

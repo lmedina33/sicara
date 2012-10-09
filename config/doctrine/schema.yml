@@ -1700,6 +1700,13 @@ Usuario:
       primary: false
       notnull: false
       autoincrement: false
+    foto_path:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
     id_sf_guard_user:
       type: integer(4)
       fixed: false
@@ -2127,6 +2134,14 @@ FormularioInscripcion:
       default: '0'
       notnull: true
       autoincrement: false
+    is_inscrito:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
   relations:
     TipoDocumento:
       local: id_tipo_documento
@@ -2493,6 +2508,10 @@ RefElemento:
       local: id_ref_elemento
       foreign: id_ref_elemento
       type: many
+    RefMantenimiento:
+      local: id_ref_elemento
+      foreign: id_ref_elemento
+      type: many
 
 RefFotoElemento:
   connection: doctrine
@@ -2781,7 +2800,7 @@ CurEmpresa:
       fixed: false
       unsigned: true
       primary: true
-      autoincrement: false
+      autoincrement: true
     nombre:
       type: string(150)
       fixed: false
@@ -2811,7 +2830,7 @@ CurCurso:
       fixed: false
       unsigned: true
       primary: true
-      autoincrement: false
+      autoincrement: true
     nombre:
       type: string(150)
       fixed: false
@@ -2832,6 +2851,20 @@ CurCurso:
       unsigned: false
       primary: false
       notnull: false
+      autoincrement: false
+    fecha_inicio:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_fin:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
       autoincrement: false
     inicio_calificacion:
       type: date(25)
@@ -2876,4 +2909,389 @@ CurCurso:
     Profesor:
       local: codigo_profesor
       foreign: codigo_profesor
+      type: one
+    CurInscritoHasCurCurso:
+      local: id_cur_curso
+      foreign: id_cur_curso
+      type: many
+
+CurInscrito:
+  connection: doctrine
+  tableName: cur_inscrito
+  columns:
+    id_cur_inscrito:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    primer_nombre:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    segundo_nombre:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    primer_apellido:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    segundo_apellido:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    documento:
+      type: string(20)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_tipo_documento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    lugar_expedicion:
+      type: string(200)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    telefono1:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    telefono2:
+      type: string(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    correo:
+      type: string(50)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    TipoDocumento:
+      local: id_tipo_documento
+      foreign: id_tipo_documento
+      type: one
+    CurInscritoHasCurCurso:
+      local: id_cur_inscrito
+      foreign: id_cur_inscrito
+      type: many
+
+CurFormulario:
+  connection: doctrine
+  tableName: cur_formulario
+  actAs: [Timestampable]
+  columns:
+    id_cur_formulario:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    direccion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    dependencia:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    cargo:
+      type: string(100)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    telefono:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    horario:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    licencia_basica1:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    numero_licencia1:
+      type: string(20)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    habilitacion1:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_expedicion1:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_repaso1:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    licencia_basica2:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    numero_licencia2:
+      type: string(20)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    habilitacion2:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_expedicion2:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_repaso2:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    licencia_basica3:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    numero_licencia3:
+      type: string(20)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    habilitacion3:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_expedicion3:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_repaso3:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    licencia_basica4:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    numero_licencia4:
+      type: string(20)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    habilitacion4:
+      type: string(45)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_expedicion4:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    fecha_repaso4:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_cur_inscrito:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      autoincrement: false
+    id_cur_curso:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      autoincrement: false
+  relations:
+    CurInscrito:
+      local: id_cur_inscrito
+      foreign: id_cur_inscrito
+      type: one
+    CurCurso:
+      local: id_cur_curso
+      foreign: id_cur_curso
+      type: one
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+RefMantenimiento:
+  connection: doctrine
+  tableName: ref_mantenimiento
+  actAs: [Timestampable]
+  columns:
+    id_ref_mantenimiento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    descripcion:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    fecha_programada:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    is_ejecutado:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    id_asignador:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_ejecutor:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_ref_elemento:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Asignador:
+      class: Usuario
+      local: id_asignador
+      foreign: id_usuario
+      type: one
+    Ejecutor:
+      class: Usuario
+      local: id_ejecutor
+      foreign: id_usuario
+      type: one
+    RefElemento:
+      local: id_ref_elemento
+      foreign: id_ref_elemento
       type: one

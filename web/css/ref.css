@@ -40,3 +40,23 @@
     clear: both;
 }
 
+#mantenimientos{
+    border: dashed 1px #ccc;
+    width: 500px;
+    height: 180px;
+    float: left;
+    margin-right: 25px;
+    padding: 10px;
+}
+
+#calMantenimiento{
+    float: left;
+}
+
+.manttoProx{
+    background-color: #2BAC00;
+}
+
+.manttoPas{
+    background-color: #FCB42D;
+}

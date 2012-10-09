@@ -71,16 +71,31 @@ class libMaterialActions extends sfActions {
                 $this->getUser()->setAttribute('error', 'El nuevo material no ha podido ser creado.');
         }
 
-        $this->redirect('libMaterial/index');
+        $this->redirect('libMaterial/ver?id_lib_material='.$lib_material->getIdLibMaterial());
     }
 
     public function executeValidarCodigo(sfWebRequest $request) {
         $value = $request->getParameter('fieldValue');
         $id = $request->getParameter('fieldId');
-        $material = Doctrine_Core::getTable('LibMaterial')->find($value);
+        $material=null;
+        
         $data = array();
         $data[0] = $id;
-        if ($material == null) {
+        
+        if($request->getParameter('lib_material_id_lib_material')!=""){
+            $material = Doctrine_Core::getTable('LibMaterial')
+                    ->createQuery('m')
+                    ->where('id_lib_material != ?',$request->getParameter('lib_material_id_lib_material'))
+                    ->andWhere('codigo_lib_material = ?',$value)
+                    ->execute();
+        }else{
+            $material = Doctrine_Core::getTable('LibMaterial')
+                ->createQuery('m')
+                ->where('codigo_lib_material = ?',$value)
+                ->execute();
+        }
+        
+        if ($material->count() == 0) {
             $data[1] = true;
         } else {
             $data[1] = false;
@@ -213,11 +228,17 @@ class libMaterialActions extends sfActions {
     protected function processFormItem(sfWebRequest $request, sfForm $form, $editado = false) {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
         if ($form->isValid()) {
-            $lib_item = $form->save();
-            if ($editado)
+            if ($editado){
+                $lib_item = $form->save();
                 $this->getUser()->setAttribute('notice', 'La copia con serial ' . $lib_item->getSerialLibItem() . ' ha sido editada exitosamente.');
-            else
-                $this->getUser()->setAttribute('notice', 'La nueva copia con serial ' . $lib_item->getSerialLibItem() . ' ha sido creada exitosamente.');
+            }else{
+                if(Doctrine_Core::getTable('LibItem')->find($form->getValue('serial_lib_item'))==null){
+                    $lib_item = $form->save();
+                    $this->getUser()->setAttribute('notice', 'La nueva copia con serial ' . $lib_item->getSerialLibItem() . ' ha sido creada exitosamente.');
+                }else{
+                    $this->getUser()->setAttribute('error', 'La nueva copia no ha podido ser creada. Ya existe una copia con el serial '.$form->getValue('serial_lib_item').'.');
+                }
+            }
         } else {
             if ($editado)
                 $this->getUser()->setAttribute('error', 'La copia no ha podido ser editada.');
@@ -371,7 +392,7 @@ class libMaterialActions extends sfActions {
                     ->createQuery('i')
                     ->select('COUNT(i.serial_lib_item) AS nitems')
                     ->groupBy('i.id_lib_material')
-                    ->having('i.id_lib_material = ?', array($codigo))
+                    ->having('i.id_lib_material = ?', array($id))
                     ->fetchArray();
 
             if (isset($rows2[0]['nitems']))

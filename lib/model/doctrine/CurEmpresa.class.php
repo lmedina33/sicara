@@ -12,5 +12,7 @@
  */
 class CurEmpresa extends BaseCurEmpresa
 {
-
+     function __toString(){
+        return $this->nombre;
+    }
 }

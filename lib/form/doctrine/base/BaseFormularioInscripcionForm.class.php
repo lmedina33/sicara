@@ -63,6 +63,7 @@ abstract class BaseFormularioInscripcionForm extends BaseFormDoctrine
       'id_periodo'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'), 'add_empty' => false)),
       'id_jornada'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Jornada'), 'add_empty' => false)),
       'is_cerrado'                => new sfWidgetFormInputText(),
+      'is_inscrito'               => new sfWidgetFormInputText(),
       'created_at'                => new sfWidgetFormDateTime(),
       'updated_at'                => new sfWidgetFormDateTime(),
     ));
@@ -116,6 +117,7 @@ abstract class BaseFormularioInscripcionForm extends BaseFormDoctrine
       'id_periodo'                => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'))),
       'id_jornada'                => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Jornada'))),
       'is_cerrado'                => new sfValidatorInteger(array('required' => false)),
+      'is_inscrito'               => new sfValidatorInteger(array('required' => false)),
       'created_at'                => new sfValidatorDateTime(),
       'updated_at'                => new sfValidatorDateTime(),
     ));
