@@ -30,6 +30,7 @@ abstract class BaseUsuarioFormFilter extends BaseFormFilterDoctrine
       'telefono_acudiente2'      => new sfWidgetFormFilterInput(),
       'especificaciones_medicas' => new sfWidgetFormFilterInput(),
       'observaciones'            => new sfWidgetFormFilterInput(),
+      'foto_path'                => new sfWidgetFormFilterInput(),
       'id_sf_guard_user'         => new sfWidgetFormFilterInput(),
     ));
 
@@ -51,6 +52,7 @@ abstract class BaseUsuarioFormFilter extends BaseFormFilterDoctrine
       'telefono_acudiente2'      => new sfValidatorPass(array('required' => false)),
       'especificaciones_medicas' => new sfValidatorPass(array('required' => false)),
       'observaciones'            => new sfValidatorPass(array('required' => false)),
+      'foto_path'                => new sfValidatorPass(array('required' => false)),
       'id_sf_guard_user'         => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
@@ -89,6 +91,7 @@ abstract class BaseUsuarioFormFilter extends BaseFormFilterDoctrine
       'telefono_acudiente2'      => 'Text',
       'especificaciones_medicas' => 'Text',
       'observaciones'            => 'Text',
+      'foto_path'                => 'Text',
       'id_sf_guard_user'         => 'Number',
     );
   }

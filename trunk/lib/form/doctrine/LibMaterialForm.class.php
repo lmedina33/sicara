@@ -12,12 +12,12 @@ class LibMaterialForm extends BaseLibMaterialForm {
 
     public function configure() {
         $this->setWidgets(array(
+            'id_lib_material'      => new sfWidgetFormInputHidden(),
             'codigo_lib_material' => new sfWidgetFormInputText(array(
                 'label' => 'Código'
                     ), array(
-                'class' => ($this->getObject()->isNew()? 'validate[required,maxSize[25],ajax[ajaxLibMaterialCallPhp_' . sfConfig::get('sf_environment') . ']]' : ''),
-                ($this->getObject()->isNew()? '' : 'readonly') => ($this->getObject()->isNew()? '' : 'readonly')
-            )),
+                'class' => 'validate[required,maxSize[25],ajax[ajaxLibMaterialCallPhp_' . sfConfig::get('sf_environment') . ']]')
+            ),
             'titulo' => new sfWidgetFormInputText(array('label' => 'Título'), array('class' => 'validate[required]')),
             'sub_titulo' => new sfWidgetFormInputText(array('label' => 'Sub Título')),
             'autores' => new sfWidgetFormTextarea(array(), array('class' => 'validate[required]')),
@@ -87,8 +87,9 @@ class LibMaterialForm extends BaseLibMaterialForm {
         ));
 
         $this->setValidators(array(
+            'id_lib_material'      => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id_lib_material')), 'empty_value' => $this->getObject()->get('id_lib_material'), 'required' => false)),
             'codigo_lib_material' => new sfValidatorString(array('required' => true)),
-            'titulo' => new sfValidatorString(array('max_length' => 45)),
+            'titulo' => new sfValidatorString(array()),
             'sub_titulo' => new sfValidatorString(array('max_length' => 45, 'required' => false)),
             'autores' => new sfValidatorString(),
             'editorial' => new sfValidatorString(array('max_length' => 45)),

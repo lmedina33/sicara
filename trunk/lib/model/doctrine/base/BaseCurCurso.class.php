@@ -11,6 +11,8 @@ Doctrine_Manager::getInstance()->bindComponent('CurCurso', 'doctrine');
  * @property string $nombre
  * @property string $duracion
  * @property string $horario
+ * @property date $fecha_inicio
+ * @property date $fecha_fin
  * @property date $inicio_calificacion
  * @property date $fin_calificacion
  * @property integer $is_inscribible
@@ -18,29 +20,36 @@ Doctrine_Manager::getInstance()->bindComponent('CurCurso', 'doctrine');
  * @property string $codigo_profesor
  * @property CurEmpresa $CurEmpresa
  * @property Profesor $Profesor
+ * @property Doctrine_Collection $CurFormulario
  * 
- * @method integer    getIdCurCurso()          Returns the current record's "id_cur_curso" value
- * @method string     getNombre()              Returns the current record's "nombre" value
- * @method string     getDuracion()            Returns the current record's "duracion" value
- * @method string     getHorario()             Returns the current record's "horario" value
- * @method date       getInicioCalificacion()  Returns the current record's "inicio_calificacion" value
- * @method date       getFinCalificacion()     Returns the current record's "fin_calificacion" value
- * @method integer    getIsInscribible()       Returns the current record's "is_inscribible" value
- * @method integer    getIdCurEmpresa()        Returns the current record's "id_cur_empresa" value
- * @method string     getCodigoProfesor()      Returns the current record's "codigo_profesor" value
- * @method CurEmpresa getCurEmpresa()          Returns the current record's "CurEmpresa" value
- * @method Profesor   getProfesor()            Returns the current record's "Profesor" value
- * @method CurCurso   setIdCurCurso()          Sets the current record's "id_cur_curso" value
- * @method CurCurso   setNombre()              Sets the current record's "nombre" value
- * @method CurCurso   setDuracion()            Sets the current record's "duracion" value
- * @method CurCurso   setHorario()             Sets the current record's "horario" value
- * @method CurCurso   setInicioCalificacion()  Sets the current record's "inicio_calificacion" value
- * @method CurCurso   setFinCalificacion()     Sets the current record's "fin_calificacion" value
- * @method CurCurso   setIsInscribible()       Sets the current record's "is_inscribible" value
- * @method CurCurso   setIdCurEmpresa()        Sets the current record's "id_cur_empresa" value
- * @method CurCurso   setCodigoProfesor()      Sets the current record's "codigo_profesor" value
- * @method CurCurso   setCurEmpresa()          Sets the current record's "CurEmpresa" value
- * @method CurCurso   setProfesor()            Sets the current record's "Profesor" value
+ * @method integer             getIdCurCurso()          Returns the current record's "id_cur_curso" value
+ * @method string              getNombre()              Returns the current record's "nombre" value
+ * @method string              getDuracion()            Returns the current record's "duracion" value
+ * @method string              getHorario()             Returns the current record's "horario" value
+ * @method date                getFechaInicio()         Returns the current record's "fecha_inicio" value
+ * @method date                getFechaFin()            Returns the current record's "fecha_fin" value
+ * @method date                getInicioCalificacion()  Returns the current record's "inicio_calificacion" value
+ * @method date                getFinCalificacion()     Returns the current record's "fin_calificacion" value
+ * @method integer             getIsInscribible()       Returns the current record's "is_inscribible" value
+ * @method integer             getIdCurEmpresa()        Returns the current record's "id_cur_empresa" value
+ * @method string              getCodigoProfesor()      Returns the current record's "codigo_profesor" value
+ * @method CurEmpresa          getCurEmpresa()          Returns the current record's "CurEmpresa" value
+ * @method Profesor            getProfesor()            Returns the current record's "Profesor" value
+ * @method Doctrine_Collection getCurFormulario()       Returns the current record's "CurFormulario" collection
+ * @method CurCurso            setIdCurCurso()          Sets the current record's "id_cur_curso" value
+ * @method CurCurso            setNombre()              Sets the current record's "nombre" value
+ * @method CurCurso            setDuracion()            Sets the current record's "duracion" value
+ * @method CurCurso            setHorario()             Sets the current record's "horario" value
+ * @method CurCurso            setFechaInicio()         Sets the current record's "fecha_inicio" value
+ * @method CurCurso            setFechaFin()            Sets the current record's "fecha_fin" value
+ * @method CurCurso            setInicioCalificacion()  Sets the current record's "inicio_calificacion" value
+ * @method CurCurso            setFinCalificacion()     Sets the current record's "fin_calificacion" value
+ * @method CurCurso            setIsInscribible()       Sets the current record's "is_inscribible" value
+ * @method CurCurso            setIdCurEmpresa()        Sets the current record's "id_cur_empresa" value
+ * @method CurCurso            setCodigoProfesor()      Sets the current record's "codigo_profesor" value
+ * @method CurCurso            setCurEmpresa()          Sets the current record's "CurEmpresa" value
+ * @method CurCurso            setProfesor()            Sets the current record's "Profesor" value
+ * @method CurCurso            setCurFormulario()       Sets the current record's "CurFormulario" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -57,7 +66,7 @@ abstract class BaseCurCurso extends sfDoctrineRecord
              'fixed' => 0,
              'unsigned' => true,
              'primary' => true,
-             'autoincrement' => false,
+             'autoincrement' => true,
              'length' => 4,
              ));
         $this->hasColumn('nombre', 'string', 150, array(
@@ -86,6 +95,24 @@ abstract class BaseCurCurso extends sfDoctrineRecord
              'notnull' => false,
              'autoincrement' => false,
              'length' => '',
+             ));
+        $this->hasColumn('fecha_inicio', 'date', 25, array(
+             'type' => 'date',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 25,
+             ));
+        $this->hasColumn('fecha_fin', 'date', 25, array(
+             'type' => 'date',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 25,
              ));
         $this->hasColumn('inicio_calificacion', 'date', 25, array(
              'type' => 'date',
@@ -144,5 +171,9 @@ abstract class BaseCurCurso extends sfDoctrineRecord
         $this->hasOne('Profesor', array(
              'local' => 'codigo_profesor',
              'foreign' => 'codigo_profesor'));
+
+        $this->hasMany('CurFormulario', array(
+             'local' => 'id_cur_curso',
+             'foreign' => 'id_cur_curso'));
     }
 }

@@ -32,6 +32,7 @@ Doctrine_Manager::getInstance()->bindComponent('RefElemento', 'doctrine');
  * @property Doctrine_Collection $RefPrestamo
  * @property Doctrine_Collection $RefSancion
  * @property Doctrine_Collection $RefFotoElemento
+ * @property Doctrine_Collection $RefMantenimiento
  * 
  * @method integer             getIdRefElemento()          Returns the current record's "id_ref_elemento" value
  * @method string              getSerial()                 Returns the current record's "serial" value
@@ -58,6 +59,7 @@ Doctrine_Manager::getInstance()->bindComponent('RefElemento', 'doctrine');
  * @method Doctrine_Collection getRefPrestamo()            Returns the current record's "RefPrestamo" collection
  * @method Doctrine_Collection getRefSancion()             Returns the current record's "RefSancion" collection
  * @method Doctrine_Collection getRefFotoElemento()        Returns the current record's "RefFotoElemento" collection
+ * @method Doctrine_Collection getRefMantenimiento()       Returns the current record's "RefMantenimiento" collection
  * @method RefElemento         setIdRefElemento()          Sets the current record's "id_ref_elemento" value
  * @method RefElemento         setSerial()                 Sets the current record's "serial" value
  * @method RefElemento         setSerialInterno()          Sets the current record's "serial_interno" value
@@ -83,6 +85,7 @@ Doctrine_Manager::getInstance()->bindComponent('RefElemento', 'doctrine');
  * @method RefElemento         setRefPrestamo()            Sets the current record's "RefPrestamo" collection
  * @method RefElemento         setRefSancion()             Sets the current record's "RefSancion" collection
  * @method RefElemento         setRefFotoElemento()        Sets the current record's "RefFotoElemento" collection
+ * @method RefElemento         setRefMantenimiento()       Sets the current record's "RefMantenimiento" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -271,6 +274,10 @@ abstract class BaseRefElemento extends sfDoctrineRecord
              'foreign' => 'id_ref_elemento'));
 
         $this->hasMany('RefFotoElemento', array(
+             'local' => 'id_ref_elemento',
+             'foreign' => 'id_ref_elemento'));
+
+        $this->hasMany('RefMantenimiento', array(
              'local' => 'id_ref_elemento',
              'foreign' => 'id_ref_elemento'));
 

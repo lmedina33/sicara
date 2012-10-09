@@ -203,6 +203,7 @@ class formularioInscripcionActions extends sfActions {
             'pen.nombre',
             'per.periodo',
             'j.nombre',
+            'is_inscrito',
             'is_cerrado');
 
         //*Se seleeciona la tabla y los campos que se van a mostrar en este datatables
@@ -220,6 +221,7 @@ class formularioInscripcionActions extends sfActions {
                     f.telefono1,
                     f.correo,
                     f.is_cerrado,
+                    f.is_inscrito,
                     pen.nombre AS pensum,
                     per.periodo AS periodo,
                     j.nombre AS jornada')
@@ -306,6 +308,7 @@ class formularioInscripcionActions extends sfActions {
             $periodo = "";
             $jornada = "";
             $cerrado = "0";
+            $inscrito = "0";
 
             //*Se evalúa si el dato a insertar existe
             if (isset($rows[$i]['id_formulario_inscripcion']))
@@ -341,8 +344,11 @@ class formularioInscripcionActions extends sfActions {
             if (isset($rows[$i]['is_cerrado']))
                 $cerrado = $rows[$i]['is_cerrado'];
 
+            if (isset($rows[$i]['is_inscrito']))
+                $inscrito = $rows[$i]['is_inscrito'];
+
             //*Se agregan los datos en la matriz
-            $data[$i] = array('Id' => $id, 'Numero' => $numero, 'Nombre' => $nombre, 'TipoDoc' => $tipoDoc, 'Documento' => $documento, 'Telefono' => $telefono, 'Correo' => $correo, 'Pensum' => $pensum, 'Periodo' => $periodo, 'Jornada' => $jornada, 'Formalizado' => $cerrado);
+            $data[$i] = array('Id' => $id, 'Numero' => $numero, 'Nombre' => $nombre, 'TipoDoc' => $tipoDoc, 'Documento' => $documento, 'Telefono' => $telefono, 'Correo' => $correo, 'Pensum' => $pensum, 'Periodo' => $periodo, 'Jornada' => $jornada, 'Formalizado' => $cerrado, 'Inscrito' => $inscrito);
         }
 
         //*Calculo del total de registros en la BD si no se usaran los filtros de busqueda
@@ -467,7 +473,21 @@ class formularioInscripcionActions extends sfActions {
         $formulario = new FormularioInscripcion();
         $formulario = Doctrine_Core::getTable('FormularioInscripcion')->find($this->idForm);
         
-        $usuario = new Usuario();
+        $bUpdate=false;
+        
+        $usuario = Doctrine_Core::getTable('Usuario')->findBySql('documento = ? AND id_tipo_documento = ?',array($formulario->getDocumento(),$formulario->getIdTipoDocumento()))->getFirst();
+        
+        if($usuario == null){
+            $usuario = new Usuario();
+        }else{
+            $bUpdate=true;
+        }
+        
+        $aux=explode('.',$formulario->getFotoPath());
+        $extension = $aux[1];
+        
+        $pathOrigen = $formulario->getFotoPath();
+        
         $usuario->setPrimerNombre($formulario->getPrimerNombre());
         $usuario->setSegundoNombre($formulario->getSegundoNombre());
         $usuario->setPrimerApellido($formulario->getPrimerApellido());
@@ -479,6 +499,8 @@ class formularioInscripcionActions extends sfActions {
         $usuario->setTelefono2($formulario->getTelefono2());
         $usuario->setDireccion($formulario->getDireccion());
         $usuario->setCorreo($formulario->getCorreo());
+        $pathDestino = sfConfig::get('sf_app_dir') . '/private_uploads/fotoUsuario/' . $usuario->getDocumento().'-'.$usuario->getIdTipoDocumento() . '.' . $extension;
+        $usuario->setFotoPath($pathDestino);
         $usuario->save();
         
         $inscrito = new Inscrito();
@@ -491,7 +513,16 @@ class formularioInscripcionActions extends sfActions {
         $inscrito->setFechaInscripcion(date('Y-m-d'));
         $inscrito->save();
         
-        $this->redirect('inscrito/edit?id_inscrito='.$inscrito->getNumeroFormulario());
+        copy($pathOrigen, $pathDestino);
+
+        if($bUpdate){
+            $this->getUser()->setAttribute('notice', 'El aspirante ha sido inscrito exitosamente.');
+            $this->getUser()->setAttribute('warning', 'El usuario ya existía y por lo tanto los datos han sido actualizados.');
+        }else{
+        $this->getUser()->setAttribute('notice', 'El aspirante ha sido inscrito exitosamente.');
+        }
+        
+        $this->redirect('inscrito/edit?id='.$inscrito->getNumeroFormulario());
     }
 
 }

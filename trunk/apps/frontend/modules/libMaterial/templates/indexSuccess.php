@@ -21,7 +21,7 @@ slot('title', 'Listar Material Bibliográfico')
                 { "mDataProp": "Autor" },
                 { "mDataProp": "Categoria" },
                 { "mDataProp": "Tipo" },
-                { "mDataProp": "NItems" }
+                { "mDataProp": "NItems", "bSortable":false }
             ],
             "fnDrawCallback": function ( oSettings ) {
                 $('.dataTable tbody tr').each( function () {

@@ -25,6 +25,7 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @property string $telefono_acudiente2
  * @property string $especificaciones_medicas
  * @property string $observaciones
+ * @property string $foto_path
  * @property integer $id_sf_guard_user
  * @property TipoDocumento $TipoDocumento
  * @property Doctrine_Collection $AsignaturaCursada
@@ -43,6 +44,7 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @property Doctrine_Collection $RefSancion
  * @property Doctrine_Collection $RefHojaVida
  * @property Doctrine_Collection $RefElemento
+ * @property Doctrine_Collection $RefMantenimiento
  * 
  * @method integer             getIdUsuario()                Returns the current record's "id_usuario" value
  * @method string              getPrimerNombre()             Returns the current record's "primer_nombre" value
@@ -62,6 +64,7 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method string              getTelefonoAcudiente2()       Returns the current record's "telefono_acudiente2" value
  * @method string              getEspecificacionesMedicas()  Returns the current record's "especificaciones_medicas" value
  * @method string              getObservaciones()            Returns the current record's "observaciones" value
+ * @method string              getFotoPath()                 Returns the current record's "foto_path" value
  * @method integer             getIdSfGuardUser()            Returns the current record's "id_sf_guard_user" value
  * @method TipoDocumento       getTipoDocumento()            Returns the current record's "TipoDocumento" value
  * @method Doctrine_Collection getAsignaturaCursada()        Returns the current record's "AsignaturaCursada" collection
@@ -80,6 +83,7 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method Doctrine_Collection getRefSancion()               Returns the current record's "RefSancion" collection
  * @method Doctrine_Collection getRefHojaVida()              Returns the current record's "RefHojaVida" collection
  * @method Doctrine_Collection getRefElemento()              Returns the current record's "RefElemento" collection
+ * @method Doctrine_Collection getRefMantenimiento()         Returns the current record's "RefMantenimiento" collection
  * @method Usuario             setIdUsuario()                Sets the current record's "id_usuario" value
  * @method Usuario             setPrimerNombre()             Sets the current record's "primer_nombre" value
  * @method Usuario             setSegundoNombre()            Sets the current record's "segundo_nombre" value
@@ -98,6 +102,7 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method Usuario             setTelefonoAcudiente2()       Sets the current record's "telefono_acudiente2" value
  * @method Usuario             setEspecificacionesMedicas()  Sets the current record's "especificaciones_medicas" value
  * @method Usuario             setObservaciones()            Sets the current record's "observaciones" value
+ * @method Usuario             setFotoPath()                 Sets the current record's "foto_path" value
  * @method Usuario             setIdSfGuardUser()            Sets the current record's "id_sf_guard_user" value
  * @method Usuario             setTipoDocumento()            Sets the current record's "TipoDocumento" value
  * @method Usuario             setAsignaturaCursada()        Sets the current record's "AsignaturaCursada" collection
@@ -116,6 +121,7 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method Usuario             setRefSancion()               Sets the current record's "RefSancion" collection
  * @method Usuario             setRefHojaVida()              Sets the current record's "RefHojaVida" collection
  * @method Usuario             setRefElemento()              Sets the current record's "RefElemento" collection
+ * @method Usuario             setRefMantenimiento()         Sets the current record's "RefMantenimiento" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -288,6 +294,15 @@ abstract class BaseUsuario extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => '',
              ));
+        $this->hasColumn('foto_path', 'string', 150, array(
+             'type' => 'string',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'length' => 150,
+             ));
         $this->hasColumn('id_sf_guard_user', 'integer', 4, array(
              'type' => 'integer',
              'fixed' => 0,
@@ -369,5 +384,9 @@ abstract class BaseUsuario extends sfDoctrineRecord
         $this->hasMany('RefElemento', array(
              'local' => 'id_usuario',
              'foreign' => 'id_usuario_responsable'));
+
+        $this->hasMany('RefMantenimiento', array(
+             'local' => 'id_usuario',
+             'foreign' => 'id_asignador'));
     }
 }

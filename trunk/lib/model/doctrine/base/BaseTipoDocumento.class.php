@@ -11,15 +11,18 @@ Doctrine_Manager::getInstance()->bindComponent('TipoDocumento', 'doctrine');
  * @property string $nombre
  * @property Doctrine_Collection $Usuario
  * @property Doctrine_Collection $FormularioInscripcion
+ * @property Doctrine_Collection $CurInscrito
  * 
  * @method integer             getIdTipoDocumento()       Returns the current record's "id_tipo_documento" value
  * @method string              getNombre()                Returns the current record's "nombre" value
  * @method Doctrine_Collection getUsuario()               Returns the current record's "Usuario" collection
  * @method Doctrine_Collection getFormularioInscripcion() Returns the current record's "FormularioInscripcion" collection
+ * @method Doctrine_Collection getCurInscrito()           Returns the current record's "CurInscrito" collection
  * @method TipoDocumento       setIdTipoDocumento()       Sets the current record's "id_tipo_documento" value
  * @method TipoDocumento       setNombre()                Sets the current record's "nombre" value
  * @method TipoDocumento       setUsuario()               Sets the current record's "Usuario" collection
  * @method TipoDocumento       setFormularioInscripcion() Sets the current record's "FormularioInscripcion" collection
+ * @method TipoDocumento       setCurInscrito()           Sets the current record's "CurInscrito" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -58,6 +61,10 @@ abstract class BaseTipoDocumento extends sfDoctrineRecord
              'foreign' => 'id_tipo_documento'));
 
         $this->hasMany('FormularioInscripcion', array(
+             'local' => 'id_tipo_documento',
+             'foreign' => 'id_tipo_documento'));
+
+        $this->hasMany('CurInscrito', array(
              'local' => 'id_tipo_documento',
              'foreign' => 'id_tipo_documento'));
     }

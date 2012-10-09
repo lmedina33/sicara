@@ -1,0 +1,22 @@
+## YAML Template.
+all:
+  is_secure: true
+  credentials: admisiones
+
+registrar:
+  is_secure: false
+
+new:
+  is_secure: false
+
+newFull:
+  is_secure: false
+  
+createFull:
+  is_secure: false
+  
+showConfirm:
+  is_secure: false
+  
+create:
+  is_secure: false

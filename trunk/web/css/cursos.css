@@ -1,0 +1,56 @@
+/* 
+    Document   : cursos
+    Created on : 20-ago-2012, 18:34:52
+    Author     : Robinson
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.curNombre{
+    font-weight: bolder;
+    margin-left: 20px;
+}
+
+.curNombre img{
+    position: relative;
+    top: 5px;
+    margin-right: 5px;
+}
+
+.curDatos{
+    margin-left: 50px;
+}
+
+.curDatos label{
+    font-weight: bolder;
+    margin-right: 15px;
+}
+
+a.inscribir{
+    margin-left: 15px;
+    text-decoration: none;
+    color: #333;
+    background-color: #E4EFFE;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    -moz-box-shadow: 2px 2px 5px #888;
+    -webkit-box-shadow: 2px 2px 5px #888;
+    box-shadow: 2px 2px 5px #888;
+    border: 1px solid #ccc;
+}
+
+a.inscribir:hover{
+    background-color: #FEFDE4;
+}
+
+a.inscribir img{
+    position: relative;
+    top: 5px;
+    margin-right: 5px;
+}

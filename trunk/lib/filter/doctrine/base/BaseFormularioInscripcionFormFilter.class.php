@@ -60,6 +60,7 @@ abstract class BaseFormularioInscripcionFormFilter extends BaseFormFilterDoctrin
       'id_periodo'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'), 'add_empty' => true)),
       'id_jornada'                => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Jornada'), 'add_empty' => true)),
       'is_cerrado'                => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'is_inscrito'               => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'created_at'                => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'updated_at'                => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
     ));
@@ -112,6 +113,7 @@ abstract class BaseFormularioInscripcionFormFilter extends BaseFormFilterDoctrin
       'id_periodo'                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('PeriodoAcademico'), 'column' => 'id_periodo_academico')),
       'id_jornada'                => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Jornada'), 'column' => 'id_jornada')),
       'is_cerrado'                => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'is_inscrito'               => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'created_at'                => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
       'updated_at'                => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
     ));
@@ -181,6 +183,7 @@ abstract class BaseFormularioInscripcionFormFilter extends BaseFormFilterDoctrin
       'id_periodo'                => 'ForeignKey',
       'id_jornada'                => 'ForeignKey',
       'is_cerrado'                => 'Number',
+      'is_inscrito'               => 'Number',
       'created_at'                => 'Date',
       'updated_at'                => 'Date',
     );

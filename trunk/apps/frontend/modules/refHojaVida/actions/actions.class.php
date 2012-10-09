@@ -106,6 +106,20 @@ class refHojaVidaActions extends sfActions {
         if ($foto != null) {
             $this->id_foto = $foto->getIdRefFotoElemento();
         }
+        
+        date_default_timezone_set("America/Bogota");
+        
+        $this->mantenimientosProx=  Doctrine_Core::getTable("RefMantenimiento")
+                ->createQuery('m')
+                ->where('m.id_ref_elemento = ?', $this->elemento->getIdRefElemento())
+                ->andWhere('DATEDIFF(m.fecha_programada, ?) >= 0 ', date('Y-m-d'))
+                ->execute();
+        
+        $this->mantenimientosPas=  Doctrine_Core::getTable("RefMantenimiento")
+                ->createQuery('m')
+                ->where('m.id_ref_elemento = ?', $this->elemento->getIdRefElemento())
+                ->andWhere('DATEDIFF(m.fecha_programada, ?) < 0 ', date('Y-m-d'))
+                ->execute();
     }
 
     public function executeGenerarHojaVida(sfWebRequest $request) {

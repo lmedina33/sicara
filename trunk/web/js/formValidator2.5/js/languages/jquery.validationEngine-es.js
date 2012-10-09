@@ -126,13 +126,15 @@
                     "url": '/frontend_dev.php/libMaterial/validarCodigo',
                     "alertTextOk": "* Este código se encuentra disponible",
                     "alertText": "* No puede usar este código",
-                    "alertTextLoad": "* Validando, por favor espere..."
+                    "alertTextLoad": "* Validando, por favor espere...",
+                    "extraDataDynamic": ['#lib_material_id_lib_material']
                 },
                 "ajaxLibMaterialCallPhp_prod": {
-                    "url": '/frontend.php/libMaterial/validarCodigo',
+                    "url": '/libMaterial/validarCodigo',
                     "alertTextOk": "* Este código se encuentra disponible",
                     "alertText": "* No puede usar este código",
-                    "alertTextLoad": "* Validando, por favor espere..."
+                    "alertTextLoad": "* Validando, por favor espere...",
+                    "extraDataDynamic": ['#lib_material_id_lib_material']
                 },
                 "ajaxLibItemCallPhp_dev": {
                     "url": '/frontend_dev.php/libMaterial/validarSerialItem',
@@ -141,7 +143,7 @@
                     "alertTextLoad": "* Validando, por favor espere..."
                 },
                 "ajaxLibItemCallPhp_prod": {
-                    "url": '/frontend.php/libMaterial/validarSerialItem',
+                    "url": '/libMaterial/validarSerialItem',
                     "alertTextOk": "* Este serial se encuentra disponible",
                     "alertText": "* No puede usar este serial",
                     "alertTextLoad": "* Validando, por favor espere..."
@@ -153,10 +155,38 @@
                     "alertTextLoad": "* Validando, por favor espere..."
                 },
                 "ajaxLibCategoriaCallPhp_prod": {
-                    "url": '/frontend.php/libCategoria/validarCodigo',
+                    "url": '/libCategoria/validarCodigo',
                     "alertTextOk": "* Este codigo se encuentra disponible",
                     "alertText": "* No puede usar este codigo",
                     "alertTextLoad": "* Validando, por favor espere..."
+                },
+                "ajaxDocumentoCallPhp_dev": {
+                    "url": '/frontend_dev.php/inscrito/validarDocumento',
+                    "alertTextOk": "* Este documento se encuentra disponible",
+                    "alertText": "* No puede usar este documento",
+                    "alertTextLoad": "* Validando, por favor espere...",
+                    "extraDataDynamic": ['#usuario_id_usuario','#usuario_id_tipo_documento']
+                },
+                "ajaxDocumentoCallPhp_prod": {
+                    "url": '/inscrito/validarDocumento',
+                    "alertTextOk": "* Este documento se encuentra disponible",
+                    "alertText": "* No puede usar este documento",
+                    "alertTextLoad": "* Validando, por favor espere...",
+                    "extraDataDynamic": ['#usuario_id_usuario','#usuario_id_tipo_documento']
+                },
+                "ajaxTipoDocumentoCallPhp_dev": {
+                    "url": '/frontend_dev.php/inscrito/validarTipoDocumento',
+                    "alertTextOk": "* Este tipo de documento se encuentra disponible",
+                    "alertText": "* No puede usar este tipo de documento",
+                    "alertTextLoad": "* Validando, por favor espere...",
+                    "extraDataDynamic": ['#usuario_id_usuario','#usuario_documento']
+                },
+                "ajaxTipoDocumentoCallPhp_prod": {
+                    "url": '/inscrito/validarTipoDocumento',
+                    "alertTextOk": "* Este tipo de documento se encuentra disponible",
+                    "alertText": "* No puede usar este tipo de documento",
+                    "alertTextLoad": "* Validando, por favor espere...",
+                    "extraDataDynamic": ['#usuario_id_usuario','#usuario_documento']
                 }
             };
             
