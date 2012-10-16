@@ -203,6 +203,10 @@ ul.sf-menu li li.sfHover ul {
     padding-left: 20px;
 }
 
+.content div.notificaciones ul li{
+    margin-top: 5px;
+}
+
 /*Formulario*/
 form table th{
     text-align: right;

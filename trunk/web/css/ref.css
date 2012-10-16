@@ -40,13 +40,14 @@
     clear: both;
 }
 
-#mantenimientos{
+.mantenimientos{
     border: dashed 1px #ccc;
     width: 500px;
-    height: 180px;
+/*    height: 180px;*/
     float: left;
     margin-right: 25px;
     padding: 10px;
+    font-size: 15px;
 }
 
 #calMantenimiento{
@@ -59,4 +60,44 @@
 
 .manttoPas{
     background-color: #FCB42D;
+}
+
+.manttoEje{
+    background-color: #aaa;
+}
+
+.cargando{
+    color: #ccc;
+}
+
+.titulo_mantto{
+    margin-bottom: 5px;
+}
+.titulo_mantto b{
+    color: #0A246A;
+}
+
+.descripcion_mantto{
+    border: dashed 1px #ccc;
+    font-size: 12px;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    padding: 8px;
+    position: relative;
+    left: 5px;
+}
+
+.tit_descripcion_mantto{
+    color: #0A246A;
+    font-weight: bold;
+}
+
+.asignador_mantto b{
+    color: #0A246A;
+}
+
+.fecha_mantto{
+    text-align: right;
+    color: #999;
+    font-size: 12px;
 }

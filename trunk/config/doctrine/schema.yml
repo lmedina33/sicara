@@ -1787,6 +1787,10 @@ Usuario:
       local: id_usuario
       foreign: id_usuario_creador
       type: many
+    Notificacion:
+      local: id_usuario
+      foreign: id_usuario
+      type: many
 
 FormularioInscripcion:
   connection: doctrine
@@ -3212,13 +3216,7 @@ CurFormulario:
       local: id_cur_curso
       foreign: id_cur_curso
       type: one
- 
- 
- 
- 
- 
- 
- 
+  
 RefMantenimiento:
   connection: doctrine
   tableName: ref_mantenimiento
@@ -3294,4 +3292,56 @@ RefMantenimiento:
     RefElemento:
       local: id_ref_elemento
       foreign: id_ref_elemento
+      type: one
+
+Notificacion:
+  connection: doctrine
+  tableName: notificacion
+  actAs: [Timestampable]
+  columns:
+    id_notificacion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    titulo:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    contenido:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    permiso:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_usuario:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      autoincrement: false
+      notnull: false
+    fecha_notificacion:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Usuario:
+      local: id_usuario
+      foreign: id_usuario
       type: one

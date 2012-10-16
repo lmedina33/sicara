@@ -34,9 +34,13 @@ tendrá acceso a diferentes módulos.
 
 <div class="notificaciones" id="notificaciones" style="display:none">
     <ul>
+        <?php foreach($notificaciones as $notificacion){ ?>
         <li>
-            Recuerde cambiar su contraseña periódicamente.
+            <b><?php echo $notificacion->getTitulo() ?></b><br />
+            <?php echo html_entity_decode($notificacion->getContenido()) ?>
         </li>
+        <?php } ?>
     </ul>
 </div>
+
 
