@@ -9,18 +9,37 @@ slot('title', 'Ver Hoja de Vida')
         
         fechasProx=new Array();
         fechasPas=new Array();
+        fechasEje=new Array();
         
-        <?php 
-        $i=0;
-        foreach($mantenimientosProx as $mantenimiento){ ?>
-        fechasProx[<?php echo $i ?>]= "<?php echo date("Y",strtotime ($mantenimiento->getFechaProgramada())) ?>"+"-"+"<?php echo intval(date("m",strtotime ($mantenimiento->getFechaProgramada())))-1 ?>"+"-"+"<?php echo intval(date("d",strtotime ($mantenimiento->getFechaProgramada()))) ?>";
-        <?php $i++; } ?>
+<?php
+$i = 0;
+foreach ($mantenimientosProx as $mantenimiento) {
+    ?>
+                fechasProx[<?php echo $i ?>]= "<?php echo date("Y", strtotime($mantenimiento->getFechaProgramada())) ?>"+"-"+"<?php echo intval(date("m", strtotime($mantenimiento->getFechaProgramada()))) - 1 ?>"+"-"+"<?php echo intval(date("d", strtotime($mantenimiento->getFechaProgramada()))) ?>";
+    <?php
+    $i++;
+}
+?>
             
-        <?php 
-        $i=0;
-        foreach($mantenimientosPas as $mantenimiento){ ?>
-        fechasPas[<?php echo $i ?>]= "<?php echo date("Y",strtotime ($mantenimiento->getFechaProgramada())) ?>"+"-"+"<?php echo intval(date("m",strtotime ($mantenimiento->getFechaProgramada())))-1 ?>"+"-"+"<?php echo intval(date("d",strtotime ($mantenimiento->getFechaProgramada()))) ?>";
-        <?php $i++; } ?>
+<?php
+$i = 0;
+foreach ($mantenimientosPas as $mantenimiento) {
+    ?>
+                fechasPas[<?php echo $i ?>]= "<?php echo date("Y", strtotime($mantenimiento->getFechaProgramada())) ?>"+"-"+"<?php echo intval(date("m", strtotime($mantenimiento->getFechaProgramada()))) - 1 ?>"+"-"+"<?php echo intval(date("d", strtotime($mantenimiento->getFechaProgramada()))) ?>";
+    <?php
+    $i++;
+}
+?>
+            
+<?php
+$i = 0;
+foreach ($mantenimientosEje as $mantenimiento) {
+    ?>
+                fechasEje[<?php echo $i ?>]= "<?php echo date("Y", strtotime($mantenimiento->getFechaProgramada())) ?>"+"-"+"<?php echo intval(date("m", strtotime($mantenimiento->getFechaProgramada()))) - 1 ?>"+"-"+"<?php echo intval(date("d", strtotime($mantenimiento->getFechaProgramada()))) ?>";
+    <?php
+    $i++;
+}
+?>
         
         jQuery("#form").validationEngine();
         
@@ -32,7 +51,7 @@ slot('title', 'Ver Hoja de Vida')
             theme: "simple",
             mode: "textareas",
             width: "400",
-            height: "250"
+            height: "100"
         });
         
         $( "#calMantenimiento" ).datepicker(
@@ -44,6 +63,7 @@ slot('title', 'Ver Hoja de Vida')
             yearRange: 'c-1:c+2',
             changeMonth: true,
             changeYear: true,
+            dateFormat: "yy-mm-dd",
             beforeShowDay: function(date) {
                 data=new Array();
                 data[0]=true;
@@ -53,53 +73,152 @@ slot('title', 'Ver Hoja de Vida')
                 }else if(fechasPas.indexOf(date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate())!=-1){
                     data[1]="manttoPas";
                     data[2]="Mantenimiento pasado";
+                }else if(fechasEje.indexOf(date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate())!=-1){
+                    data[1]="manttoEje";
+                    data[2]="Mantenimiento ejecutado";
                 }else{
                     data[1]="";
                     data[2]="";
                 }
                 
                 return data;
+            },
+            onSelect: function(date){
+                showMantenimiento(date);
             }
         });
-    });
+        
+    date=new Date();
+    fecha="";
+    fecha+=date.getFullYear()+"-";
+    mes=date.getMonth()+1;
+    if(mes<10)
+        fecha+="0"+mes+"-";
+    else
+        fecha+=mes+"-";
+    if(date.getDate()<10)
+        fecha+="0"+date.getDate();
+    else
+        fecha+=date.getDate();
+    showMantenimiento(fecha);
+});
     
-    function showAdd(){
-        $('#form_add').show('normal');
+function showAdd(){
+    $('#form_add').show('normal');
         
-        $('#button_add').removeClass('add');
-        $('#button_add').addClass('delete');
+    $('#button_add').removeClass('add');
+    $('#button_add').addClass('delete');
         
-        $('#button_add').attr('onClick','javascript:hideAdd()');
-        $('#button_add').attr('href','#button_add');
+    $('#button_add').attr('onClick','javascript:hideAdd()');
+    $('#button_add').attr('href','#button_add');
         
-        $('#button_add span').html('Cancelar Adición de Registro');
-    }
+    $('#button_add span').html('Cancelar Adición de Registro');
+}
     
-    function hideAdd(){
-        $('#form_add').hide('normal');
+function hideAdd(){
+    $('#form_add').hide('normal');
         
-        $('#button_add').removeClass('deleteadd');
-        $('#button_add').addClass('add');
+    $('#button_add').removeClass('deleteadd');
+    $('#button_add').addClass('add');
         
-        $('#button_add').attr('onClick','javascript:showAdd()');
-        $('#button_add').attr('href','#form_add');
+    $('#button_add').attr('onClick','javascript:showAdd()');
+    $('#button_add').attr('href','#form_add');
         
-        $('#button_add span').html('Agregar Registro');
-    }
+    $('#button_add span').html('Agregar Registro');
+}
     
-    function showDetailLugar(){
-        $('#detail_lugar').show('normal');
+function showDetailLugar(){
+    $('#detail_lugar').show('normal');
         
-        $('#button_detail_lugar img').attr('src','/images/iconos/seeMinus.png');
-        $('#button_detail_lugar').attr('onClick','hideDetailLugar()');
-    }
+    $('#button_detail_lugar img').attr('src','/images/iconos/seeMinus.png');
+    $('#button_detail_lugar').attr('onClick','hideDetailLugar()');
+}
     
-    function hideDetailLugar(){
-        $('#detail_lugar').hide('normal');
+function hideDetailLugar(){
+    $('#detail_lugar').hide('normal');
         
-        $('#button_detail_lugar img').attr('src','/images/iconos/seePlus.png');
-        $('#button_detail_lugar').attr('onClick','showDetailLugar()');
+    $('#button_detail_lugar img').attr('src','/images/iconos/seePlus.png');
+    $('#button_detail_lugar').attr('onClick','showDetailLugar()');
+}
+    
+function showMantenimiento(date){
+    $("#descripcion").hide();
+    $("#mantenimientos").html("<div class='cargando'>Cargando...</div>");
+    $.post("<?php echo url_for("refHojaVida/getMantenimiento") ?>",
+    {
+        "id" : <?php echo $elemento->getIdRefElemento() ?>,
+        "fecha" : date
+    }, 
+    function(data){            
+        if(data == false){            
+            html="<div class='fecha_mantto'>Fecha: "+date+"</div>";
+                
+            aux=date.split("-");
+            f=new Date();
+            now=new Date(f.getFullYear(),f.getMonth(),f.getDate());
+            target=new Date(aux[0],parseInt(aux[1])-1,aux[2]);
+            
+            if(now <= target){
+                html+="Sin mantenimiento programado.<br/>";
+                html+="Registre un mantenimiento para este día:<br /><br />";
+                html+="<div class='titulo_mantto'><b>Nombre:</b> <input id='nombre_mantto' type='text' name='nombre' /></div>";
+                html+="<div class='titulo_mantto'><b>Descripción:</b><br /><textarea id='descripcion_mantto' name='descripcion' /></div>";
+                html+="<input id='producto_mantto' type='hidden' value='<?php echo $elemento->getIdRefElemento(); ?>' />";
+                html+="<input id='usuario_mantto' type='hidden' value='<?php echo sfContext::getInstance()->getUser()->getGuardUser()->getId(); ?>' />";
+                html+="<br /><input value='Registrar' type='submit' onClick='registrarMantenimiento(\""+date+"\")' /></div>";
+            }else{
+                html+="No se realizó mantenimiento.<br/>";
+            }
+            $("#mantenimientos").html(html);
+        }else{
+            html="<div class='fecha_mantto'>Fecha: "+date+"</div>";
+            html+="<div class='titulo_mantto'><b>Nombre:</b> "+data["nombre"]+"</div>";
+            html+="<b class='tit_descripcion_mantto'>Descripción:</b><div class='descripcion_mantto'>"+data["descripcion"]+"</div>";
+            html+="<div class='asignador_mantto'><b>Asignador:</b> "+data["asignador"]+"</div>";
+            if(data["ejecutado"]==0){
+                html+="<br /><hr /><br />Si el mantenimiento se realizó, registrelo a continuación:<br /><br />";
+                $("#descripcion").show('normal');
+                $("#registrar_ejecucion").attr('onClick','javascript:registrarEjecucion("'+date+'");');
+            }else{
+                html+="<div class='asignador_mantto'><b>Ejecutor:</b> "+data["ejecutor"]+"</div>";
+                html+="<div class='asignador_mantto'><b>Fecha de Ejecución:</b> "+data["fecha"]+"</div>";
+            }
+            html+="</div>";
+            $("#mantenimientos").html(html);
+        }
     }
+    , "json"  );
+                
+}
+    
+function registrarMantenimiento(date){
+    $.post("<?php echo url_for("refHojaVida/addMantenimiento") ?>",
+    {
+        "nombre" : $("#nombre_mantto").val(),
+        "descripcion" : $("#descripcion_mantto").val(),
+        "producto" : $("#producto_mantto").val(),
+        "usuario" : $("#usuario_mantto").val(),
+        "fecha" : date
+    }, 
+    function(data){
+        top.location="<?php echo url_for("refHojaVida/verByElemento?idEle=" . $elemento->getIdRefElemento()) ?>";
+    }
+    , "json"  );
+}
+    
+function registrarEjecucion(date){
+    $.post("<?php echo url_for("refHojaVida/addEjecucion") ?>",
+    {
+        "actividades" : tinyMCE.get('descripcion_mantto').getContent(),
+        "usuario" : <?php echo sfContext::getInstance()->getUser()->getGuardUser()->getId(); ?>,
+        "producto" : <?php echo $elemento->getIdRefElemento(); ?>,
+        "fecha" : date
+    }, 
+    function(data){
+        top.location="<?php echo url_for("refHojaVida/verByElemento?idEle=" . $elemento->getIdRefElemento()) ?>";
+    }
+    , "json"  );
+}
     
 </script>
 
@@ -211,8 +330,17 @@ slot('title', 'Ver Hoja de Vida')
 <a id="button_add" class="button add" href="#form_add" onClick="javascript: showAdd()">Agregar Registro</a>
 <a class="button" href="<?php echo url_for("refHojaVida/generarHojaVida?idElem=" . $elemento->getIdRefElemento()) ?>" target="_blank"><img src="/images/iconos/pdfSmall.png" /> Generar PDF</a>
 <h2>Mantenimientos Programados</h2>
-<div id="mantenimientos" >
+<div class="mantenimientos" >
+    <div id="mantenimientos">
     Mantenimientos no disponibles
+    </div>
+    <div id="descripcion" style="display:none">
+        <b class='tit_descripcion_mantto'>Actividades Realizadas:</b>
+        <textarea id="descripcion_mantto" ></textarea>
+        <br />
+        <input id="registrar_ejecucion" value='Registrar' type='submit' />
+        <input type="hidden" id="fecha_mantto" />
+    </div>
 </div>
 <div id="calMantenimiento"></div>
 <div style="clear:both"></div>
@@ -326,7 +454,7 @@ slot('title', 'Ver Hoja de Vida')
                 <div style="float:right; margin-left: 5px; color: #888;"> Mostrando <?php echo $indicePrimero ?> a <?php echo $indiceUltimo ?> elementos de <?php echo $total ?> encontrados</div>
             </div>
             <hr>
-        <?php
+            <?php
         }
     }
     ?>

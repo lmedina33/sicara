@@ -43,6 +43,7 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @property Doctrine_Collection $RefPrestamo_2
  * @property Doctrine_Collection $RefSancion
  * @property Doctrine_Collection $RefHojaVida
+ * @property Doctrine_Collection $Notificacion
  * @property Doctrine_Collection $RefElemento
  * @property Doctrine_Collection $RefMantenimiento
  * 
@@ -82,6 +83,7 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method Doctrine_Collection getRefPrestamo2()             Returns the current record's "RefPrestamo_2" collection
  * @method Doctrine_Collection getRefSancion()               Returns the current record's "RefSancion" collection
  * @method Doctrine_Collection getRefHojaVida()              Returns the current record's "RefHojaVida" collection
+ * @method Doctrine_Collection getNotificacion()             Returns the current record's "Notificacion" collection
  * @method Doctrine_Collection getRefElemento()              Returns the current record's "RefElemento" collection
  * @method Doctrine_Collection getRefMantenimiento()         Returns the current record's "RefMantenimiento" collection
  * @method Usuario             setIdUsuario()                Sets the current record's "id_usuario" value
@@ -120,6 +122,7 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method Usuario             setRefPrestamo2()             Sets the current record's "RefPrestamo_2" collection
  * @method Usuario             setRefSancion()               Sets the current record's "RefSancion" collection
  * @method Usuario             setRefHojaVida()              Sets the current record's "RefHojaVida" collection
+ * @method Usuario             setNotificacion()             Sets the current record's "Notificacion" collection
  * @method Usuario             setRefElemento()              Sets the current record's "RefElemento" collection
  * @method Usuario             setRefMantenimiento()         Sets the current record's "RefMantenimiento" collection
  * 
@@ -380,6 +383,10 @@ abstract class BaseUsuario extends sfDoctrineRecord
         $this->hasMany('RefHojaVida', array(
              'local' => 'id_usuario',
              'foreign' => 'id_usuario_creador'));
+
+        $this->hasMany('Notificacion', array(
+             'local' => 'id_usuario',
+             'foreign' => 'id_usuario'));
 
         $this->hasMany('RefElemento', array(
              'local' => 'id_usuario',

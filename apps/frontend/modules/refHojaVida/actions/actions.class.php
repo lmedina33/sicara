@@ -106,19 +106,27 @@ class refHojaVidaActions extends sfActions {
         if ($foto != null) {
             $this->id_foto = $foto->getIdRefFotoElemento();
         }
-        
+
         date_default_timezone_set("America/Bogota");
-        
-        $this->mantenimientosProx=  Doctrine_Core::getTable("RefMantenimiento")
+
+        $this->mantenimientosProx = Doctrine_Core::getTable("RefMantenimiento")
                 ->createQuery('m')
                 ->where('m.id_ref_elemento = ?', $this->elemento->getIdRefElemento())
                 ->andWhere('DATEDIFF(m.fecha_programada, ?) >= 0 ', date('Y-m-d'))
+                ->andWhere('is_ejecutado = 0')
                 ->execute();
-        
-        $this->mantenimientosPas=  Doctrine_Core::getTable("RefMantenimiento")
+
+        $this->mantenimientosPas = Doctrine_Core::getTable("RefMantenimiento")
                 ->createQuery('m')
                 ->where('m.id_ref_elemento = ?', $this->elemento->getIdRefElemento())
                 ->andWhere('DATEDIFF(m.fecha_programada, ?) < 0 ', date('Y-m-d'))
+                ->andWhere('is_ejecutado = 0')
+                ->execute();
+
+        $this->mantenimientosEje = Doctrine_Core::getTable("RefMantenimiento")
+                ->createQuery('m')
+                ->where('m.id_ref_elemento = ?', $this->elemento->getIdRefElemento())
+                ->andWhere('is_ejecutado = 1')
                 ->execute();
     }
 
@@ -128,7 +136,7 @@ class refHojaVidaActions extends sfActions {
 
 
         sfConfig::set('sf_web_debug', false);
-        
+
         $pdf = new HojaVidaPdf();
 
         $pdf->setElemento($elemento);
@@ -137,6 +145,106 @@ class refHojaVidaActions extends sfActions {
 
 
         throw new sfStopException();
+    }
+
+    public function executeGetMantenimiento(sfWebRequest $request) {
+        $fecha = $request->getParameter("fecha");
+        $id = $request->getParameter("id");
+
+        $mantenimiento = Doctrine_Core::getTable("RefMantenimiento")
+                ->createQuery('m')
+                ->where('id_ref_elemento = ?', $id)
+                ->andWhere('fecha_programada = ?', $fecha)
+                ->execute()
+                ->getFirst();
+
+        if ($mantenimiento != null) {
+            $data = array();
+            $data["nombre"] = $mantenimiento->getNombre();
+            $data["descripcion"] = $mantenimiento->getDescripcion();
+            $data["asignador"] = $mantenimiento->getAsignador()->getPrimerNombre() . " " . $mantenimiento->getAsignador()->getSegundoNombre() . " " . $mantenimiento->getAsignador()->getPrimerApellido() . " " . $mantenimiento->getAsignador()->getSegundoApellido();
+            $data["ejecutado"] = $mantenimiento->getIsEjecutado();
+            if ($mantenimiento->getIsEjecutado() == 1) {
+                $data["ejecutor"] = $mantenimiento->getEjecutor()->getPrimerNombre() . " " . $mantenimiento->getEjecutor()->getSegundoNombre() . " " . $mantenimiento->getEjecutor()->getPrimerApellido() . " " . $mantenimiento->getEjecutor()->getSegundoApellido();
+                $data["fecha"] = date('Y-m-d', strtotime($mantenimiento->getUpdatedAt()));
+            }
+
+            return $this->renderText(json_encode($data));
+        }
+
+        return $this->renderText(json_encode(false));
+    }
+
+    public function executeAddMantenimiento(sfWebRequest $request) {
+        date_default_timezone_set("America/Bogota");
+
+        $idProducto = $request->getParameter("producto");
+        $idAsignador = $request->getParameter("usuario");
+        $nombre = $request->getParameter("nombre");
+        $descripcion = $request->getParameter("descripcion");
+        $fecha = $request->getParameter("fecha");
+
+        try {
+            $mantenimiento = new RefMantenimiento();
+            $mantenimiento->setIdRefElemento($idProducto);
+            $mantenimiento->setIdAsignador($idAsignador);
+            $mantenimiento->setNombre($nombre);
+            $mantenimiento->setDescripcion($descripcion);
+            $mantenimiento->setFechaProgramada($fecha);
+            $mantenimiento->save();
+            
+            $elemento= Doctrine_Core::getTable('RefElemento')->find($idProducto);
+            
+            sfContext::getInstance()->getConfiguration()->loadHelpers('Url');
+            
+            $notificacion = new Notificacion();
+            $notificacion->setTitulo('Mantenimiento programado');
+            $notificacion->setContenido('Existe un mantenimiento programado para <a href="'.  url_for("refHojaVida/verByElemento?idEle=".$idProducto) .'">'.$elemento->getNombre().' <small>['.$elemento->getSerialInterno().']</small></a>, el día '.$fecha.' .');
+            $notificacion->setFechaNotificacion($fecha);
+            $notificacion->setPermiso('recursosFisicos');
+            $notificacion->save();
+            
+        } catch (Exception $e) {
+            $this->getUser()->setAttribute('error', 'El mantenimiento no se ha podido crear.');
+        }
+
+        $this->getUser()->setAttribute('notice', 'El mantenimiento se ha creado exitosamente para la fecha ' . $fecha . ' .');
+
+        return $this->renderText("");
+    }
+
+    public function executeAddEjecucion(sfWebRequest $request) {
+        date_default_timezone_set("America/Bogota");
+
+        $actividad = $request->getParameter("actividades");
+        $idEjecutor = $request->getParameter("usuario");
+        $idProducto = $request->getParameter("producto");
+        $fecha = $request->getParameter("fecha");
+
+        try {
+            $mantenimiento = Doctrine_Core::getTable("RefMantenimiento")
+                ->createQuery('m')
+                ->where('id_ref_elemento = ?', $idProducto)
+                ->andWhere('fecha_programada = ?', $fecha)
+                ->execute()
+                ->getFirst();
+            
+            $mantenimiento->setIdEjecutor($idEjecutor);
+            $mantenimiento->setIsEjecutado(1);
+            $mantenimiento->save();
+            
+            $hojaVida = new RefHojaVida();
+            $hojaVida->setDescripcion("Se ejecutó un mantenimiento que se programó para el día ".$fecha.", donde se realizaron las siguientes actividades:<br />".$actividad);
+            $hojaVida->setIdRefElemento($idProducto);
+            $hojaVida->setIdUsuarioCreador($idEjecutor);
+            $hojaVida->save();
+        } catch (Exception $e) {
+            $this->getUser()->setAttribute('error', 'La ejecución no se ha podido crear.');
+        }
+
+        $this->getUser()->setAttribute('notice', 'La ejecución se ha registrado exitosamente para la fecha ' . $fecha . ' .');
+
+        return $this->renderText("");
     }
 
 }
