@@ -93,4 +93,17 @@ class curCursoActions extends sfActions {
         $this->formularios = Doctrine_Core::getTable('CurFormulario')->findBy('id_cur_curso',$this->curso->getIdCurCurso());
     }
 
+    public function executeBorrarInscrito(sfWebRequest $request) {
+        $formulario = Doctrine_Core::getTable('CurFormulario')->find($request->getParameter("id"));
+        
+        if($formulario != null){
+            $formulario->delete();
+            $this->getUser()->setAttribute('notice', 'El inscrito ha sido eliminado con éxito.');
+        }else{
+            $this->getUser()->setAttribute('notice', 'El inscrito no pudo ser eliminado exitosamente.');
+        }
+        
+        $this->redirect("curCurso/verInscritos?id=".$request->getParameter("idCur"));
+    }
+
 }

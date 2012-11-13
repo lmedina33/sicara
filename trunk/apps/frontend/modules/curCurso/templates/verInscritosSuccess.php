@@ -40,7 +40,11 @@ slot('title', 'Listar Inscritos a Curso Empresarial')
             
                         $('#formulario').attr('href', '<?php echo url_for('curFormulario/generarFormulario?id=') ?>'+idForm);
                         $('#formulario img').attr('src', '/images/iconos/refHV.png');
-                    } );
+            
+                        $('#borrar').attr('href', '<?php echo url_for('curCurso/borrarInscrito?idCur='.$curso->getIdCurCurso().'&id=') ?>'+idForm);
+                        $('#borrar').attr('onClick', 'javascript: return confirm("Esta seguro de querer eliminar este inscrito de este curso?")');
+                        $('#borrar img').attr('src', '/images/iconos/removeSmall.png');
+                    } )
                 } );
             },
             "oColVis": {
@@ -69,7 +73,8 @@ slot('title', 'Listar Inscritos a Curso Empresarial')
         });
         
         $("div.toolbar").html('<a href="#" id="detallar" title="Ver Inscrito"><img src="/images/iconos/listarSmallGray.png"/></a>\n\
-            <a href="#" id="formulario" title="Ver Formulario" target="_blank"><img src="/images/iconos/refHVGray.png"/></a>');
+            <a href="#" id="formulario" title="Ver Formulario" target="_blank"><img src="/images/iconos/refHVGray.png"/></a>\n\
+            <a href="#" id="borrar" title="Borrar Inscrito"><img src="/images/iconos/removeSmallGray.png"/></a>');
     });
 </script>
 <h1>Listar Inscritos a Curso Empresarial</h1>

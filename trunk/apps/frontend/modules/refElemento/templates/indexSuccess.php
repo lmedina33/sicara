@@ -88,7 +88,8 @@ slot('title', 'Listar Material Bibliográfico')
         $("div.toolbar").html('<a href="#" id="detallar" title="Ver Material"><img src="/images/iconos/listarSmallGray.png"/></a>\n\
         <a id="foto" href="#" title="Ver Fotografía"><img src="/images/iconos/fotoGrey.png" /></a>\n\
         <a id="hv" href="#" title="Ver Hoja de Vida"><img src="/images/iconos/refHVGray.png" /></a>\n\
-        <a id="lista" href="<?php echo url_for('refElemento/verListado') ?>" title="Ver Listado de Elementos"><img src="/images/iconos/list.png" /></a>');
+        <a id="lista" href="<?php echo url_for('refElemento/verListado') ?>" title="Exportar Listado de Elementos a Excel"><img src="/images/iconos/xlsDoc.png" /></a>\n\
+        <a id="listaPdf" target="_blank" href="<?php echo url_for('refElemento/generarListado') ?>" title="Exportar Listado de Elementos a PDF"><img src="/images/iconos/pdfDoc.png" /></a>');
     });
 </script>
 <h1>Listar Recursos Físicos</h1>

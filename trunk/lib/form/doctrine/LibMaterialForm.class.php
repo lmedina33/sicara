@@ -90,7 +90,7 @@ class LibMaterialForm extends BaseLibMaterialForm {
             'id_lib_material'      => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id_lib_material')), 'empty_value' => $this->getObject()->get('id_lib_material'), 'required' => false)),
             'codigo_lib_material' => new sfValidatorString(array('required' => true)),
             'titulo' => new sfValidatorString(array()),
-            'sub_titulo' => new sfValidatorString(array('max_length' => 45, 'required' => false)),
+            'sub_titulo' => new sfValidatorString(array('required' => false)),
             'autores' => new sfValidatorString(),
             'editorial' => new sfValidatorString(array('max_length' => 45)),
             'fecha_publicacion' => new sfValidatorDate(),

@@ -22,7 +22,7 @@ class CurInscritoForm extends BaseCurInscritoForm {
             'lugar_expedicion' => new sfWidgetFormInputText(array('label' => 'Lugar de Expedición'),array('class' => 'validate[required,maxSize[200]]')),
             'telefono1' => new sfWidgetFormInputText(array('label' => 'Teléfono Fijo'),array()),
             'telefono2' => new sfWidgetFormInputText(array('label' => 'Teléfono Móvil'),array()),
-            'correo' => new sfWidgetFormInputText(array('label' => 'Correo Electrónico'),array('class' => 'validate[custom[email],maxSize[50]]')),
+            'correo' => new sfWidgetFormInputText(array('label' => 'Correo Electrónico'),array('class' => 'validate[required,custom[email],maxSize[50]]')),
         ));
 
         $this->setValidators(array(
