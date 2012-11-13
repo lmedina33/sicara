@@ -3345,3 +3345,29 @@ Notificacion:
       local: id_usuario
       foreign: id_usuario
       type: one
+
+VariableConfigurable:
+  connection: doctrine
+  tableName: variable_configurable
+  actAs: [Timestampable]
+  columns:
+    id_variable_configurable:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    valor:
+      type: string(150)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false

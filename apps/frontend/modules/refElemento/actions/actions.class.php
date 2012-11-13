@@ -141,6 +141,42 @@ class refElementoActions extends sfActions {
                         $registro->setIdRefElemento($elemento->getIdRefElemento());
                         $registro->setIdUsuarioCreador($usuario = Doctrine_Core::getTable('Usuario')->findBy('id_sf_guard_user', $this->getUser()->getGuardUser()->getId())->getFirst()->getIdUsuario());
                         $registro->save();
+
+                        $correos =  Doctrine_Core::getTable("VariableConfigurable")->findBy("nombre","refElemento[mail_update]");
+                        
+                        sfProjectConfiguration::getActive()->loadHelpers('Url');
+                        
+                        foreach($correos as $correo){
+                        
+                            $nombreEle=$elemento->getNombre();
+                            $serialEle=$elemento->getSerial();
+                            $serialIntEle=$elemento->getSerialInterno();
+                            $url="http://sicara.escuelaaeronautica.edu.co".url_for("refHojaVida/verByElemento?idEle=".$elemento->getIdRefElemento());
+                            
+                            $message = $this->getMailer()->compose(
+                                        array('noreply@escuelaaeronautica.edu.co' => 'SiCaRa'), $correo->getValor(), 'Actualización de Recurso Físico',
+<<<EOF
+Se han realizado cambios en los datos propios de un recurso físico.
+<br />
+<br />
+<b>Recurso Editado:</b> $nombreEle <br />
+<b>Serial:</b> $serialEle <br />
+<b>Serial Interno:</b> $serialIntEle <br />
+<b>Cambios Realizados:</b> $informe
+<br />
+<br />
+Para más información ingrese a <a href='http://sicara.escuelaaeronautica.edu.co'>SiCaRa</a>, una vez en el sistema visite el siguiente sitio para ver los detalles:
+<br />
+<br /><a href='$url'>$url</a>
+<br />
+<br />Cordialmente.
+<br />SiCaRa - Escuela Aeronáutica de Colombia.
+EOF
+)->setContentType('text/html');
+                            
+                            $this->getMailer()->send($message);
+                        
+                        }
                     }
                 }
             }
@@ -565,7 +601,7 @@ class refElementoActions extends sfActions {
         $this->getResponse()->setHttpHeader('Content-Type', 'application/vnd.ms-excel');
         $this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=listadoElementos.csv');
 
-        echo '"Serial","Serial Interno","Nombre","Marca","Modelo","'.utf8_decode('Descripción').'","Tipo","Lugar","'.utf8_decode('Ubicación').'","Prestable?","'.utf8_decode('Sanción').'","Cantidad '.utf8_decode('Sanción').'","Estado","Responsable"';
+        echo '"Serial","Serial Interno","Nombre","Marca","Modelo","' . utf8_decode('Descripción') . '","Tipo","Lugar","' . utf8_decode('Ubicación') . '","Prestable?","' . utf8_decode('Sanción') . '","Cantidad ' . utf8_decode('Sanción') . '","Estado","Responsable"';
 
         echo "\n";
 
@@ -589,6 +625,25 @@ class refElementoActions extends sfActions {
         }
 
         return sfView::NONE;
+    }
+    
+    public function executeGenerarListado(sfWebRequest $request) {
+
+        $elementos = Doctrine_Core::getTable('RefElemento')
+                ->createQuery("e")
+                ->orderBy("id_ref_lugar")
+                ->execute();
+
+        sfConfig::set('sf_web_debug', false);
+
+        $pdf = new ListadoGeneralPdf("L");
+
+        $pdf->setElementos($elementos);
+        $pdf->generar();
+        $pdf->Output();
+
+
+        throw new sfStopException();
     }
 
 }

@@ -246,5 +246,5 @@ class refHojaVidaActions extends sfActions {
 
         return $this->renderText("");
     }
-
+    
 }

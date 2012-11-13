@@ -88,7 +88,7 @@ class curFormularioActions extends sfActions {
         $this->forward404Unless($request->isMethod(sfRequest::POST));
 
         $formInscrito = new CurInscritoForm();
-        
+
         $dataIns = $request->getParameter($formInscrito->getName());
 
         $inscrito = Doctrine_Core::getTable('CurInscrito')->find($dataIns['id_cur_inscrito']);
@@ -108,7 +108,7 @@ class curFormularioActions extends sfActions {
         $inscrito->setTelefono2($dataIns['telefono2']);
         $inscrito->setCorreo($dataIns['correo']);
         $inscrito->save();
-        
+
         $form = new CurFormularioForm();
 
         $data = $request->getParameter($form->getName());
@@ -127,30 +127,30 @@ class curFormularioActions extends sfActions {
         $formulario->setLicenciaBasica1($data['licencia_basica1']);
         $formulario->setNumeroLicencia1($data['numero_licencia1']);
         $formulario->setHabilitacion1($data['habilitacion1']);
-        $formulario->setFechaExpedicion1(($data['fecha_expedicion1'] =="" ? null:$data['fecha_expedicion1']));
-        $formulario->setFechaRepaso1(($data['fecha_repaso1'] =="" ? null:$data['fecha_repaso1']));
+        $formulario->setFechaExpedicion1(($data['fecha_expedicion1'] == "" ? null : $data['fecha_expedicion1']));
+        $formulario->setFechaRepaso1(($data['fecha_repaso1'] == "" ? null : $data['fecha_repaso1']));
         $formulario->setLicenciaBasica2($data['licencia_basica2']);
         $formulario->setNumeroLicencia2($data['numero_licencia2']);
         $formulario->setHabilitacion2($data['habilitacion2']);
-        $formulario->setFechaExpedicion2(($data['fecha_expedicion2'] =="" ? null:$data['fecha_expedicion2']));
-        $formulario->setFechaRepaso2(($data['fecha_repaso2'] =="" ? null:$data['fecha_repaso2']));
+        $formulario->setFechaExpedicion2(($data['fecha_expedicion2'] == "" ? null : $data['fecha_expedicion2']));
+        $formulario->setFechaRepaso2(($data['fecha_repaso2'] == "" ? null : $data['fecha_repaso2']));
         $formulario->setLicenciaBasica3($data['licencia_basica3']);
         $formulario->setNumeroLicencia3($data['numero_licencia3']);
         $formulario->setHabilitacion3($data['habilitacion3']);
-        $formulario->setFechaExpedicion3(($data['fecha_expedicion3'] =="" ? null:$data['fecha_expedicion3']));
-        $formulario->setFechaRepaso3(($data['fecha_repaso3'] =="" ? null:$data['fecha_repaso3']));
+        $formulario->setFechaExpedicion3(($data['fecha_expedicion3'] == "" ? null : $data['fecha_expedicion3']));
+        $formulario->setFechaRepaso3(($data['fecha_repaso3'] == "" ? null : $data['fecha_repaso3']));
         $formulario->setLicenciaBasica4($data['licencia_basica4']);
         $formulario->setNumeroLicencia4($data['numero_licencia4']);
         $formulario->setHabilitacion4($data['habilitacion4']);
-        $formulario->setFechaExpedicion4(($data['fecha_expedicion4'] =="" ? null:$data['fecha_expedicion4']));
-        $formulario->setFechaRepaso4(($data['fecha_repaso4'] =="" ? null:$data['fecha_repaso4']));
+        $formulario->setFechaExpedicion4(($data['fecha_expedicion4'] == "" ? null : $data['fecha_expedicion4']));
+        $formulario->setFechaRepaso4(($data['fecha_repaso4'] == "" ? null : $data['fecha_repaso4']));
         $formulario->setIdCurInscrito($data['id_cur_inscrito']);
         $formulario->setIdCurCurso($data['id_cur_curso']);
         $formulario->save();
 
         $this->getUser()->setAttribute('notice', 'El inscrito se ha modificado con éxito.');
-        
-        $this->redirect('curFormulario/verInscrito?id='.$formulario->getIdCurFormulario());
+
+        $this->redirect('curFormulario/verInscrito?id=' . $formulario->getIdCurFormulario());
 
         $this->setTemplate('new');
     }
@@ -204,23 +204,47 @@ class curFormularioActions extends sfActions {
             $formulario->setLicenciaBasica1($data['licencia_basica1']);
             $formulario->setNumeroLicencia1($data['numero_licencia1']);
             $formulario->setHabilitacion1($data['habilitacion1']);
-            $formulario->setFechaExpedicion1($data['fecha_expedicion1']);
-            $formulario->setFechaRepaso1($data['fecha_repaso1']);
+            if ($data['fecha_expedicion1'] != "")
+                $formulario->setFechaExpedicion1($data['fecha_expedicion1']);
+            else
+                $formulario->setFechaExpedicion1(null);
+            if ($data['fecha_repaso1'] != "")
+                $formulario->setFechaRepaso1($data['fecha_repaso1']);
+            else
+                $formulario->setFechaRepaso1(null);
             $formulario->setLicenciaBasica2($data['licencia_basica2']);
             $formulario->setNumeroLicencia2($data['numero_licencia2']);
             $formulario->setHabilitacion2($data['habilitacion2']);
-            $formulario->setFechaExpedicion2($data['fecha_expedicion2']);
-            $formulario->setFechaRepaso2($data['fecha_repaso2']);
+            if ($data['fecha_expedicion2'] != "")
+                $formulario->setFechaExpedicion2($data['fecha_expedicion2']);
+            else
+                $formulario->setFechaExpedicion2(null);
+            if ($data['fecha_repaso2'] != "")
+                $formulario->setFechaRepaso2($data['fecha_repaso2']);
+            else
+                $formulario->setFechaRepaso2(null);
             $formulario->setLicenciaBasica3($data['licencia_basica3']);
             $formulario->setNumeroLicencia3($data['numero_licencia3']);
             $formulario->setHabilitacion3($data['habilitacion3']);
-            $formulario->setFechaExpedicion3($data['fecha_expedicion3']);
-            $formulario->setFechaRepaso3($data['fecha_repaso3']);
+            if ($data['fecha_expedicion3'] != "")
+                $formulario->setFechaExpedicion3($data['fecha_expedicion3']);
+            else
+                $formulario->setFechaExpedicion3(null);
+            if ($data['fecha_repaso3'] != "")
+                $formulario->setFechaRepaso1($data['fecha_repaso3']);
+            else
+                $formulario->setFechaRepaso3(null);
             $formulario->setLicenciaBasica4($data['licencia_basica4']);
             $formulario->setNumeroLicencia4($data['numero_licencia4']);
             $formulario->setHabilitacion4($data['habilitacion4']);
-            $formulario->setFechaExpedicion4($data['fecha_expedicion4']);
-            $formulario->setFechaRepaso4($data['fecha_repaso4']);
+            if ($data['fecha_expedicion4'] != "")
+                $formulario->setFechaExpedicion4($data['fecha_expedicion4']);
+            else
+                $formulario->setFechaExpedicion4(null);
+            if ($data['fecha_repaso4'] != "")
+                $formulario->setFechaRepaso4($data['fecha_repaso4']);
+            else
+                $formulario->setFechaRepaso4(null);
             $formulario->setIdCurInscrito($data['id_cur_inscrito']);
             $formulario->setIdCurCurso($data['id_cur_curso']);
             $formulario->save();
@@ -245,24 +269,48 @@ class curFormularioActions extends sfActions {
                 $formulario->setLicenciaBasica1($data['licencia_basica1']);
                 $formulario->setNumeroLicencia1($data['numero_licencia1']);
                 $formulario->setHabilitacion1($data['habilitacion1']);
-                $formulario->setFechaExpedicion1($data['fecha_expedicion1']);
-                $formulario->setFechaRepaso1($data['fecha_repaso1']);
+                if ($data['fecha_expedicion1'] != "")
+                    $formulario->setFechaExpedicion1($data['fecha_expedicion1']);
+                else
+                    $formulario->setFechaExpedicion1(null);
+                if ($data['fecha_repaso1'] != "")
+                    $formulario->setFechaRepaso1($data['fecha_repaso1']);
+                else
+                    $formulario->setFechaRepaso1(null);
                 $formulario->setLicenciaBasica2($data['licencia_basica2']);
                 $formulario->setNumeroLicencia2($data['numero_licencia2']);
                 $formulario->setHabilitacion2($data['habilitacion2']);
-                $formulario->setFechaExpedicion2($data['fecha_expedicion2']);
-                $formulario->setFechaRepaso2($data['fecha_repaso2']);
+                if ($data['fecha_expedicion2'] != "")
+                    $formulario->setFechaExpedicion2($data['fecha_expedicion2']);
+                else
+                    $formulario->setFechaExpedicion2(null);
+                if ($data['fecha_repaso2'] != "")
+                    $formulario->setFechaRepaso2($data['fecha_repaso2']);
+                else
+                    $formulario->setFechaRepaso2(null);
                 $formulario->setLicenciaBasica3($data['licencia_basica3']);
                 $formulario->setNumeroLicencia3($data['numero_licencia3']);
                 $formulario->setHabilitacion3($data['habilitacion3']);
-                $formulario->setFechaExpedicion3($data['fecha_expedicion3']);
-                $formulario->setFechaRepaso3($data['fecha_repaso3']);
+                if ($data['fecha_expedicion3'] != "")
+                    $formulario->setFechaExpedicion3($data['fecha_expedicion3']);
+                else
+                    $formulario->setFechaExpedicion3(null);
+                if ($data['fecha_repaso3'] != "")
+                    $formulario->setFechaRepaso1($data['fecha_repaso3']);
+                else
+                    $formulario->setFechaRepaso3(null);
                 $formulario->setLicenciaBasica4($data['licencia_basica4']);
                 $formulario->setNumeroLicencia4($data['numero_licencia4']);
                 $formulario->setHabilitacion4($data['habilitacion4']);
-                $formulario->setFechaExpedicion4($data['fecha_expedicion4']);
-                $formulario->setFechaRepaso4($data['fecha_repaso4']);
-                $formulario->setIdCurInscrito($inscrito->getIdCurInscrito());
+                if ($data['fecha_expedicion4'] != "")
+                    $formulario->setFechaExpedicion4($data['fecha_expedicion4']);
+                else
+                    $formulario->setFechaExpedicion4(null);
+                if ($data['fecha_repaso4'] != "")
+                    $formulario->setFechaRepaso4($data['fecha_repaso4']);
+                else
+                    $formulario->setFechaRepaso4(null);
+                $formulario->setIdCurInscrito($data['id_cur_inscrito']);
                 $formulario->setIdCurCurso($data['id_cur_curso']);
                 $formulario->save();
 
@@ -289,7 +337,7 @@ class curFormularioActions extends sfActions {
     public function executeShowConfirm(sfWebRequest $request) {
         
     }
-    
+
     public function executeVerInscrito(sfWebRequest $request) {
         $formulario = Doctrine_Core::getTable('CurFormulario')->find($request->getParameter('id'));
 
@@ -304,7 +352,7 @@ class curFormularioActions extends sfActions {
 
         $this->tipo = $formulario->getCurInscrito()->getTipoDocumento();
     }
-    
+
     public function executeGenerarFormulario(sfWebRequest $request) {
         $elemento = Doctrine_Core::getTable('CurFormulario')->find($request->getParameter('id'));
 

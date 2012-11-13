@@ -67,7 +67,6 @@ class inscritoActions extends sfActions {
             $inscrito = $form->save();
 
             $file = $formUser->getValue('foto_path');
-            echo $file->getOriginalExtension();
             if ($file != null && $file->getOriginalName() != "") {
 
                 $filename = $formUser->getObject()->getDocumento() . '-' . $formUser->getObject()->getIdTipoDocumento();
@@ -81,14 +80,13 @@ class inscritoActions extends sfActions {
             $formUser->save();
 
             $this->getUser()->setAttribute('notice', 'El inscrito ha sido actualizado con éxito.');
-            
+
             $this->redirect('inscrito/ver?id=' . $inscrito->getNumeroFormulario());
         } else {
             $this->getUser()->setAttribute('error', 'El inscrito no ha podido ser actualizado con éxito.');
         }
 
         $this->setTemplate('edit');
-        
     }
 
     public function executeGetDataPaging($request) {
@@ -264,7 +262,7 @@ class inscritoActions extends sfActions {
 
         $this->formUser = new UsuarioForm($inscrito->getUsuario());
     }
-    
+
     public function executeRenderFoto(sfWebRequest $request) {
         $usuario = Doctrine_Core::getTable('Usuario')->find($request->getParameter('id'));
 
@@ -325,13 +323,13 @@ class inscritoActions extends sfActions {
 
         return sfView::NONE;
     }
-    
+
     public function executeValidarDocumento(sfWebRequest $request) {
         $value = $request->getParameter('fieldValue');
         $id = $request->getParameter('fieldId');
         $idUs = $request->getParameter('usuario_id_usuario');
         $idUsTip = $request->getParameter('usuario_id_tipo_documento');
-        $usuario = Doctrine_Core::getTable('Usuario')->findBySql('documento = "'.$value.'" AND id_tipo_documento = '.$idUsTip.' AND id_usuario != '.$idUs)->getFirst();
+        $usuario = Doctrine_Core::getTable('Usuario')->findBySql('documento = "' . $value . '" AND id_tipo_documento = ' . $idUsTip . ' AND id_usuario != ' . $idUs)->getFirst();
         $data = array();
         $data[0] = $id;
         if ($usuario == null) {
@@ -342,13 +340,13 @@ class inscritoActions extends sfActions {
 
         return $this->renderText(json_encode($data));
     }
-    
+
     public function executeValidarTipoDocumento(sfWebRequest $request) {
         $value = $request->getParameter('fieldValue');
         $id = $request->getParameter('fieldId');
         $idUs = $request->getParameter('usuario_id_usuario');
         $doc = $request->getParameter('usuario_documento');
-        $usuario = Doctrine_Core::getTable('Usuario')->findBySql('id_tipo_documento = '.$value.' AND documento = "'.$doc.'" AND id_usuario != '.$idUs)->getFirst();
+        $usuario = Doctrine_Core::getTable('Usuario')->findBySql('id_tipo_documento = ' . $value . ' AND documento = "' . $doc . '" AND id_usuario != ' . $idUs)->getFirst();
         $data = array();
         $data[0] = $id;
         if ($usuario == null) {

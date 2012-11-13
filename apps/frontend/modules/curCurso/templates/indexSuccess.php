@@ -27,7 +27,7 @@ slot('title', 'Cursos Empresariales')
 $n = 0;
 foreach ($empresas as $empresa) {
     ?>
-    <h2><?php echo $empresa->getNombre() ?></h2>
+    <h2><?php echo $empresa->getNombre() ?> <small style="font-size: 12px;">[<a href="<?php echo url_for("curEmpresa/edit?id_cur_empresa=".$empresa->getIdCurEmpresa()) ?>">Editar</a>]</small></h2>
     <?php if(count($cursos[$n]) == 0){ ?>
     Esta empresa no tiene cursos disponibles.
     <?php }else{ ?>
@@ -38,7 +38,7 @@ foreach ($empresas as $empresa) {
     <div id="cursos_<?php echo $empresa->getIdCurEmpresa() ?>" style="display:none; floar:left">
     <?php foreach($cursos[$n] as $curso){ ?>
     <div class="curNombre">
-        <?php echo $curso->getNombre() ?>:
+        <?php echo $curso->getNombre() ?> <small>[<a href="<?php echo url_for("curCurso/edit?id_cur_curso=".$curso->getIdCurCurso()) ?>">Editar</a>]</small>:
     </div>
     <div class="curDatos">
         <?php if ($curso->getDuracion() != null && $curso->getDuracion() != "") { ?>
