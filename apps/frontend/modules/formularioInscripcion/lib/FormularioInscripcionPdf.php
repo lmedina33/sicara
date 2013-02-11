@@ -35,7 +35,7 @@ class FormularioInscripcionPdf extends FPDF {
         $this->Cell(120, 6.5, '', 'LB', 0);
         $this->Cell(45, 6.5, 'FECHA DE INSCRIPCIÓN: ', 'LB', 0, 'L');
         $this->SetFont('times', '', 10);
-        $this->Cell(30, 6.5, date('d-m-Y',strtotime($this->elemento->getCreatedAt())), 'BR', 1);
+        $this->Cell(30, 6.5, date('d-m-Y',strtotime($this->elemento->getUpdatedAt())), 'BR', 1);
     }
 
 //    function Footer() {

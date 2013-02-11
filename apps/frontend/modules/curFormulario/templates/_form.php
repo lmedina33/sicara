@@ -38,6 +38,9 @@
         <label>Nombre:</label> <?php echo $inscrito->getPrimerNombre()." ".$inscrito->getSegundoNombre()." ".$inscrito->getPrimerApellido()." ".$inscrito->getSegundoApellido() ?>
         <br />
         <label>Documento de Identidad:</label> <?php echo $inscrito->getDocumento()." ".$inscrito->getTipoDocumento() ?>
+        <br />
+        <label>Correo Electrónico:</label> <input type="text" value="<?php echo $inscrito->getCorreo() ?>" id="correo" name="correo" class="validate[required,custom[email]]"/>
+        <input type="hidden" value="<?php echo $inscrito->getIdCurInscrito() ?>" id="idUsu" name="idUsu"/>
     </div>
     <h2>Datos Laborales</h2>
     <table>

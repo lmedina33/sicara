@@ -9,6 +9,9 @@ Doctrine_Manager::getInstance()->bindComponent('Matricula', 'doctrine');
  * 
  * @property integer $id_matricula
  * @property date $fecha
+ * @property string $nombre_beneficiario
+ * @property string $documento
+ * @property string $telefono
  * @property integer $id_periodo
  * @property integer $id_jornada
  * @property integer $id_tipo_pago
@@ -18,26 +21,32 @@ Doctrine_Manager::getInstance()->bindComponent('Matricula', 'doctrine');
  * @property PeriodoAcademico $PeriodoAcademico
  * @property TipoPago $TipoPago
  * 
- * @method integer          getIdMatricula()       Returns the current record's "id_matricula" value
- * @method date             getFecha()             Returns the current record's "fecha" value
- * @method integer          getIdPeriodo()         Returns the current record's "id_periodo" value
- * @method integer          getIdJornada()         Returns the current record's "id_jornada" value
- * @method integer          getIdTipoPago()        Returns the current record's "id_tipo_pago" value
- * @method string           getCodigoEstudiante()  Returns the current record's "codigo_estudiante" value
- * @method Estudiante       getEstudiante()        Returns the current record's "Estudiante" value
- * @method Jornada          getJornada()           Returns the current record's "Jornada" value
- * @method PeriodoAcademico getPeriodoAcademico()  Returns the current record's "PeriodoAcademico" value
- * @method TipoPago         getTipoPago()          Returns the current record's "TipoPago" value
- * @method Matricula        setIdMatricula()       Sets the current record's "id_matricula" value
- * @method Matricula        setFecha()             Sets the current record's "fecha" value
- * @method Matricula        setIdPeriodo()         Sets the current record's "id_periodo" value
- * @method Matricula        setIdJornada()         Sets the current record's "id_jornada" value
- * @method Matricula        setIdTipoPago()        Sets the current record's "id_tipo_pago" value
- * @method Matricula        setCodigoEstudiante()  Sets the current record's "codigo_estudiante" value
- * @method Matricula        setEstudiante()        Sets the current record's "Estudiante" value
- * @method Matricula        setJornada()           Sets the current record's "Jornada" value
- * @method Matricula        setPeriodoAcademico()  Sets the current record's "PeriodoAcademico" value
- * @method Matricula        setTipoPago()          Sets the current record's "TipoPago" value
+ * @method integer          getIdMatricula()         Returns the current record's "id_matricula" value
+ * @method date             getFecha()               Returns the current record's "fecha" value
+ * @method string           getNombreBeneficiario()  Returns the current record's "nombre_beneficiario" value
+ * @method string           getDocumento()           Returns the current record's "documento" value
+ * @method string           getTelefono()            Returns the current record's "telefono" value
+ * @method integer          getIdPeriodo()           Returns the current record's "id_periodo" value
+ * @method integer          getIdJornada()           Returns the current record's "id_jornada" value
+ * @method integer          getIdTipoPago()          Returns the current record's "id_tipo_pago" value
+ * @method string           getCodigoEstudiante()    Returns the current record's "codigo_estudiante" value
+ * @method Estudiante       getEstudiante()          Returns the current record's "Estudiante" value
+ * @method Jornada          getJornada()             Returns the current record's "Jornada" value
+ * @method PeriodoAcademico getPeriodoAcademico()    Returns the current record's "PeriodoAcademico" value
+ * @method TipoPago         getTipoPago()            Returns the current record's "TipoPago" value
+ * @method Matricula        setIdMatricula()         Sets the current record's "id_matricula" value
+ * @method Matricula        setFecha()               Sets the current record's "fecha" value
+ * @method Matricula        setNombreBeneficiario()  Sets the current record's "nombre_beneficiario" value
+ * @method Matricula        setDocumento()           Sets the current record's "documento" value
+ * @method Matricula        setTelefono()            Sets the current record's "telefono" value
+ * @method Matricula        setIdPeriodo()           Sets the current record's "id_periodo" value
+ * @method Matricula        setIdJornada()           Sets the current record's "id_jornada" value
+ * @method Matricula        setIdTipoPago()          Sets the current record's "id_tipo_pago" value
+ * @method Matricula        setCodigoEstudiante()    Sets the current record's "codigo_estudiante" value
+ * @method Matricula        setEstudiante()          Sets the current record's "Estudiante" value
+ * @method Matricula        setJornada()             Sets the current record's "Jornada" value
+ * @method Matricula        setPeriodoAcademico()    Sets the current record's "PeriodoAcademico" value
+ * @method Matricula        setTipoPago()            Sets the current record's "TipoPago" value
  * 
  * @package    sicara2
  * @subpackage model
@@ -65,6 +74,33 @@ abstract class BaseMatricula extends sfDoctrineRecord
              'notnull' => true,
              'autoincrement' => false,
              'length' => 25,
+             ));
+        $this->hasColumn('nombre_beneficiario', 'string', 500, array(
+             'type' => 'string',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 500,
+             ));
+        $this->hasColumn('documento', 'string', 500, array(
+             'type' => 'string',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 500,
+             ));
+        $this->hasColumn('telefono', 'string', 500, array(
+             'type' => 'string',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 500,
              ));
         $this->hasColumn('id_periodo', 'integer', 4, array(
              'type' => 'integer',

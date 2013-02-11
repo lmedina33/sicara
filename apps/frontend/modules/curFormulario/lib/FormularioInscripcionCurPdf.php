@@ -11,18 +11,35 @@ class FormularioInscripcionCurPdf extends FPDF {
 
     function Header() {
         
+        $this->SetFont('times', '', 10);
+        
+        $this->Cell(100, 5, 'ESCUELA AERONÁUTICA DE COLOMBIA', 0, 0, 'L');
+        $this->Cell(80, 5, 'DIRECTIVAS DE INSTRUCCIÓN', 0, 1, 'R');
+        $this->Cell(70, 5, 'E.A.C.', 0, 1, 'C');
+        
+        $this->Cell(180, 3, '', 'T', 1, 'C');
+        
+        $this->Cell(15, 5, '2.', 0, 0, 'L');
+        $this->Cell(70, 5, 'Formatos', 0, 1, 'L');
+        $this->Cell(15, 5, '2.1.', 0, 0, 'L');
+        $this->Cell(70, 5, 'Formatos para admisiones', 0, 1, 'L');
+        $this->Cell(15, 5, '2.1.1', 0, 0, 'L');
+        $this->Cell(70, 5, 'Formato de Inscripción', 0, 1, 'L');
+        $this->Cell(15, 5, '2.1.1.1', 0, 0, 'L');
+        $this->Cell(70, 5, 'Formato para Cursos Especiales y Recurrentes', 0, 1, 'L');
+        
+        $this->Cell(180, 3, '', 0, 1, 'C');
+        
         $this->SetFont('times', 'B', 13);
-        $this->Cell(170, 5, 'ESCUELA AERONÁUTICA DE COLOMBIA', 0, 1, 'C');
         
         $this->SetFont('times', 'B', 12);
-        $this->Cell(170, 5, 'FORMATO DE INSCRIPCIÓN', 0, 1, 'C');
-        $this->Cell(170, 5, '', 0, 1, 'C');
+        $this->Cell(180, 5, 'FORMATO DE INSCRIPCIÓN', 0, 1, 'C');
         
     }    
 
     function generar() {
         $this->SetFont('Arial', '', 11);
-        $this->SetMargins(20,30,20);   
+        $this->SetMargins(20,20,20);   
 	$this->SetAutoPageBreak(true,10);
 	$this->AliasNbPages();
         $this->AddPage();
@@ -204,12 +221,19 @@ class FormularioInscripcionCurPdf extends FPDF {
         $this->Cell(30, 5, $this->elemento->getFechaRepaso4(), 'LBR', 1, 'C');
         
 //        Firma y cédula
-        $this->Cell(170, 10, '', 0, 1, 'C');
+        $this->Cell(170, 5, '', 0, 1, 'C');
         
         $this->Cell(15, 5, 'FIRMA:', 0, 0, 'C');
         $this->Cell(70, 5, '', 'B', 0, 'L');
         $this->Cell(50, 5, $this->elemento->getCurInscrito()->getTipoDocumento().': ', '', 0, 'R');
         $this->Cell(25, 5, $this->elemento->getCurInscrito()->getDocumento(), 'B', 1, 'L');
+        
+        $this->SetFont('times', '', 10);
+        
+        $this->Cell(180, 5, '', 'B', 1, 'L');
+        $this->Cell(180, 5, 'Página C.6', 0, 1, 'R');
+        $this->Cell(180, 5, 'Revisión 001', 0, 1, 'R');
+        $this->Cell(180, 5, '01 de Septiembre de 2011', 0, 1, 'R');
     }
 
 }

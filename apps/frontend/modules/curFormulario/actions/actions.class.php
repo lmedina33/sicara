@@ -52,7 +52,15 @@ class curFormularioActions extends sfActions {
         $this->forward404Unless($request->isMethod(sfRequest::POST));
 
         $this->form = new CurFormularioForm();
-
+        
+        $inscrito=  Doctrine_Core::getTable('CurInscrito')->find($request->getParameter('idUsu'));
+        
+        if($inscrito!=null){
+            $correo = $request->getParameter('correo');
+            $inscrito->setCorreo($correo);
+            $inscrito->save();
+        }
+        
         $this->processForm($request, $this->form);
 
         $this->setTemplate('new');

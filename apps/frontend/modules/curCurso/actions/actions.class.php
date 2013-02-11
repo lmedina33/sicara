@@ -90,20 +90,90 @@ class curCursoActions extends sfActions {
 
     public function executeVerInscritos(sfWebRequest $request) {
         $this->curso = Doctrine_Core::getTable('CurCurso')->find($request->getParameter('id'));
-        $this->formularios = Doctrine_Core::getTable('CurFormulario')->findBy('id_cur_curso',$this->curso->getIdCurCurso());
+        $this->formularios = Doctrine_Core::getTable('CurFormulario')->findBy('id_cur_curso', $this->curso->getIdCurCurso());
     }
 
     public function executeBorrarInscrito(sfWebRequest $request) {
         $formulario = Doctrine_Core::getTable('CurFormulario')->find($request->getParameter("id"));
-        
-        if($formulario != null){
+
+        if ($formulario != null) {
             $formulario->delete();
             $this->getUser()->setAttribute('notice', 'El inscrito ha sido eliminado con éxito.');
-        }else{
+        } else {
             $this->getUser()->setAttribute('notice', 'El inscrito no pudo ser eliminado exitosamente.');
         }
-        
-        $this->redirect("curCurso/verInscritos?id=".$request->getParameter("idCur"));
+
+        $this->redirect("curCurso/verInscritos?id=" . $request->getParameter("idCur"));
+    }
+
+    public function executeShowCalCursos(sfWebRequest $request) {
+        $this->cursos = Doctrine_Core::getTable('CurCurso')
+                ->createQuery('c')
+                ->leftJoin('c.CurEmpresa e')
+                ->where('c.is_inscribible = 1')
+                ->andWhere('c.fecha_inicio > ?', date('Y-m-d', strtotime('-1 year')))
+                ->orderBy('e.nombre ASC')
+                ->execute();
+    }
+
+    public function executeGetCursos(sfWebRequest $request) {
+        $fecha = $request->getParameter("fecha");
+
+        if ($fecha == "" || $fecha == null) {
+            $cursos = Doctrine_Core::getTable("CurCurso")
+                    ->createQuery('c')
+                    ->leftJoin('c.CurEmpresa e')
+                    ->where('c.is_inscribible = 1')
+                    ->andWhere('c.fecha_inicio > ?', date('Y-m-d'))
+                    ->orderBy('c.fecha_inicio ASC')
+                    ->limit(5)
+                    ->execute();
+
+            if ($cursos != null) {
+                $data = array();
+                
+                foreach ($cursos as $curso){
+                    $row = array();
+                    $row['id']=$curso->getIdCurCurso();
+                    $row['nombre']=$curso->getNombre();
+                    $row['empresa']=$curso->getCurEmpresa()->getNombre();
+                    $row['fecha']=$curso->getFechaInicio();
+                    $row['duracion']=$curso->getDuracion();
+                    
+                    $data[]=$row;
+                }
+
+                return $this->renderText(json_encode($data));
+            }
+        }else{
+            $cursos = Doctrine_Core::getTable("CurCurso")
+                    ->createQuery('c')
+                    ->leftJoin('c.CurEmpresa e')
+                    ->where('c.is_inscribible = 1')
+                    ->andWhere('c.fecha_inicio = ?', $fecha)
+                    ->orderBy('e.nombre ASC')
+                    ->limit(5)
+                    ->execute();
+
+            if ($cursos != null) {
+                $data = array();
+                
+                foreach ($cursos as $curso){
+                    $row = array();
+                    $row['id']=$curso;
+                    $row['nombre']=$curso->getNombre();
+                    $row['empresa']=$curso->getCurEmpresa()->getNombre();
+                    $row['fecha']=$curso->getFechaInicio();
+                    $row['duracion']=$curso->getDuracion();
+                    
+                    $data[]=$row;
+                }
+
+                return $this->renderText(json_encode($data));
+            }
+        }
+
+        return $this->renderText(json_encode(false));
     }
 
 }
