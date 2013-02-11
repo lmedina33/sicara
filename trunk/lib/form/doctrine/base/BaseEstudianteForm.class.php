@@ -18,8 +18,8 @@ abstract class BaseEstudianteForm extends BaseFormDoctrine
       'codigo_estudiante'    => new sfWidgetFormInputHidden(),
       'fecha_ingreso'        => new sfWidgetFormDate(),
       'fecha_retiro'         => new sfWidgetFormDate(),
-      'id_estado'            => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('EstadoEstudiante_3'), 'add_empty' => true)),
-      'id_estado_secundario' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('EstadoEstudiante'), 'add_empty' => true)),
+      'id_estado'            => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('EstadoEstudiante'), 'add_empty' => true)),
+      'id_estado_secundario' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('EstadoEstudianteSecundario'), 'add_empty' => true)),
       'id_usuario'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => false)),
       'codigo_pensum'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Pensum'), 'add_empty' => false)),
     ));
@@ -28,8 +28,8 @@ abstract class BaseEstudianteForm extends BaseFormDoctrine
       'codigo_estudiante'    => new sfValidatorChoice(array('choices' => array($this->getObject()->get('codigo_estudiante')), 'empty_value' => $this->getObject()->get('codigo_estudiante'), 'required' => false)),
       'fecha_ingreso'        => new sfValidatorDate(),
       'fecha_retiro'         => new sfValidatorDate(),
-      'id_estado'            => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('EstadoEstudiante_3'), 'required' => false)),
-      'id_estado_secundario' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('EstadoEstudiante'), 'required' => false)),
+      'id_estado'            => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('EstadoEstudiante'), 'required' => false)),
+      'id_estado_secundario' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('EstadoEstudianteSecundario'), 'required' => false)),
       'id_usuario'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'))),
       'codigo_pensum'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Pensum'))),
     ));

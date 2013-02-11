@@ -50,6 +50,14 @@ slot('title', 'Listar Inscritos')
             
                         $('#formulario').attr('href', '<?php echo url_for('formularioInscripcion/generarFormulario?id=') ?>'+idForm);
                         $('#formulario img').attr('src', '/images/iconos/refHV.png');
+                        
+                        if(datos.Matriculado == ""){
+                            $('#matricular').attr('href', '<?php echo url_for('inscrito/matricular?cod=') ?>'+numForm);
+                            $('#matricular img').attr('src', '/images/iconos/matricular.png');
+                        }else{
+                            $('#matricular').attr('href', '');
+                            $('#matricular img').attr('src', '/images/iconos/matricularGray.png');
+                        }
                     } );
                 } );
             },
@@ -79,7 +87,8 @@ slot('title', 'Listar Inscritos')
         });
         
         $("div.toolbar").html('<a href="#" id="detallar" title="Ver Inscrito"><img src="/images/iconos/listarSmallGray.png"/></a>\n\
-            <a href="#" id="formulario" title="Ver Formulario" target="_blank"><img src="/images/iconos/refHVGray.png"/></a>');
+            <a href="#" id="formulario" title="Ver Formulario" target="_blank"><img src="/images/iconos/refHVGray.png"/></a>\n\
+            <a href="#" id="matricular" title="Matricular"><img src="/images/iconos/matricularGray.png"/></a>');
     });
     
     function confirmFormalizar(){

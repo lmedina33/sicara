@@ -12,5 +12,8 @@
  */
 class EstadoEstudiante extends BaseEstadoEstudiante
 {
+    function __toString(){
+        return "".$this->getNombre();
+    }
 
 }

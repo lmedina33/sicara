@@ -5,3 +5,9 @@ all:
 
 showCursos:
   is_secure: false
+
+showCalCursos:
+  is_secure: false
+
+getCursos:
+  is_secure: false

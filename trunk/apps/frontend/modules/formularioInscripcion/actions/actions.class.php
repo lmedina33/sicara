@@ -513,6 +513,9 @@ class formularioInscripcionActions extends sfActions {
         $inscrito->setFechaInscripcion(date('Y-m-d'));
         $inscrito->save();
         
+        $formulario->setIsInscrito(1);
+        $formulario->save();
+        
         copy($pathOrigen, $pathDestino);
 
         if($bUpdate){

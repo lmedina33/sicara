@@ -23,6 +23,8 @@ abstract class BaseUsuarioForm extends BaseFormDoctrine
       'documento'                => new sfWidgetFormInputText(),
       'id_tipo_documento'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoDocumento'), 'add_empty' => false)),
       'lugar_expedicion'         => new sfWidgetFormInputText(),
+      'fecha_nacimiento'         => new sfWidgetFormDate(),
+      'genero'                   => new sfWidgetFormInputText(),
       'telefono1'                => new sfWidgetFormInputText(),
       'telefono2'                => new sfWidgetFormInputText(),
       'direccion'                => new sfWidgetFormTextarea(),
@@ -35,6 +37,7 @@ abstract class BaseUsuarioForm extends BaseFormDoctrine
       'observaciones'            => new sfWidgetFormTextarea(),
       'foto_path'                => new sfWidgetFormInputText(),
       'id_sf_guard_user'         => new sfWidgetFormInputText(),
+      'id_tipo_sangre'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoSangre'), 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -46,6 +49,8 @@ abstract class BaseUsuarioForm extends BaseFormDoctrine
       'documento'                => new sfValidatorString(array('max_length' => 20)),
       'id_tipo_documento'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoDocumento'))),
       'lugar_expedicion'         => new sfValidatorString(array('max_length' => 200, 'required' => false)),
+      'fecha_nacimiento'         => new sfValidatorDate(),
+      'genero'                   => new sfValidatorInteger(array('required' => false)),
       'telefono1'                => new sfValidatorString(array('max_length' => 25, 'required' => false)),
       'telefono2'                => new sfValidatorString(array('max_length' => 25, 'required' => false)),
       'direccion'                => new sfValidatorString(array('required' => false)),
@@ -58,6 +63,7 @@ abstract class BaseUsuarioForm extends BaseFormDoctrine
       'observaciones'            => new sfValidatorString(array('required' => false)),
       'foto_path'                => new sfValidatorString(array('max_length' => 150, 'required' => false)),
       'id_sf_guard_user'         => new sfValidatorInteger(array('required' => false)),
+      'id_tipo_sangre'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoSangre'), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('usuario[%s]');

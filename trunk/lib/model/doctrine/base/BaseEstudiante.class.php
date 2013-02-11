@@ -16,40 +16,40 @@ Doctrine_Manager::getInstance()->bindComponent('Estudiante', 'doctrine');
  * @property string $codigo_pensum
  * @property EstadoEstudiante $EstadoEstudiante
  * @property Pensum $Pensum
- * @property EstadoEstudiante $EstadoEstudiante_3
+ * @property EstadoEstudiante $EstadoEstudianteSecundario
  * @property Usuario $Usuario
  * @property Doctrine_Collection $AsignaturaCursada
  * @property Doctrine_Collection $GrupoHasEstudiante
  * @property Doctrine_Collection $Matricula
  * 
- * @method string              getCodigoEstudiante()     Returns the current record's "codigo_estudiante" value
- * @method date                getFechaIngreso()         Returns the current record's "fecha_ingreso" value
- * @method date                getFechaRetiro()          Returns the current record's "fecha_retiro" value
- * @method integer             getIdEstado()             Returns the current record's "id_estado" value
- * @method integer             getIdEstadoSecundario()   Returns the current record's "id_estado_secundario" value
- * @method integer             getIdUsuario()            Returns the current record's "id_usuario" value
- * @method string              getCodigoPensum()         Returns the current record's "codigo_pensum" value
- * @method EstadoEstudiante    getEstadoEstudiante()     Returns the current record's "EstadoEstudiante" value
- * @method Pensum              getPensum()               Returns the current record's "Pensum" value
- * @method EstadoEstudiante    getEstadoEstudiante3()    Returns the current record's "EstadoEstudiante_3" value
- * @method Usuario             getUsuario()              Returns the current record's "Usuario" value
- * @method Doctrine_Collection getAsignaturaCursada()    Returns the current record's "AsignaturaCursada" collection
- * @method Doctrine_Collection getGrupoHasEstudiante()   Returns the current record's "GrupoHasEstudiante" collection
- * @method Doctrine_Collection getMatricula()            Returns the current record's "Matricula" collection
- * @method Estudiante          setCodigoEstudiante()     Sets the current record's "codigo_estudiante" value
- * @method Estudiante          setFechaIngreso()         Sets the current record's "fecha_ingreso" value
- * @method Estudiante          setFechaRetiro()          Sets the current record's "fecha_retiro" value
- * @method Estudiante          setIdEstado()             Sets the current record's "id_estado" value
- * @method Estudiante          setIdEstadoSecundario()   Sets the current record's "id_estado_secundario" value
- * @method Estudiante          setIdUsuario()            Sets the current record's "id_usuario" value
- * @method Estudiante          setCodigoPensum()         Sets the current record's "codigo_pensum" value
- * @method Estudiante          setEstadoEstudiante()     Sets the current record's "EstadoEstudiante" value
- * @method Estudiante          setPensum()               Sets the current record's "Pensum" value
- * @method Estudiante          setEstadoEstudiante3()    Sets the current record's "EstadoEstudiante_3" value
- * @method Estudiante          setUsuario()              Sets the current record's "Usuario" value
- * @method Estudiante          setAsignaturaCursada()    Sets the current record's "AsignaturaCursada" collection
- * @method Estudiante          setGrupoHasEstudiante()   Sets the current record's "GrupoHasEstudiante" collection
- * @method Estudiante          setMatricula()            Sets the current record's "Matricula" collection
+ * @method string              getCodigoEstudiante()           Returns the current record's "codigo_estudiante" value
+ * @method date                getFechaIngreso()               Returns the current record's "fecha_ingreso" value
+ * @method date                getFechaRetiro()                Returns the current record's "fecha_retiro" value
+ * @method integer             getIdEstado()                   Returns the current record's "id_estado" value
+ * @method integer             getIdEstadoSecundario()         Returns the current record's "id_estado_secundario" value
+ * @method integer             getIdUsuario()                  Returns the current record's "id_usuario" value
+ * @method string              getCodigoPensum()               Returns the current record's "codigo_pensum" value
+ * @method EstadoEstudiante    getEstadoEstudiante()           Returns the current record's "EstadoEstudiante" value
+ * @method Pensum              getPensum()                     Returns the current record's "Pensum" value
+ * @method EstadoEstudiante    getEstadoEstudianteSecundario() Returns the current record's "EstadoEstudianteSecundario" value
+ * @method Usuario             getUsuario()                    Returns the current record's "Usuario" value
+ * @method Doctrine_Collection getAsignaturaCursada()          Returns the current record's "AsignaturaCursada" collection
+ * @method Doctrine_Collection getGrupoHasEstudiante()         Returns the current record's "GrupoHasEstudiante" collection
+ * @method Doctrine_Collection getMatricula()                  Returns the current record's "Matricula" collection
+ * @method Estudiante          setCodigoEstudiante()           Sets the current record's "codigo_estudiante" value
+ * @method Estudiante          setFechaIngreso()               Sets the current record's "fecha_ingreso" value
+ * @method Estudiante          setFechaRetiro()                Sets the current record's "fecha_retiro" value
+ * @method Estudiante          setIdEstado()                   Sets the current record's "id_estado" value
+ * @method Estudiante          setIdEstadoSecundario()         Sets the current record's "id_estado_secundario" value
+ * @method Estudiante          setIdUsuario()                  Sets the current record's "id_usuario" value
+ * @method Estudiante          setCodigoPensum()               Sets the current record's "codigo_pensum" value
+ * @method Estudiante          setEstadoEstudiante()           Sets the current record's "EstadoEstudiante" value
+ * @method Estudiante          setPensum()                     Sets the current record's "Pensum" value
+ * @method Estudiante          setEstadoEstudianteSecundario() Sets the current record's "EstadoEstudianteSecundario" value
+ * @method Estudiante          setUsuario()                    Sets the current record's "Usuario" value
+ * @method Estudiante          setAsignaturaCursada()          Sets the current record's "AsignaturaCursada" collection
+ * @method Estudiante          setGrupoHasEstudiante()         Sets the current record's "GrupoHasEstudiante" collection
+ * @method Estudiante          setMatricula()                  Sets the current record's "Matricula" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -129,15 +129,15 @@ abstract class BaseEstudiante extends sfDoctrineRecord
     {
         parent::setUp();
         $this->hasOne('EstadoEstudiante', array(
-             'local' => 'id_estado_secundario',
+             'local' => 'id_estado',
              'foreign' => 'id_estado_estudiante'));
 
         $this->hasOne('Pensum', array(
              'local' => 'codigo_pensum',
              'foreign' => 'codigo_pensum'));
 
-        $this->hasOne('EstadoEstudiante as EstadoEstudiante_3', array(
-             'local' => 'id_estado',
+        $this->hasOne('EstadoEstudiante as EstadoEstudianteSecundario', array(
+             'local' => 'id_estado_secundario',
              'foreign' => 'id_estado_estudiante'));
 
         $this->hasOne('Usuario', array(

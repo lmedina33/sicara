@@ -37,6 +37,17 @@ $root->addChild("Usuarios", $menu);
 
 
 
+//ESTUDIANTES
+
+$menu = new pmSuperfishMenu();
+$menu->setName("Estudiantes")->setCredentials(array("admin"));
+
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Listar")->setUrl("estudiante/index");
+$menu->addChild("Estudiantes_Lista", $menu_item);
+
+$root->addChild("Estudiantes",$menu);
+
 //ADMISIONES: Inscrito
 
 $menu = new pmSuperfishMenu();
@@ -136,6 +147,11 @@ $menu_item->setName("Cursos Empresariales")->setUrl("curCurso/index")->setCreden
 
 
 $root->addChild("CursosEmpresariales", $menu_item);
+
+//RENOVAR PASS:
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Cambiar Contraseña")->setUrl(url_for("home/renovarPass"));
+$root->addChild("cambiar_pass", $menu_item);
 
 //SALIR:
 $menu_item = new pmSuperfishMenuItem();

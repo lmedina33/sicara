@@ -304,16 +304,16 @@ Estudiante:
       autoincrement: false
   relations:
     EstadoEstudiante:
-      local: id_estado_secundario
+      local: id_estado
       foreign: id_estado_estudiante
       type: one
     Pensum:
       local: codigo_pensum
       foreign: codigo_pensum
       type: one
-    EstadoEstudiante_3:
+    EstadoEstudianteSecundario:
       class: EstadoEstudiante
-      local: id_estado
+      local: id_estado_secundario
       foreign: id_estado_estudiante
       type: one
     Usuario:
@@ -1179,6 +1179,27 @@ Matricula:
       primary: false
       notnull: true
       autoincrement: false
+    nombre_beneficiario:
+      type: string(500)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    documento:
+      type: string(500)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    telefono:
+      type: string(500)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
     id_periodo:
       type: integer(4)
       fixed: false
@@ -1630,6 +1651,20 @@ Usuario:
       primary: false
       notnull: false
       autoincrement: false
+    fecha_nacimiento:
+      type: date(25)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    genero:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
     telefono1:
       type: string(25)
       fixed: false
@@ -1714,10 +1749,21 @@ Usuario:
       primary: false
       notnull: false
       autoincrement: false
+    id_tipo_sangre:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
   relations:
     TipoDocumento:
       local: id_tipo_documento
       foreign: id_tipo_documento
+      type: one
+    TipoSangre:
+      local: id_tipo_sangre
+      foreign: id_tipo_sangre
       type: one
     AsignaturaCursada:
       local: id_usuario
@@ -3371,3 +3417,26 @@ VariableConfigurable:
       primary: false
       notnull: true
       autoincrement: false
+
+TipoSangre:
+  connection: doctrine
+  tableName: tipo_sangre
+  columns:
+    id_tipo_sangre:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(5)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+  relations:
+    Usuario:
+      local: id_tipo_sangre
+      foreign: id_tipo_sangre
+      type: many

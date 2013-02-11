@@ -15,6 +15,8 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @property string $documento
  * @property integer $id_tipo_documento
  * @property string $lugar_expedicion
+ * @property date $fecha_nacimiento
+ * @property integer $genero
  * @property string $telefono1
  * @property string $telefono2
  * @property string $direccion
@@ -27,7 +29,9 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @property string $observaciones
  * @property string $foto_path
  * @property integer $id_sf_guard_user
+ * @property integer $id_tipo_sangre
  * @property TipoDocumento $TipoDocumento
+ * @property TipoSangre $TipoSangre
  * @property Doctrine_Collection $AsignaturaCursada
  * @property Doctrine_Collection $Estudiante
  * @property Doctrine_Collection $FotoUsuario
@@ -55,6 +59,8 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method string              getDocumento()                Returns the current record's "documento" value
  * @method integer             getIdTipoDocumento()          Returns the current record's "id_tipo_documento" value
  * @method string              getLugarExpedicion()          Returns the current record's "lugar_expedicion" value
+ * @method date                getFechaNacimiento()          Returns the current record's "fecha_nacimiento" value
+ * @method integer             getGenero()                   Returns the current record's "genero" value
  * @method string              getTelefono1()                Returns the current record's "telefono1" value
  * @method string              getTelefono2()                Returns the current record's "telefono2" value
  * @method string              getDireccion()                Returns the current record's "direccion" value
@@ -67,7 +73,9 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method string              getObservaciones()            Returns the current record's "observaciones" value
  * @method string              getFotoPath()                 Returns the current record's "foto_path" value
  * @method integer             getIdSfGuardUser()            Returns the current record's "id_sf_guard_user" value
+ * @method integer             getIdTipoSangre()             Returns the current record's "id_tipo_sangre" value
  * @method TipoDocumento       getTipoDocumento()            Returns the current record's "TipoDocumento" value
+ * @method TipoSangre          getTipoSangre()               Returns the current record's "TipoSangre" value
  * @method Doctrine_Collection getAsignaturaCursada()        Returns the current record's "AsignaturaCursada" collection
  * @method Doctrine_Collection getEstudiante()               Returns the current record's "Estudiante" collection
  * @method Doctrine_Collection getFotoUsuario()              Returns the current record's "FotoUsuario" collection
@@ -94,6 +102,8 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method Usuario             setDocumento()                Sets the current record's "documento" value
  * @method Usuario             setIdTipoDocumento()          Sets the current record's "id_tipo_documento" value
  * @method Usuario             setLugarExpedicion()          Sets the current record's "lugar_expedicion" value
+ * @method Usuario             setFechaNacimiento()          Sets the current record's "fecha_nacimiento" value
+ * @method Usuario             setGenero()                   Sets the current record's "genero" value
  * @method Usuario             setTelefono1()                Sets the current record's "telefono1" value
  * @method Usuario             setTelefono2()                Sets the current record's "telefono2" value
  * @method Usuario             setDireccion()                Sets the current record's "direccion" value
@@ -106,7 +116,9 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method Usuario             setObservaciones()            Sets the current record's "observaciones" value
  * @method Usuario             setFotoPath()                 Sets the current record's "foto_path" value
  * @method Usuario             setIdSfGuardUser()            Sets the current record's "id_sf_guard_user" value
+ * @method Usuario             setIdTipoSangre()             Sets the current record's "id_tipo_sangre" value
  * @method Usuario             setTipoDocumento()            Sets the current record's "TipoDocumento" value
+ * @method Usuario             setTipoSangre()               Sets the current record's "TipoSangre" value
  * @method Usuario             setAsignaturaCursada()        Sets the current record's "AsignaturaCursada" collection
  * @method Usuario             setEstudiante()               Sets the current record's "Estudiante" collection
  * @method Usuario             setFotoUsuario()              Sets the current record's "FotoUsuario" collection
@@ -206,6 +218,24 @@ abstract class BaseUsuario extends sfDoctrineRecord
              'notnull' => false,
              'autoincrement' => false,
              'length' => 200,
+             ));
+        $this->hasColumn('fecha_nacimiento', 'date', 25, array(
+             'type' => 'date',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 25,
+             ));
+        $this->hasColumn('genero', 'integer', 1, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'length' => 1,
              ));
         $this->hasColumn('telefono1', 'string', 25, array(
              'type' => 'string',
@@ -315,6 +345,15 @@ abstract class BaseUsuario extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 4,
              ));
+        $this->hasColumn('id_tipo_sangre', 'integer', 4, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => true,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'length' => 4,
+             ));
     }
 
     public function setUp()
@@ -323,6 +362,10 @@ abstract class BaseUsuario extends sfDoctrineRecord
         $this->hasOne('TipoDocumento', array(
              'local' => 'id_tipo_documento',
              'foreign' => 'id_tipo_documento'));
+
+        $this->hasOne('TipoSangre', array(
+             'local' => 'id_tipo_sangre',
+             'foreign' => 'id_tipo_sangre'));
 
         $this->hasMany('AsignaturaCursada', array(
              'local' => 'id_usuario',

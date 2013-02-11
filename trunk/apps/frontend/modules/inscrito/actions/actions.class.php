@@ -358,4 +358,102 @@ class inscritoActions extends sfActions {
         return $this->renderText(json_encode($data));
     }
 
+    public function executeMatricular(sfWebRequest $request) {
+        $cod = $request->getParameter('cod');
+
+        $inscrito = Doctrine_Core::getTable('Inscrito')->find($cod);
+
+        if ($inscrito->getIsMatriculado() != 1) {
+
+            $usuario = $inscrito->getUsuario();
+
+            $userOld = Doctrine_Core::getTable('sfGuardUser')->findBy('email_address', $usuario->getCorreo())->getFirst();
+
+            if ($userOld == null) {
+
+                $estudiante = new Estudiante();
+
+                $subCod = substr($inscrito->getPeriodoAcademico()->getCodigoPensum(), 0, 2) . str_replace('-', '', $inscrito->getPeriodoAcademico()->getPeriodo());
+                $estudianteOld = Doctrine_Core::getTable('Estudiante')->createQuery()
+                        ->where("codigo_estudiante LIKE '" . $subCod . "%'")
+                        ->andWhere('codigo_pensum = ?', $inscrito->getPeriodoAcademico()->getCodigoPensum())
+                        ->orderBy('codigo_estudiante DESC')
+                        ->execute()
+                        ->getFirst();
+
+                $lastCod = null;
+
+                if ($estudianteOld != null)
+                    $lastCod = $estudianteOld->getCodigoEstudiante();
+                else
+                    $lastCod = $subCod . "000";
+
+                $codigo = "" . (doubleval($lastCod) + 1);
+
+                $estudiante->setCodigoEstudiante($codigo);
+                $estudiante->setFechaIngreso(date('Y-m-d'));
+
+                if ($inscrito->getPeriodoAcademico()->getEstado() == 1) {
+                    $estudiante->setIdEstado(1);
+                } else {
+                    $estudiante->setIdEstado(2);
+                }
+
+                $estudiante->setUsuario($inscrito->getUsuario());
+                $estudiante->setCodigoPensum($inscrito->getPeriodoAcademico()->getCodigoPensum());
+                $estudiante->save();
+
+
+                $matricula = new Matricula();
+                $matricula->setFecha(date('Y-m-d'));
+                $matricula->setPeriodoAcademico($inscrito->getPeriodoAcademico());
+                $matricula->setJornada($inscrito->getJornada());
+                $matricula->setTipoPago($inscrito->getTipoPago());
+                $matricula->setEstudiante($estudiante);
+                $matricula->save();
+
+                $inscrito->setIsMatriculado(1);
+                $inscrito->save();
+
+                $permiso = Doctrine_Core::getTable('sfGuardPermission')->findBy('name', 'estudiante')->getFirst();
+
+                $user = new sfGuardUser();
+                $user->setUsername($codigo);
+                $user->setPassword($usuario->getDocumento());
+                $user->setFirstName($usuario->getPrimerNombre() . " " . $usuario->getSegundoNombre());
+                $user->setLastName($usuario->getPrimerApellido() . " " . $usuario->getSegundoApellido());
+                $user->setEmailAddress($usuario->getCorreo());
+                $user->setIsActive(1);
+                $user->save();
+
+                $credential = new sfGuardUserPermission();
+                $credential->setUserId($user);
+                $credential->setPermission($permiso);
+                $credential->save();
+
+                $usuario->setIdSfGuardUser($user->getId());
+                $usuario->save();
+
+                $this->getUser()->setAttribute('notice', 'El estudiante se ha matriculado exitosamente con el código ' . $estudiante->getCodigoEstudiante() . ' .');
+                $this->redirect('estudiante/index');
+            }
+
+            $this->getUser()->setAttribute('error', 'Al parecer el usuario que intenta registrar ya existe en el sistema, consulte con el administrador.');
+            $this->redirect('inscrito/index');
+        } else {
+            $estudiante = Doctrine_Core::getTable('Estudiante')->findBy('id_usuario', $inscrito->getIdUsuario())->getFirst();
+
+            if ($estudiante == null) {
+                $this->getUser()->setAttribute('error', 'Existe una inconsistencia en el sistema, consulte con el administrador.');
+            } else {
+                $this->getUser()->setAttribute('error', 'Este estudiante ya figura como matriculado.');
+            }
+
+            $this->redirect('inscrito/index');
+        }
+
+
+        joder();
+    }
+
 }

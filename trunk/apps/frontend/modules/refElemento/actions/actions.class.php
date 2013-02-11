@@ -31,6 +31,18 @@ class refElementoActions extends sfActions {
 
         if ($data['id_usuario_responsable'])
             $this->filtroUsuario = $data['id_usuario_responsable'];
+        
+        $this->mantenimientosProx = Doctrine_Core::getTable("RefMantenimiento")
+                ->createQuery('m')
+                ->where('DATEDIFF(m.fecha_programada, ?) >= 0 ', date('Y-m-d'))
+                ->andWhere('is_ejecutado = 0')
+                ->execute();
+
+        $this->mantenimientosPas = Doctrine_Core::getTable("RefMantenimiento")
+                ->createQuery('m')
+                ->where('DATEDIFF(m.fecha_programada, ?) < 0 ', date('Y-m-d'))
+                ->andWhere('is_ejecutado = 0')
+                ->execute();
     }
 
     public function executeNew(sfWebRequest $request) {
@@ -644,6 +656,27 @@ EOF
 
 
         throw new sfStopException();
+    }
+    
+    public function executeGetMantenimientos(sfWebRequest $request) {
+        $fecha = $request->getParameter("fecha");
+
+        $mantenimientos = Doctrine_Core::getTable("RefMantenimiento")
+                ->createQuery('m')
+                ->where('fecha_programada = ?', $fecha)
+                ->execute();
+
+        $data = array();
+        
+        foreach ($mantenimientos as $mantenimiento) {
+            $row = array();
+            $row["elemento"] = $mantenimiento->getRefElemento()->getNombre();
+            $row["idElemento"] = $mantenimiento->getIdRefElemento();
+            
+            $data[]=$row;
+        }
+
+        return $this->renderText(json_encode($data));
     }
 
 }

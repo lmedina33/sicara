@@ -9,12 +9,82 @@ slot('title', 'Listar Material Bibliográfico')
     var oTable;
     $(document).ready(function(){
         
+        fechasProx=new Array();
+        fechasPas=new Array();
+        
+<?php
+$i = 0;
+foreach ($mantenimientosProx as $mantenimiento) {
+    ?>
+                fechasProx[<?php echo $i ?>]= "<?php echo date("Y", strtotime($mantenimiento->getFechaProgramada())) ?>"+"-"+"<?php echo intval(date("m", strtotime($mantenimiento->getFechaProgramada()))) - 1 ?>"+"-"+"<?php echo intval(date("d", strtotime($mantenimiento->getFechaProgramada()))) ?>";
+    <?php
+    $i++;
+}
+?>
+            
+<?php
+$i = 0;
+foreach ($mantenimientosPas as $mantenimiento) {
+    ?>
+                fechasPas[<?php echo $i ?>]= "<?php echo date("Y", strtotime($mantenimiento->getFechaProgramada())) ?>"+"-"+"<?php echo intval(date("m", strtotime($mantenimiento->getFechaProgramada()))) - 1 ?>"+"-"+"<?php echo intval(date("d", strtotime($mantenimiento->getFechaProgramada()))) ?>";
+    <?php
+    $i++;
+}
+?>
+        
+
+        $( "#calMantenimiento" ).datepicker(
+        {
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            buttonText: ['Ver Calendario...'],
+            yearRange: 'c-1:c+2',
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd",
+            beforeShowDay: function(date) {
+                data=new Array();
+                data[0]=true;
+                if(fechasProx.indexOf(date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate())!=-1){
+                    data[1]="manttoProx";
+                    data[2]="Mantenimiento próximo";
+                }else if(fechasPas.indexOf(date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate())!=-1){
+                    data[1]="manttoPas";
+                    data[2]="Mantenimiento pasado";
+                }else{
+                    data[1]="";
+                    data[2]="";
+                }
+                
+                return data;
+            },
+            onSelect: function(date){
+                showMantenimiento(date);
+            }
+        });
+        
+        date=new Date();
+        fecha="";
+        fecha+=date.getFullYear()+"-";
+        mes=date.getMonth()+1;
+        if(mes<10)
+            fecha+="0"+mes+"-";
+        else
+            fecha+=mes+"-";
+        if(date.getDate()<10)
+            fecha+="0"+date.getDate();
+        else
+            fecha+=date.getDate();
+        showMantenimiento(fecha);
+          
+        
         oTable=$('.dataTable').dataTable({
             "sDom": 'lfT<"toolbar">trip<"foot">',
             "oLanguage": <?php echo getLenguageEs(); ?>,
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": "<?php echo url_for('refElemento/getDataPaging?fTip='.$filtroTipo.'&fEst='.$filtroEstado.'&fUsu='.$filtroUsuario) ?>",
+            "sAjaxSource": "<?php echo url_for('refElemento/getDataPaging?fTip=' . $filtroTipo . '&fEst=' . $filtroEstado . '&fUsu=' . $filtroUsuario) ?>",
             "aoColumns": [
                 { "mDataProp": "Id", 'bVisible': false },
                 { "mDataProp": "Tipo" },
@@ -46,7 +116,7 @@ slot('title', 'Listar Material Bibliográfico')
                         $('#hv').attr('href', '<?php echo url_for('refHojaVida/verByElemento?idEle=') ?>'+idElemento);
                         $('#hv img').attr('src', '/images/iconos/refHV.png');
                         
-                        url='<?php  echo url_for('refElemento/showFoto?id=') ?>'+datos.IdFoto;
+                        url='<?php echo url_for('refElemento/showFoto?id=') ?>'+datos.IdFoto;
                         opc='toolbar=0,location=0,status=0,menubar=0,scrollbars=1,resizable=1,width=700,height=600';
                         
                         if(datos.IdFoto != ""){
@@ -91,22 +161,48 @@ slot('title', 'Listar Material Bibliográfico')
         <a id="lista" href="<?php echo url_for('refElemento/verListado') ?>" title="Exportar Listado de Elementos a Excel"><img src="/images/iconos/xlsDoc.png" /></a>\n\
         <a id="listaPdf" target="_blank" href="<?php echo url_for('refElemento/generarListado') ?>" title="Exportar Listado de Elementos a PDF"><img src="/images/iconos/pdfDoc.png" /></a>');
     });
+    
+    
+    function showMantenimiento(date){
+        $("#mantenimientos").html("<div class='cargando'>Cargando...</div>");
+        $.post("<?php echo url_for("refElemento/getMantenimientos") ?>",
+        {
+            "fecha" : date
+        }, 
+        function(data){            
+            if(data.length == 0){            
+                html="<div class='fecha_mantto'>Fecha: "+date+"</div>";
+                html += "No hay mantenimientos para esta fecha.";
+                $("#mantenimientos").html(html);
+            }else{
+                html="<div class='fecha_mantto'>Fecha: "+date+"</div>";
+                html += "Mantenimientos programados para:<br><ul>";
+                for(i=0;i<data.length;i++){
+                    html+="<li><a href='<?php echo url_for('refHojaVida/verByElemento') ?>?idEle="+data[i]['idElemento']+"'>"+data[i]['elemento']+"</a></li>";
+                }
+                html += "</ul>";
+                $("#mantenimientos").html(html);
+            }
+        }
+        , "json"  );
+                
+    }
 </script>
 <h1>Listar Recursos Físicos</h1>
 <br />
 <form id="form" action="<?php echo url_for('refElemento/index') ?>" method="post">
-&nbsp;&nbsp;&nbsp;
-<?php echo $form->renderHiddenFields(false) ?>
-<?php echo $form['id_ref_tipo_elemento']->renderError() ?>
-<?php echo $form['id_ref_tipo_elemento']->renderLabel() ?>
-<?php echo $form['id_ref_tipo_elemento'] ?>&nbsp;&nbsp;&nbsp;
-<?php echo $form['id_ref_estado_elemento']->renderError() ?>
-<?php echo $form['id_ref_estado_elemento']->renderLabel() ?>
-<?php echo $form['id_ref_estado_elemento'] ?>&nbsp;&nbsp;&nbsp;
-<?php echo $form['id_usuario_responsable']->renderError() ?>
-<?php echo $form['id_usuario_responsable']->renderLabel() ?>
-<?php echo $form['id_usuario_responsable'] ?>&nbsp;&nbsp;&nbsp;
-<input type="submit" value="Filtrar" />
+    &nbsp;&nbsp;&nbsp;
+    <?php echo $form->renderHiddenFields(false) ?>
+    <?php echo $form['id_ref_tipo_elemento']->renderError() ?>
+    <?php echo $form['id_ref_tipo_elemento']->renderLabel() ?>
+    <?php echo $form['id_ref_tipo_elemento'] ?>&nbsp;&nbsp;&nbsp;
+    <?php echo $form['id_ref_estado_elemento']->renderError() ?>
+    <?php echo $form['id_ref_estado_elemento']->renderLabel() ?>
+    <?php echo $form['id_ref_estado_elemento'] ?>&nbsp;&nbsp;&nbsp;
+    <?php echo $form['id_usuario_responsable']->renderError() ?>
+    <?php echo $form['id_usuario_responsable']->renderLabel() ?>
+    <?php echo $form['id_usuario_responsable'] ?>&nbsp;&nbsp;&nbsp;
+    <input type="submit" value="Filtrar" />
 </form>
 <br />
 <br />
@@ -129,4 +225,11 @@ slot('title', 'Listar Material Bibliográfico')
     <tbody>
     </tbody>
 </table>
-
+<br />
+<h2>Mantenimientos Programados</h2>
+<div class="mantenimientos" >
+    <div id="mantenimientos">
+        Mantenimientos no disponibles
+    </div>
+</div>
+<div id="calMantenimiento"></div>
