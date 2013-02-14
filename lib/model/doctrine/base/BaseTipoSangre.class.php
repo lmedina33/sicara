@@ -10,13 +10,16 @@ Doctrine_Manager::getInstance()->bindComponent('TipoSangre', 'doctrine');
  * @property integer $id_tipo_sangre
  * @property string $nombre
  * @property Doctrine_Collection $Usuario
+ * @property Doctrine_Collection $FormularioInscripcion
  * 
- * @method integer             getIdTipoSangre()   Returns the current record's "id_tipo_sangre" value
- * @method string              getNombre()         Returns the current record's "nombre" value
- * @method Doctrine_Collection getUsuario()        Returns the current record's "Usuario" collection
- * @method TipoSangre          setIdTipoSangre()   Sets the current record's "id_tipo_sangre" value
- * @method TipoSangre          setNombre()         Sets the current record's "nombre" value
- * @method TipoSangre          setUsuario()        Sets the current record's "Usuario" collection
+ * @method integer             getIdTipoSangre()          Returns the current record's "id_tipo_sangre" value
+ * @method string              getNombre()                Returns the current record's "nombre" value
+ * @method Doctrine_Collection getUsuario()               Returns the current record's "Usuario" collection
+ * @method Doctrine_Collection getFormularioInscripcion() Returns the current record's "FormularioInscripcion" collection
+ * @method TipoSangre          setIdTipoSangre()          Sets the current record's "id_tipo_sangre" value
+ * @method TipoSangre          setNombre()                Sets the current record's "nombre" value
+ * @method TipoSangre          setUsuario()               Sets the current record's "Usuario" collection
+ * @method TipoSangre          setFormularioInscripcion() Sets the current record's "FormularioInscripcion" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -51,6 +54,10 @@ abstract class BaseTipoSangre extends sfDoctrineRecord
     {
         parent::setUp();
         $this->hasMany('Usuario', array(
+             'local' => 'id_tipo_sangre',
+             'foreign' => 'id_tipo_sangre'));
+
+        $this->hasMany('FormularioInscripcion', array(
              'local' => 'id_tipo_sangre',
              'foreign' => 'id_tipo_sangre'));
     }

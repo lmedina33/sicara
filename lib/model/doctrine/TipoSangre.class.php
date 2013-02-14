@@ -12,5 +12,7 @@
  */
 class TipoSangre extends BaseTipoSangre
 {
-
+    function __toString(){
+        return $this->nombre;
+    }
 }

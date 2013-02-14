@@ -37,6 +37,8 @@ class FormularioInscripcionForm extends BaseFormularioInscripcionForm {
             'documento' => new sfWidgetFormInputText(
                     array('label' => 'Documento de Identidad'),
                     array('class' => 'validate[required,custom[onlyNumberSp],maxSize[20]]')),
+            'genero' => new sfWidgetFormChoice(array('choices' => array(0 => 'Femenino', 1 => 'Masculino'), 'label' => 'Género')),
+            'id_tipo_sangre' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoSangre'), 'add_empty' => false, 'label' => 'Tipo de Sangre')),
             'id_tipo_documento' => new sfWidgetFormDoctrineChoice(array('label' => 'Tipo de Documento de Identidad','model' => $this->getRelatedModelName('TipoDocumento'), 'add_empty' => 'Seleccione...'),
                     array('class' => 'validate[required]')),
             'lugar_expedicion' => new sfWidgetFormInputText(
@@ -54,7 +56,7 @@ class FormularioInscripcionForm extends BaseFormularioInscripcionForm {
                     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
                     buttonText: ['Ver Calendario...'],
-                    yearRange: 'c-100:c-10',
+                    yearRange: '-100:-10',
                     changeMonth: true,
                     changeYear: true }",
                 'date_widget' => new sfWidgetFormInputText()
@@ -209,6 +211,8 @@ class FormularioInscripcionForm extends BaseFormularioInscripcionForm {
             'edu_superior3_lugar' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
             'codigo_pensum' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Pensum'))),
             'id_periodo' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'))),
+            'genero' => new sfValidatorPass(),
+            'id_tipo_sangre'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoSangre'), 'required' => false)),
             'id_jornada' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Jornada'))),);
         
         if($this->isUpdate){

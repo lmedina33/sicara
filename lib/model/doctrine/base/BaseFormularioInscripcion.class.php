@@ -17,9 +17,11 @@ Doctrine_Manager::getInstance()->bindComponent('FormularioInscripcion', 'doctrin
  * @property string $documento
  * @property integer $id_tipo_documento
  * @property string $lugar_expedicion
+ * @property integer $genero
  * @property string $lugar_nacimiento
  * @property date $fecha_nacimiento
  * @property string $libreta_militar
+ * @property integer $id_tipo_sangre
  * @property string $foto_path
  * @property integer $es_trabajador
  * @property string $telefono1
@@ -61,6 +63,7 @@ Doctrine_Manager::getInstance()->bindComponent('FormularioInscripcion', 'doctrin
  * @property PeriodoAcademico $PeriodoAcademico
  * @property Jornada $Jornada
  * @property TipoPago $TipoPago
+ * @property TipoSangre $TipoSangre
  * 
  * @method integer               getIdFormularioInscripcion()   Returns the current record's "id_formulario_inscripcion" value
  * @method string                getNumero()                    Returns the current record's "numero" value
@@ -72,9 +75,11 @@ Doctrine_Manager::getInstance()->bindComponent('FormularioInscripcion', 'doctrin
  * @method string                getDocumento()                 Returns the current record's "documento" value
  * @method integer               getIdTipoDocumento()           Returns the current record's "id_tipo_documento" value
  * @method string                getLugarExpedicion()           Returns the current record's "lugar_expedicion" value
+ * @method integer               getGenero()                    Returns the current record's "genero" value
  * @method string                getLugarNacimiento()           Returns the current record's "lugar_nacimiento" value
  * @method date                  getFechaNacimiento()           Returns the current record's "fecha_nacimiento" value
  * @method string                getLibretaMilitar()            Returns the current record's "libreta_militar" value
+ * @method integer               getIdTipoSangre()              Returns the current record's "id_tipo_sangre" value
  * @method string                getFotoPath()                  Returns the current record's "foto_path" value
  * @method integer               getEsTrabajador()              Returns the current record's "es_trabajador" value
  * @method string                getTelefono1()                 Returns the current record's "telefono1" value
@@ -116,6 +121,7 @@ Doctrine_Manager::getInstance()->bindComponent('FormularioInscripcion', 'doctrin
  * @method PeriodoAcademico      getPeriodoAcademico()          Returns the current record's "PeriodoAcademico" value
  * @method Jornada               getJornada()                   Returns the current record's "Jornada" value
  * @method TipoPago              getTipoPago()                  Returns the current record's "TipoPago" value
+ * @method TipoSangre            getTipoSangre()                Returns the current record's "TipoSangre" value
  * @method FormularioInscripcion setIdFormularioInscripcion()   Sets the current record's "id_formulario_inscripcion" value
  * @method FormularioInscripcion setNumero()                    Sets the current record's "numero" value
  * @method FormularioInscripcion setCodigo()                    Sets the current record's "codigo" value
@@ -126,9 +132,11 @@ Doctrine_Manager::getInstance()->bindComponent('FormularioInscripcion', 'doctrin
  * @method FormularioInscripcion setDocumento()                 Sets the current record's "documento" value
  * @method FormularioInscripcion setIdTipoDocumento()           Sets the current record's "id_tipo_documento" value
  * @method FormularioInscripcion setLugarExpedicion()           Sets the current record's "lugar_expedicion" value
+ * @method FormularioInscripcion setGenero()                    Sets the current record's "genero" value
  * @method FormularioInscripcion setLugarNacimiento()           Sets the current record's "lugar_nacimiento" value
  * @method FormularioInscripcion setFechaNacimiento()           Sets the current record's "fecha_nacimiento" value
  * @method FormularioInscripcion setLibretaMilitar()            Sets the current record's "libreta_militar" value
+ * @method FormularioInscripcion setIdTipoSangre()              Sets the current record's "id_tipo_sangre" value
  * @method FormularioInscripcion setFotoPath()                  Sets the current record's "foto_path" value
  * @method FormularioInscripcion setEsTrabajador()              Sets the current record's "es_trabajador" value
  * @method FormularioInscripcion setTelefono1()                 Sets the current record's "telefono1" value
@@ -170,6 +178,7 @@ Doctrine_Manager::getInstance()->bindComponent('FormularioInscripcion', 'doctrin
  * @method FormularioInscripcion setPeriodoAcademico()          Sets the current record's "PeriodoAcademico" value
  * @method FormularioInscripcion setJornada()                   Sets the current record's "Jornada" value
  * @method FormularioInscripcion setTipoPago()                  Sets the current record's "TipoPago" value
+ * @method FormularioInscripcion setTipoSangre()                Sets the current record's "TipoSangre" value
  * 
  * @package    sicara2
  * @subpackage model
@@ -270,6 +279,15 @@ abstract class BaseFormularioInscripcion extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 200,
              ));
+        $this->hasColumn('genero', 'integer', 1, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'length' => 1,
+             ));
         $this->hasColumn('lugar_nacimiento', 'string', 200, array(
              'type' => 'string',
              'fixed' => 0,
@@ -296,6 +314,15 @@ abstract class BaseFormularioInscripcion extends sfDoctrineRecord
              'notnull' => false,
              'autoincrement' => false,
              'length' => 25,
+             ));
+        $this->hasColumn('id_tipo_sangre', 'integer', 4, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => true,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'length' => 4,
              ));
         $this->hasColumn('foto_path', 'string', 150, array(
              'type' => 'string',
@@ -652,6 +679,10 @@ abstract class BaseFormularioInscripcion extends sfDoctrineRecord
         $this->hasOne('TipoPago', array(
              'local' => 'id_tipo_pago',
              'foreign' => 'id_tipo_pago'));
+
+        $this->hasOne('TipoSangre', array(
+             'local' => 'id_tipo_sangre',
+             'foreign' => 'id_tipo_sangre'));
 
         $timestampable0 = new Doctrine_Template_Timestampable(array(
              ));

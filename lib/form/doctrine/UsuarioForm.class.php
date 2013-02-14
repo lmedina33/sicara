@@ -20,6 +20,21 @@ class UsuarioForm extends BaseUsuarioForm {
             'documento' => new sfWidgetFormInputText(array('label' => 'Número de Documento'),array('class' => 'validate[required,maxSize[20],ajax[ajaxDocumentoCallPhp_' . sfConfig::get('sf_environment') . ']]')),
             'id_tipo_documento' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoDocumento'), 'add_empty' => false, 'label' => 'Tipo de Documento'),array('class' => 'validate[required,maxSize[20],ajax[ajaxTipoDocumentoCallPhp_' . sfConfig::get('sf_environment') . ']]')),
             'lugar_expedicion' => new sfWidgetFormInputText(array('label' => 'Lugar de Expedición'),array('class' => 'validate[required]')),
+            'fecha_nacimiento' => new sfWidgetFormJQueryDate(array(
+                'label' => 'Fecha de Nacimiento',
+                'image' => '/images/iconos/calendar.png',
+                'culture' => 'es',
+                'config' => "{
+                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    buttonText: ['Ver Calendario...'],
+                    yearRange: '-100:-10',
+                    changeMonth: true,
+                    changeYear: true }",
+                'date_widget' => new sfWidgetFormInputText()
+                    ),
+                    array('class' => 'validate[required]','readonly' => 'readonly')),
             'telefono1' => new sfWidgetFormInputText(array('label' => 'Teléfono 1'),array('class' => 'validate[required]')),
             'telefono2' => new sfWidgetFormInputText(array('label' => 'Teléfono 2')),
             'direccion' => new sfWidgetFormInputText(array('label' => 'Dirección'),array('class' => 'validate[required]')),
@@ -31,7 +46,9 @@ class UsuarioForm extends BaseUsuarioForm {
             'especificaciones_medicas' => new sfWidgetFormTextarea(array('label' => 'Especificaciones Médicas'),array('class' => 'validate[required]')),
             'observaciones' => new sfWidgetFormTextarea(array('label' => 'Otras Observaciones')),
             'foto_path' => new sfWidgetFormInputFile(array('label' => 'Foto')),
+            'genero' => new sfWidgetFormChoice(array('choices' => array(0 => 'Femenino', 1 => 'Masculino'))),
             'id_sf_guard_user' => new sfWidgetFormInputText(),
+            'id_tipo_sangre' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoSangre'), 'add_empty' => false)),
         ));
 
         $this->setValidators(array(
@@ -43,6 +60,7 @@ class UsuarioForm extends BaseUsuarioForm {
             'documento' => new sfValidatorString(array('max_length' => 20)),
             'id_tipo_documento' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoDocumento'))),
             'lugar_expedicion' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
+            'fecha_nacimiento' => new sfValidatorDate(),
             'telefono1' => new sfValidatorString(array('max_length' => 25, 'required' => false)),
             'telefono2' => new sfValidatorString(array('max_length' => 25, 'required' => false)),
             'direccion' => new sfValidatorString(array('required' => false)),
@@ -60,7 +78,9 @@ class UsuarioForm extends BaseUsuarioForm {
                 ),array(
                     'max_size' => 'Este archivo es demasiado grande.'
                 )),
+            'genero' => new sfValidatorPass(),
             'id_sf_guard_user' => new sfValidatorInteger(array('required' => false)),
+            'id_tipo_sangre'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoSangre'), 'required' => false)),
         ));
 
         $this->widgetSchema->setNameFormat('usuario[%s]');

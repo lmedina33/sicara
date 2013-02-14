@@ -115,6 +115,20 @@
                 </td>
             </tr>
             <tr>
+                <th><?php echo $form['genero']->renderLabel() ?></th>
+                <td>
+                    <?php echo $form['genero']->renderError() ?>
+                    <?php echo $form['genero'] ?>
+                </td>
+            </tr>
+            <tr>
+                <th><?php echo $form['id_tipo_sangre']->renderLabel() ?></th>
+                <td>
+                    <?php echo $form['id_tipo_sangre']->renderError() ?>
+                    <?php echo $form['id_tipo_sangre'] ?>
+                </td>
+            </tr>
+            <tr>
                 <th>
                     <?php echo $form['libreta_militar']->renderLabel() ?>
                     <div class="tip" title="Solo para hombres.<br/>Si no ha definido su situación militar, deje este campo vacío."></div>
