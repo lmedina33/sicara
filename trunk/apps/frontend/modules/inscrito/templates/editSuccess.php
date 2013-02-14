@@ -81,6 +81,27 @@
                 </td>
             </tr>
             <tr>
+                <th><?php echo $formUser['fecha_nacimiento']->renderLabel() ?>
+                    <?php echo $formUser['fecha_nacimiento']->renderError() ?></th>
+                <td>
+                    <?php echo $formUser['fecha_nacimiento'] ?>
+                </td>
+            </tr>
+            <tr>
+                <th><?php echo $formUser['genero']->renderLabel() ?>
+                    <?php echo $formUser['genero']->renderError() ?></th>
+                <td>
+                    <?php echo $formUser['genero'] ?>
+                </td>
+            </tr>
+            <tr>
+                <th><?php echo $formUser['id_tipo_sangre']->renderLabel() ?>
+                    <?php echo $formUser['id_tipo_sangre']->renderError() ?></th>
+                <td>
+                    <?php echo $formUser['id_tipo_sangre'] ?>
+                </td>
+            </tr>
+            <tr>
                 <th><?php echo $formUser['telefono1']->renderLabel() ?>
                     <?php echo $formUser['telefono1']->renderError() ?></th>
                 <td>

@@ -75,6 +75,13 @@
             </td>
         </tr>
         <tr>
+            <th><?php echo $formUser['fecha_nacimiento']->renderLabel() ?>
+                <?php echo $formUser['fecha_nacimiento']->renderError() ?></th>
+            <td>
+                <input type="text" value="<?php echo $formUser->getObject()->getFechaNacimiento() ?>"/>
+            </td>
+        </tr>
+        <tr>
             <th><?php echo $formUser['telefono1']->renderLabel() ?>
                 <?php echo $formUser['telefono1']->renderError() ?></th>
             <td>

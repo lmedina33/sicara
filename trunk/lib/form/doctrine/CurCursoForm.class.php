@@ -25,7 +25,7 @@ class CurCursoForm extends BaseCurCursoForm {
                     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
                     buttonText: ['Ver Calendario...'],
-                    yearRange: 'c-1:c+2',
+                    yearRange: '-1:+2',
                     changeMonth: true,
                     changeYear: true }",
                 'date_widget' => new sfWidgetFormInputText()
@@ -41,7 +41,7 @@ class CurCursoForm extends BaseCurCursoForm {
                     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
                     buttonText: ['Ver Calendario...'],
-                    yearRange: 'c-1:c+2',
+                    yearRange: '-1:+2',
                     changeMonth: true,
                     changeYear: true }",
                 'date_widget' => new sfWidgetFormInputText()
@@ -56,7 +56,7 @@ class CurCursoForm extends BaseCurCursoForm {
                     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
                     buttonText: ['Ver Calendario...'],
-                    yearRange: 'c-1:c+2',
+                    yearRange: '-1:+2',
                     changeMonth: true,
                     changeYear: true }",
                 'date_widget' => new sfWidgetFormInputText()
@@ -72,7 +72,7 @@ class CurCursoForm extends BaseCurCursoForm {
                     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
                     buttonText: ['Ver Calendario...'],
-                    yearRange: 'c-1:c+2',
+                    yearRange: '-1:+2',
                     changeMonth: true,
                     changeYear: true }",
                 'date_widget' => new sfWidgetFormInputText()

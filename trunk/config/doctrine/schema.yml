@@ -1912,6 +1912,13 @@ FormularioInscripcion:
       primary: false
       notnull: false
       autoincrement: false
+    genero:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
     lugar_nacimiento:
       type: string(200)
       fixed: false
@@ -1930,6 +1937,13 @@ FormularioInscripcion:
       type: string(25)
       fixed: false
       unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_tipo_sangre:
+      type: integer(4)
+      fixed: false
+      unsigned: true
       primary: false
       notnull: false
       autoincrement: false
@@ -2212,6 +2226,10 @@ FormularioInscripcion:
     TipoPago:
       local: id_tipo_pago
       foreign: id_tipo_pago
+      type: one
+    TipoSangre:
+      local: id_tipo_sangre
+      foreign: id_tipo_sangre
       type: one
 
 #Modulo para REcursos Físicos: REF
@@ -3437,6 +3455,10 @@ TipoSangre:
       autoincrement: false
   relations:
     Usuario:
+      local: id_tipo_sangre
+      foreign: id_tipo_sangre
+      type: many
+    FormularioInscripcion:
       local: id_tipo_sangre
       foreign: id_tipo_sangre
       type: many

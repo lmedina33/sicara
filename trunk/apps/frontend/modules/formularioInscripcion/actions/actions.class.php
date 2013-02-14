@@ -494,6 +494,9 @@ class formularioInscripcionActions extends sfActions {
         $usuario->setSegundoApellido($formulario->getSegundoApellido());
         $usuario->setDocumento($formulario->getDocumento());
         $usuario->setIdTipoDocumento($formulario->getIdTipoDocumento());
+        $usuario->setGenero($formulario->getGenero());
+        $usuario->setTipoSangre($formulario->getTipoSangre());
+        $usuario->setFechaNacimiento($formulario->getFechaNacimiento());
         $usuario->setLugarExpedicion($formulario->getLugarExpedicion());
         $usuario->setTelefono1($formulario->getTelefono1());
         $usuario->setTelefono2($formulario->getTelefono2());
