@@ -14,6 +14,11 @@ class estudianteActions extends sfActions {
         $this->estudiantes = Doctrine_Core::getTable('Estudiante')
                 ->createQuery('a')
                 ->execute();
+        
+        $this->pensums = Doctrine_Core::getTable('Pensum')->findAll();
+        
+        $this->codPen=$request->getParameter('prog');
+        $this->idPer=$request->getParameter('per');
     }
 
     public function executeNew(sfWebRequest $request) {
@@ -106,9 +111,20 @@ class estudianteActions extends sfActions {
                     pen.nombre AS pensum,
                     u.id_usuario AS id_usuario')
                 ->from('Estudiante e')
+                ->innerJoin('e.Matricula m')
                 ->leftJoin('e.Usuario u')
                 ->leftJoin('u.TipoDocumento t')
                 ->leftJoin('e.Pensum pen');
+        
+        if($request->getParameter('periodo')){
+            $q->where('m.id_periodo = ?',$request->getParameter('periodo'));
+            $bWhere=true;
+        }
+        
+        if($request->getParameter('pensum')){
+            $q->leftJoin('m.PeriodoAcademico per')->where('per.codigo_pensum = ?',$request->getParameter('pensum'));
+            $bWhere=true;
+        }
 
         //Se obtienen los datos necesarios para ejecutar el LIMIT:
         //SELECT ... LIMIT $limit OFFSET $offset
@@ -322,6 +338,19 @@ class estudianteActions extends sfActions {
         $this->getUser()->setAttribute('notice', 'El estudiante ha sido matriculado con éxito.');
         
         $this->redirect('estudiante/index');
+    }
+    
+    public function executeGetPeriodosByPensum(sfWebRequest $request) {
+        $periodos = Doctrine_Core::getTable('PeriodoAcademico')
+                ->findBy('codigo_pensum', $request->getParameter('codigo'));
+        
+        $data=array();
+        
+        foreach ($periodos as $periodo){
+            $data[]=array("id" => $periodo->getIdPeriodoAcademico(),"label"=>$periodo->getPeriodo());
+        }
+        
+        return $this->renderText(json_encode($data));
     }
 
 }

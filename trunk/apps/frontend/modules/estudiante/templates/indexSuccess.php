@@ -7,12 +7,20 @@ slot('title', 'Listar Estudiantes')
     var oTable;
     $(document).ready(function(){
         
+        <?php if($codPen){ ?>
+                showPeriodos('<?php echo $codPen ?>');
+        <?php } ?>
+        
+        $("#programa").change(function(){
+            showPeriodos($("#programa").val());
+        });
+        
         oTable=$('.dataTable').dataTable({
             "sDom": 'lfT<"toolbar">trip<"foot">',
             "oLanguage": <?php echo getLenguageEs(); ?>,
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": "<?php echo url_for('estudiante/getDataPaging') ?>",
+            "sAjaxSource": "<?php echo url_for('estudiante/getDataPaging').(($idPer)? "?periodo=".$idPer : (($codPen)? "?pensum=".$codPen : "")) ?>",
             "aoColumns": [
                 { "mDataProp": "IdUsuario" , "sWidth":"250px", "bVisible": false },
                 { "mDataProp": "Codigo" , "sWidth":"25px" },
@@ -108,9 +116,66 @@ slot('title', 'Listar Estudiantes')
     function confirmInscribir(){
         return confirm('Realmente desea inscribir al aspirante de este formulario?\n\nSi acepta, deberá terminar de diligenciar los datos de inscripción.');
     }
+    
+    function filtrar(){
+        data="";
+        if($('#programa').val()!=""){
+            data="prog="+$('#programa').val();
+        }
+        if($('#periodo').val()!=""){
+            data+="&per="+$('#periodo').val();
+        }
+        
+        if(data==""){
+            $('#filtrar').attr('href','<?php echo url_for('estudiante/index') ?>');
+        }else{
+            $('#filtrar').attr('href','<?php echo url_for('estudiante/index') ?>?'+data);
+        }
+        
+        return true;
+    }
+    
+    function showPeriodos(codPen){
+    $.post("<?php echo url_for("estudiante/getPeriodosByPensum") ?>",
+            {
+                "codigo" : codPen
+            },
+            function(data){
+                $("#periodo").html("");
+                html="<option value=''>Todos</option>";
+                for(i=0;i<data.length;i++){
+                    <?php if($idPer){ ?>
+                    if(data[i]['id'] == <?php echo $idPer ?>)
+                        html+="<option value='"+data[i]['id']+"' selected>"+data[i]['label']+"</option>";
+                    else
+                        html+="<option value='"+data[i]['id']+"'>"+data[i]['label']+"</option>";
+                    <?php }else{ ?>
+                    html+="<option value='"+data[i]['id']+"'>"+data[i]['label']+"</option>";
+                    <?php } ?>
+                }
+                $("#periodo").html(html);
+            },
+            'json');
+    }
 </script>
 <h1>Listar Estudiantes</h1>
+Programas: 
+<select id="programa">
+    <option value="">Todos</option>
+    <?php foreach($pensums as $pensum){ ?>
+    <option value="<?php echo $pensum->getCodigoPensum() ?>" <?php echo ($pensum->getCodigoPensum() == $codPen)? 'selected' : '' ?>><?php echo $pensum->getNombre() ?></option>
+    <?php } ?>
+</select>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Periodo: 
+<select id="periodo">
+    <option value="">Todos</option>
+</select>
+<br />
+<a id="filtrar" href="<?php echo url_for("estudiante/index") ?>" onClick="javascript: return filtrar()" class="button" value="Filtrar">Filtrar</a>
 
+<br />
+<br />
 <table class="dataTable">
     <thead>
         <tr>
