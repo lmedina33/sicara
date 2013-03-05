@@ -54,9 +54,15 @@ slot('title', 'Listar Inscritos')
                         if(datos.Matriculado == ""){
                             $('#matricular').attr('href', '<?php echo url_for('inscrito/matricular?cod=') ?>'+numForm);
                             $('#matricular img').attr('src', '/images/iconos/matricular.png');
+                            
+                            $('#homologar').attr('href', '<?php echo url_for('homologacion/new') ?>?id='+numForm+'&tipo=ext');
+                            $('#homologar img').attr('src', '/images/iconos/homologarSmall.png');
                         }else{
                             $('#matricular').attr('href', '');
                             $('#matricular img').attr('src', '/images/iconos/matricularGray.png');
+                            
+                            $('#homologar').attr('href', '');
+                            $('#homologar img').attr('src', '/images/iconos/homologarGray.png');
                         }
                     } );
                 } );
@@ -88,7 +94,8 @@ slot('title', 'Listar Inscritos')
         
         $("div.toolbar").html('<a href="#" id="detallar" title="Ver Inscrito"><img src="/images/iconos/listarSmallGray.png"/></a>\n\
             <a href="#" id="formulario" title="Ver Formulario" target="_blank"><img src="/images/iconos/refHVGray.png"/></a>\n\
-            <a href="#" id="matricular" title="Matricular"><img src="/images/iconos/matricularGray.png"/></a>');
+            <a href="#" id="matricular" title="Matricular"><img src="/images/iconos/matricularGray.png"/></a>\n\
+            <a href="#" id="homologar" title="Homologar a Nuevo Curso"><img src="/images/iconos/homologarGray.png"/></a>');
     });
     
     function confirmFormalizar(){

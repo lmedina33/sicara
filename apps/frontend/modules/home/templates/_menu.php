@@ -78,6 +78,13 @@ $menu->addChild("FormularioInscripcion_Registrar", $menu_item);
 
 $root->addChild("FormularioInscripcion",$menu);
 
+
+//HOMOLOGACIONES
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Homologaciones")->setUrl("homologacion/index")->setCredentials('homologacion');
+
+$root->addChild("Homologacion",$menu_item);
+
 //BIBLIOTECA:
 //Material:
 $menu = new pmSuperfishMenu();
