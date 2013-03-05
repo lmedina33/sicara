@@ -22,6 +22,8 @@ abstract class BaseLibSancionFormFilter extends BaseFormFilterDoctrine
       'id_sancionado'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario_2'), 'add_empty' => true)),
       'id_ejecutor'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => true)),
       'id_tipo_sancion'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibTipoSancion'), 'add_empty' => true)),
+      'created_at'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'updated_at'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -34,6 +36,8 @@ abstract class BaseLibSancionFormFilter extends BaseFormFilterDoctrine
       'id_sancionado'    => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Usuario_2'), 'column' => 'id_usuario')),
       'id_ejecutor'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Usuario'), 'column' => 'id_usuario')),
       'id_tipo_sancion'  => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('LibTipoSancion'), 'column' => 'id_lib_tipo_sancion')),
+      'created_at'       => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
+      'updated_at'       => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
     ));
 
     $this->widgetSchema->setNameFormat('lib_sancion_filters[%s]');
@@ -63,6 +67,8 @@ abstract class BaseLibSancionFormFilter extends BaseFormFilterDoctrine
       'id_sancionado'    => 'ForeignKey',
       'id_ejecutor'      => 'ForeignKey',
       'id_tipo_sancion'  => 'ForeignKey',
+      'created_at'       => 'Date',
+      'updated_at'       => 'Date',
     );
   }
 }

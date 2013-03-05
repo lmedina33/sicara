@@ -16,12 +16,16 @@ abstract class BaseSemestreFormFilter extends BaseFormFilterDoctrine
       'numero'             => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'intensidad_horaria' => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'codigo_pensum'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Pensum'), 'add_empty' => true)),
+      'created_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'updated_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
     ));
 
     $this->setValidators(array(
       'numero'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'intensidad_horaria' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'codigo_pensum'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Pensum'), 'column' => 'codigo_pensum')),
+      'created_at'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
+      'updated_at'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
     ));
 
     $this->widgetSchema->setNameFormat('semestre_filters[%s]');
@@ -45,6 +49,8 @@ abstract class BaseSemestreFormFilter extends BaseFormFilterDoctrine
       'numero'             => 'Number',
       'intensidad_horaria' => 'Number',
       'codigo_pensum'      => 'ForeignKey',
+      'created_at'         => 'Date',
+      'updated_at'         => 'Date',
     );
   }
 }

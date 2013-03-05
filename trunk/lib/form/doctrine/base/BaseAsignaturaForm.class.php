@@ -20,6 +20,8 @@ abstract class BaseAsignaturaForm extends BaseFormDoctrine
       'intensidad_horaria' => new sfWidgetFormInputText(),
       'is_practica'        => new sfWidgetFormInputText(),
       'id_semestre'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Semestre'), 'add_empty' => false)),
+      'created_at'         => new sfWidgetFormDateTime(),
+      'updated_at'         => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -28,6 +30,8 @@ abstract class BaseAsignaturaForm extends BaseFormDoctrine
       'intensidad_horaria' => new sfValidatorInteger(),
       'is_practica'        => new sfValidatorInteger(array('required' => false)),
       'id_semestre'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Semestre'))),
+      'created_at'         => new sfValidatorDateTime(),
+      'updated_at'         => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('asignatura[%s]');

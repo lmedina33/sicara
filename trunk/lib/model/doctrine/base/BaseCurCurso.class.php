@@ -175,5 +175,9 @@ abstract class BaseCurCurso extends sfDoctrineRecord
         $this->hasMany('CurFormulario', array(
              'local' => 'id_cur_curso',
              'foreign' => 'id_cur_curso'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

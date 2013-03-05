@@ -50,6 +50,7 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @property Doctrine_Collection $Notificacion
  * @property Doctrine_Collection $RefElemento
  * @property Doctrine_Collection $RefMantenimiento
+ * @property Doctrine_Collection $Homologacion
  * 
  * @method integer             getIdUsuario()                Returns the current record's "id_usuario" value
  * @method string              getPrimerNombre()             Returns the current record's "primer_nombre" value
@@ -94,6 +95,7 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method Doctrine_Collection getNotificacion()             Returns the current record's "Notificacion" collection
  * @method Doctrine_Collection getRefElemento()              Returns the current record's "RefElemento" collection
  * @method Doctrine_Collection getRefMantenimiento()         Returns the current record's "RefMantenimiento" collection
+ * @method Doctrine_Collection getHomologacion()             Returns the current record's "Homologacion" collection
  * @method Usuario             setIdUsuario()                Sets the current record's "id_usuario" value
  * @method Usuario             setPrimerNombre()             Sets the current record's "primer_nombre" value
  * @method Usuario             setSegundoNombre()            Sets the current record's "segundo_nombre" value
@@ -137,6 +139,7 @@ Doctrine_Manager::getInstance()->bindComponent('Usuario', 'doctrine');
  * @method Usuario             setNotificacion()             Sets the current record's "Notificacion" collection
  * @method Usuario             setRefElemento()              Sets the current record's "RefElemento" collection
  * @method Usuario             setRefMantenimiento()         Sets the current record's "RefMantenimiento" collection
+ * @method Usuario             setHomologacion()             Sets the current record's "Homologacion" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -438,5 +441,13 @@ abstract class BaseUsuario extends sfDoctrineRecord
         $this->hasMany('RefMantenimiento', array(
              'local' => 'id_usuario',
              'foreign' => 'id_asignador'));
+
+        $this->hasMany('Homologacion', array(
+             'local' => 'id_usuario',
+             'foreign' => 'id_usuario'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

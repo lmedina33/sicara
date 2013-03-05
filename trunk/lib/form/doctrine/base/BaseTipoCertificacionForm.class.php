@@ -18,12 +18,16 @@ abstract class BaseTipoCertificacionForm extends BaseFormDoctrine
       'id_tipo_certificacion' => new sfWidgetFormInputHidden(),
       'nombre'                => new sfWidgetFormInputText(),
       'descripcion'           => new sfWidgetFormInputText(),
+      'created_at'            => new sfWidgetFormDateTime(),
+      'updated_at'            => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
       'id_tipo_certificacion' => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id_tipo_certificacion')), 'empty_value' => $this->getObject()->get('id_tipo_certificacion'), 'required' => false)),
       'nombre'                => new sfValidatorString(array('max_length' => 45)),
       'descripcion'           => new sfValidatorString(array('max_length' => 100, 'required' => false)),
+      'created_at'            => new sfValidatorDateTime(),
+      'updated_at'            => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('tipo_certificacion[%s]');

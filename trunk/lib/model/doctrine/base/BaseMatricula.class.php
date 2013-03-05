@@ -158,5 +158,9 @@ abstract class BaseMatricula extends sfDoctrineRecord
         $this->hasOne('TipoPago', array(
              'local' => 'id_tipo_pago',
              'foreign' => 'id_tipo_pago'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

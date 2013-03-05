@@ -30,6 +30,8 @@ abstract class BaseLibMaterialForm extends BaseFormDoctrine
       'is_prestado'          => new sfWidgetFormInputText(),
       'codigo_lib_categoria' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibCategoria'), 'add_empty' => false)),
       'id_lib_tipo_material' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibTipoMaterial'), 'add_empty' => false)),
+      'created_at'           => new sfWidgetFormDateTime(),
+      'updated_at'           => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -48,6 +50,8 @@ abstract class BaseLibMaterialForm extends BaseFormDoctrine
       'is_prestado'          => new sfValidatorInteger(array('required' => false)),
       'codigo_lib_categoria' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibCategoria'))),
       'id_lib_tipo_material' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibTipoMaterial'))),
+      'created_at'           => new sfValidatorDateTime(),
+      'updated_at'           => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('lib_material[%s]');

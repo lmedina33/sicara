@@ -24,6 +24,8 @@ abstract class BasePeriodoAcademicoForm extends BaseFormDoctrine
       'id_predecesor'        => new sfWidgetFormInputText(),
       'observacion'          => new sfWidgetFormTextarea(),
       'is_inscribible'       => new sfWidgetFormInputText(),
+      'created_at'           => new sfWidgetFormDateTime(),
+      'updated_at'           => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -36,6 +38,8 @@ abstract class BasePeriodoAcademicoForm extends BaseFormDoctrine
       'id_predecesor'        => new sfValidatorInteger(array('required' => false)),
       'observacion'          => new sfValidatorString(array('required' => false)),
       'is_inscribible'       => new sfValidatorInteger(array('required' => false)),
+      'created_at'           => new sfValidatorDateTime(),
+      'updated_at'           => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('periodo_academico[%s]');

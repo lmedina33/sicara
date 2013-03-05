@@ -24,6 +24,8 @@ abstract class BaseLibPrestamoForm extends BaseFormDoctrine
       'fecha_devolucion' => new sfWidgetFormDateTime(),
       'observaciones'    => new sfWidgetFormTextarea(),
       'serial_lib_item'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibItem'), 'add_empty' => false)),
+      'created_at'       => new sfWidgetFormDateTime(),
+      'updated_at'       => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -36,6 +38,8 @@ abstract class BaseLibPrestamoForm extends BaseFormDoctrine
       'fecha_devolucion' => new sfValidatorDateTime(array('required' => false)),
       'observaciones'    => new sfValidatorString(array('required' => false)),
       'serial_lib_item'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibItem'))),
+      'created_at'       => new sfValidatorDateTime(),
+      'updated_at'       => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('lib_prestamo[%s]');

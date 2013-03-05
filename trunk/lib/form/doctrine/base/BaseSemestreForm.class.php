@@ -19,6 +19,8 @@ abstract class BaseSemestreForm extends BaseFormDoctrine
       'numero'             => new sfWidgetFormInputText(),
       'intensidad_horaria' => new sfWidgetFormInputText(),
       'codigo_pensum'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Pensum'), 'add_empty' => false)),
+      'created_at'         => new sfWidgetFormDateTime(),
+      'updated_at'         => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -26,6 +28,8 @@ abstract class BaseSemestreForm extends BaseFormDoctrine
       'numero'             => new sfValidatorInteger(),
       'intensidad_horaria' => new sfValidatorInteger(),
       'codigo_pensum'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Pensum'))),
+      'created_at'         => new sfValidatorDateTime(),
+      'updated_at'         => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('semestre[%s]');

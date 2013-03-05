@@ -25,6 +25,8 @@ abstract class BaseRefSancionForm extends BaseFormDoctrine
       'id_sancionado'       => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario_2'), 'add_empty' => false)),
       'id_ejecutor'         => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => false)),
       'id_ref_tipo_sancion' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('RefTipoSancion'), 'add_empty' => false)),
+      'created_at'          => new sfWidgetFormDateTime(),
+      'updated_at'          => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -38,6 +40,8 @@ abstract class BaseRefSancionForm extends BaseFormDoctrine
       'id_sancionado'       => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario_2'))),
       'id_ejecutor'         => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'))),
       'id_ref_tipo_sancion' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('RefTipoSancion'))),
+      'created_at'          => new sfValidatorDateTime(),
+      'updated_at'          => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('ref_sancion[%s]');

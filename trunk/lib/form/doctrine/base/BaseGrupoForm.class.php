@@ -27,6 +27,8 @@ abstract class BaseGrupoForm extends BaseFormDoctrine
       'codigo_profesor'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Profesor'), 'add_empty' => true)),
       'inicio_calificacion'      => new sfWidgetFormDateTime(),
       'fin_calificacion'         => new sfWidgetFormDateTime(),
+      'created_at'               => new sfWidgetFormDateTime(),
+      'updated_at'               => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -42,6 +44,8 @@ abstract class BaseGrupoForm extends BaseFormDoctrine
       'codigo_profesor'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Profesor'), 'required' => false)),
       'inicio_calificacion'      => new sfValidatorDateTime(array('required' => false)),
       'fin_calificacion'         => new sfValidatorDateTime(array('required' => false)),
+      'created_at'               => new sfValidatorDateTime(),
+      'updated_at'               => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('grupo[%s]');

@@ -169,5 +169,9 @@ abstract class BaseRefSancion extends sfDoctrineRecord
         $this->hasOne('RefElemento', array(
              'local' => 'id_ref_elemento',
              'foreign' => 'id_ref_elemento'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

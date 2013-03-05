@@ -170,5 +170,9 @@ abstract class BaseLibSancion extends sfDoctrineRecord
         $this->hasOne('LibTipoSancion', array(
              'local' => 'id_tipo_sancion',
              'foreign' => 'id_lib_tipo_sancion'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

@@ -167,5 +167,9 @@ abstract class BasePeriodoAcademico extends sfDoctrineRecord
         $this->hasMany('FormularioInscripcion', array(
              'local' => 'id_periodo_academico',
              'foreign' => 'id_periodo'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

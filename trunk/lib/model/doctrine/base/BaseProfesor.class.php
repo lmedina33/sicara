@@ -98,5 +98,9 @@ abstract class BaseProfesor extends sfDoctrineRecord
         $this->hasMany('CurCurso', array(
              'local' => 'codigo_profesor',
              'foreign' => 'codigo_profesor'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

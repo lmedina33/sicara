@@ -22,6 +22,8 @@ abstract class BaseEstudianteForm extends BaseFormDoctrine
       'id_estado_secundario' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('EstadoEstudianteSecundario'), 'add_empty' => true)),
       'id_usuario'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => false)),
       'codigo_pensum'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Pensum'), 'add_empty' => false)),
+      'created_at'           => new sfWidgetFormDateTime(),
+      'updated_at'           => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -32,6 +34,8 @@ abstract class BaseEstudianteForm extends BaseFormDoctrine
       'id_estado_secundario' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('EstadoEstudianteSecundario'), 'required' => false)),
       'id_usuario'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'))),
       'codigo_pensum'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Pensum'))),
+      'created_at'           => new sfValidatorDateTime(),
+      'updated_at'           => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('estudiante[%s]');

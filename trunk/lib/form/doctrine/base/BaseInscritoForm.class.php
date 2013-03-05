@@ -22,6 +22,8 @@ abstract class BaseInscritoForm extends BaseFormDoctrine
       'id_usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => false)),
       'is_matriculado'    => new sfWidgetFormInputText(),
       'fecha_inscripcion' => new sfWidgetFormDate(),
+      'created_at'        => new sfWidgetFormDateTime(),
+      'updated_at'        => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -32,6 +34,8 @@ abstract class BaseInscritoForm extends BaseFormDoctrine
       'id_usuario'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'))),
       'is_matriculado'    => new sfValidatorInteger(array('required' => false)),
       'fecha_inscripcion' => new sfValidatorDate(array('required' => false)),
+      'created_at'        => new sfValidatorDateTime(),
+      'updated_at'        => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('inscrito[%s]');

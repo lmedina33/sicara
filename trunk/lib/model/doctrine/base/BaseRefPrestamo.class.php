@@ -150,5 +150,9 @@ abstract class BaseRefPrestamo extends sfDoctrineRecord
         $this->hasOne('Usuario as Usuario_3', array(
              'local' => 'id_solicitante',
              'foreign' => 'id_usuario'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

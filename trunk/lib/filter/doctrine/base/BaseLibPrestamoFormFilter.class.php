@@ -21,6 +21,8 @@ abstract class BaseLibPrestamoFormFilter extends BaseFormFilterDoctrine
       'fecha_devolucion' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'observaciones'    => new sfWidgetFormFilterInput(),
       'serial_lib_item'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibItem'), 'add_empty' => true)),
+      'created_at'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'updated_at'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -32,6 +34,8 @@ abstract class BaseLibPrestamoFormFilter extends BaseFormFilterDoctrine
       'fecha_devolucion' => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
       'observaciones'    => new sfValidatorPass(array('required' => false)),
       'serial_lib_item'  => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('LibItem'), 'column' => 'serial_lib_item')),
+      'created_at'       => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
+      'updated_at'       => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
     ));
 
     $this->widgetSchema->setNameFormat('lib_prestamo_filters[%s]');
@@ -60,6 +64,8 @@ abstract class BaseLibPrestamoFormFilter extends BaseFormFilterDoctrine
       'fecha_devolucion' => 'Date',
       'observaciones'    => 'Text',
       'serial_lib_item'  => 'ForeignKey',
+      'created_at'       => 'Date',
+      'updated_at'       => 'Date',
     );
   }
 }

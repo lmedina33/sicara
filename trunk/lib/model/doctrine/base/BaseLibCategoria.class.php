@@ -110,5 +110,9 @@ abstract class BaseLibCategoria extends sfDoctrineRecord
         $this->hasMany('LibMaterial', array(
              'local' => 'codigo_lib_categoria',
              'foreign' => 'codigo_lib_categoria'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

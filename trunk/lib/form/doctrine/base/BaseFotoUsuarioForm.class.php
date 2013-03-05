@@ -21,6 +21,8 @@ abstract class BaseFotoUsuarioForm extends BaseFormDoctrine
       'fecha'           => new sfWidgetFormDate(),
       'imagen'          => new sfWidgetFormTextarea(),
       'id_usuario'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => false)),
+      'created_at'      => new sfWidgetFormDateTime(),
+      'updated_at'      => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -30,6 +32,8 @@ abstract class BaseFotoUsuarioForm extends BaseFormDoctrine
       'fecha'           => new sfValidatorDate(),
       'imagen'          => new sfValidatorString(),
       'id_usuario'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'))),
+      'created_at'      => new sfValidatorDateTime(),
+      'updated_at'      => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('foto_usuario[%s]');

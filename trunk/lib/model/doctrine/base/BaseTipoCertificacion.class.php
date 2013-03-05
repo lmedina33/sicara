@@ -65,5 +65,9 @@ abstract class BaseTipoCertificacion extends sfDoctrineRecord
         $this->hasMany('CertificacionDocente', array(
              'local' => 'id_tipo_certificacion',
              'foreign' => 'id_tipo_certificacion'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

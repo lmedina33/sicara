@@ -24,6 +24,8 @@ abstract class BaseRefPrestamoForm extends BaseFormDoctrine
       'fecha_devolucion' => new sfWidgetFormDateTime(),
       'observaciones'    => new sfWidgetFormTextarea(),
       'id_ref_elemento'  => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('RefElemento'), 'add_empty' => true)),
+      'created_at'       => new sfWidgetFormDateTime(),
+      'updated_at'       => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -36,6 +38,8 @@ abstract class BaseRefPrestamoForm extends BaseFormDoctrine
       'fecha_devolucion' => new sfValidatorDateTime(array('required' => false)),
       'observaciones'    => new sfValidatorString(array('required' => false)),
       'id_ref_elemento'  => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('RefElemento'), 'required' => false)),
+      'created_at'       => new sfValidatorDateTime(),
+      'updated_at'       => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('ref_prestamo[%s]');

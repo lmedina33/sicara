@@ -38,6 +38,8 @@ abstract class BaseUsuarioForm extends BaseFormDoctrine
       'foto_path'                => new sfWidgetFormInputText(),
       'id_sf_guard_user'         => new sfWidgetFormInputText(),
       'id_tipo_sangre'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoSangre'), 'add_empty' => true)),
+      'created_at'               => new sfWidgetFormDateTime(),
+      'updated_at'               => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -64,6 +66,8 @@ abstract class BaseUsuarioForm extends BaseFormDoctrine
       'foto_path'                => new sfValidatorString(array('max_length' => 150, 'required' => false)),
       'id_sf_guard_user'         => new sfValidatorInteger(array('required' => false)),
       'id_tipo_sangre'           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoSangre'), 'required' => false)),
+      'created_at'               => new sfValidatorDateTime(),
+      'updated_at'               => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('usuario[%s]');

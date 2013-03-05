@@ -194,5 +194,9 @@ abstract class BaseGrupo extends sfDoctrineRecord
         $this->hasOne('CertificacionDocente', array(
              'local' => 'certificacion_primaria',
              'foreign' => 'id_certificacion_docente'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }
