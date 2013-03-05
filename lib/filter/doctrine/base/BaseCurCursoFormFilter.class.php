@@ -23,6 +23,8 @@ abstract class BaseCurCursoFormFilter extends BaseFormFilterDoctrine
       'is_inscribible'      => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'id_cur_empresa'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('CurEmpresa'), 'add_empty' => true)),
       'codigo_profesor'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Profesor'), 'add_empty' => true)),
+      'created_at'          => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'updated_at'          => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -36,6 +38,8 @@ abstract class BaseCurCursoFormFilter extends BaseFormFilterDoctrine
       'is_inscribible'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'id_cur_empresa'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('CurEmpresa'), 'column' => 'id_cur_empresa')),
       'codigo_profesor'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Profesor'), 'column' => 'codigo_profesor')),
+      'created_at'          => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
+      'updated_at'          => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
     ));
 
     $this->widgetSchema->setNameFormat('cur_curso_filters[%s]');
@@ -66,6 +70,8 @@ abstract class BaseCurCursoFormFilter extends BaseFormFilterDoctrine
       'is_inscribible'      => 'Number',
       'id_cur_empresa'      => 'ForeignKey',
       'codigo_profesor'     => 'ForeignKey',
+      'created_at'          => 'Date',
+      'updated_at'          => 'Date',
     );
   }
 }

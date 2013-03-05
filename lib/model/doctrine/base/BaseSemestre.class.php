@@ -84,5 +84,9 @@ abstract class BaseSemestre extends sfDoctrineRecord
         $this->hasMany('Asignatura', array(
              'local' => 'id_semestre',
              'foreign' => 'id_semestre'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

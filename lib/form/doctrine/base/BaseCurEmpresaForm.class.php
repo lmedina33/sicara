@@ -18,12 +18,16 @@ abstract class BaseCurEmpresaForm extends BaseFormDoctrine
       'id_cur_empresa' => new sfWidgetFormInputHidden(),
       'nombre'         => new sfWidgetFormInputText(),
       'descripcion'    => new sfWidgetFormTextarea(),
+      'created_at'     => new sfWidgetFormDateTime(),
+      'updated_at'     => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
       'id_cur_empresa' => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id_cur_empresa')), 'empty_value' => $this->getObject()->get('id_cur_empresa'), 'required' => false)),
       'nombre'         => new sfValidatorString(array('max_length' => 150)),
       'descripcion'    => new sfValidatorString(array('required' => false)),
+      'created_at'     => new sfValidatorDateTime(),
+      'updated_at'     => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('cur_empresa[%s]');

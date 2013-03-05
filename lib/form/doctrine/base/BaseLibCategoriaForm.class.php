@@ -21,6 +21,8 @@ abstract class BaseLibCategoriaForm extends BaseFormDoctrine
       'dias_prestamo'        => new sfWidgetFormInputText(),
       'cantidad_sancion'     => new sfWidgetFormInputText(),
       'id_tipo_sancion'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('LibTipoSancion'), 'add_empty' => true)),
+      'created_at'           => new sfWidgetFormDateTime(),
+      'updated_at'           => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -30,6 +32,8 @@ abstract class BaseLibCategoriaForm extends BaseFormDoctrine
       'dias_prestamo'        => new sfValidatorInteger(array('required' => false)),
       'cantidad_sancion'     => new sfValidatorNumber(array('required' => false)),
       'id_tipo_sancion'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('LibTipoSancion'), 'required' => false)),
+      'created_at'           => new sfValidatorDateTime(),
+      'updated_at'           => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('lib_categoria[%s]');

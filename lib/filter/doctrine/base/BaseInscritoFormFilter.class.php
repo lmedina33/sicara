@@ -19,6 +19,8 @@ abstract class BaseInscritoFormFilter extends BaseFormFilterDoctrine
       'id_usuario'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => true)),
       'is_matriculado'    => new sfWidgetFormFilterInput(),
       'fecha_inscripcion' => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'created_at'        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'updated_at'        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -28,6 +30,8 @@ abstract class BaseInscritoFormFilter extends BaseFormFilterDoctrine
       'id_usuario'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('Usuario'), 'column' => 'id_usuario')),
       'is_matriculado'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'fecha_inscripcion' => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
+      'created_at'        => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
+      'updated_at'        => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
     ));
 
     $this->widgetSchema->setNameFormat('inscrito_filters[%s]');
@@ -54,6 +58,8 @@ abstract class BaseInscritoFormFilter extends BaseFormFilterDoctrine
       'id_usuario'        => 'ForeignKey',
       'is_matriculado'    => 'Number',
       'fecha_inscripcion' => 'Date',
+      'created_at'        => 'Date',
+      'updated_at'        => 'Date',
     );
   }
 }

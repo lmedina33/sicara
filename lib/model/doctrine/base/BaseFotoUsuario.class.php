@@ -101,5 +101,9 @@ abstract class BaseFotoUsuario extends sfDoctrineRecord
         $this->hasOne('Usuario', array(
              'local' => 'id_usuario',
              'foreign' => 'id_usuario'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

@@ -225,5 +225,9 @@ abstract class BaseLibMaterial extends sfDoctrineRecord
         $this->hasMany('LibItem', array(
              'local' => 'id_lib_material',
              'foreign' => 'id_lib_material'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

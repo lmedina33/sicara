@@ -26,6 +26,8 @@ abstract class BaseCurCursoForm extends BaseFormDoctrine
       'is_inscribible'      => new sfWidgetFormInputText(),
       'id_cur_empresa'      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('CurEmpresa'), 'add_empty' => false)),
       'codigo_profesor'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Profesor'), 'add_empty' => true)),
+      'created_at'          => new sfWidgetFormDateTime(),
+      'updated_at'          => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -40,6 +42,8 @@ abstract class BaseCurCursoForm extends BaseFormDoctrine
       'is_inscribible'      => new sfValidatorInteger(array('required' => false)),
       'id_cur_empresa'      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('CurEmpresa'))),
       'codigo_profesor'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Profesor'), 'required' => false)),
+      'created_at'          => new sfValidatorDateTime(),
+      'updated_at'          => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('cur_curso[%s]');

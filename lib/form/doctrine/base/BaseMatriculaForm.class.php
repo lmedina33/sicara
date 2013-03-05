@@ -24,6 +24,8 @@ abstract class BaseMatriculaForm extends BaseFormDoctrine
       'id_jornada'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Jornada'), 'add_empty' => true)),
       'id_tipo_pago'        => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoPago'), 'add_empty' => true)),
       'codigo_estudiante'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Estudiante'), 'add_empty' => false)),
+      'created_at'          => new sfWidgetFormDateTime(),
+      'updated_at'          => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -36,6 +38,8 @@ abstract class BaseMatriculaForm extends BaseFormDoctrine
       'id_jornada'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Jornada'), 'required' => false)),
       'id_tipo_pago'        => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoPago'), 'required' => false)),
       'codigo_estudiante'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Estudiante'))),
+      'created_at'          => new sfValidatorDateTime(),
+      'updated_at'          => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('matricula[%s]');

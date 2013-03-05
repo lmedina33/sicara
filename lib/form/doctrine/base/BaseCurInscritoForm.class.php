@@ -26,6 +26,8 @@ abstract class BaseCurInscritoForm extends BaseFormDoctrine
       'telefono1'         => new sfWidgetFormInputText(),
       'telefono2'         => new sfWidgetFormInputText(),
       'correo'            => new sfWidgetFormInputText(),
+      'created_at'        => new sfWidgetFormDateTime(),
+      'updated_at'        => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -40,6 +42,8 @@ abstract class BaseCurInscritoForm extends BaseFormDoctrine
       'telefono1'         => new sfValidatorString(array('max_length' => 25, 'required' => false)),
       'telefono2'         => new sfValidatorString(array('max_length' => 25, 'required' => false)),
       'correo'            => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'created_at'        => new sfValidatorDateTime(),
+      'updated_at'        => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('cur_inscrito[%s]');

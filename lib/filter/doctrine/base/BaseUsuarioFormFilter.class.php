@@ -35,6 +35,8 @@ abstract class BaseUsuarioFormFilter extends BaseFormFilterDoctrine
       'foto_path'                => new sfWidgetFormFilterInput(),
       'id_sf_guard_user'         => new sfWidgetFormFilterInput(),
       'id_tipo_sangre'           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoSangre'), 'add_empty' => true)),
+      'created_at'               => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'updated_at'               => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -60,6 +62,8 @@ abstract class BaseUsuarioFormFilter extends BaseFormFilterDoctrine
       'foto_path'                => new sfValidatorPass(array('required' => false)),
       'id_sf_guard_user'         => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'id_tipo_sangre'           => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('TipoSangre'), 'column' => 'id_tipo_sangre')),
+      'created_at'               => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
+      'updated_at'               => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
     ));
 
     $this->widgetSchema->setNameFormat('usuario_filters[%s]');
@@ -102,6 +106,8 @@ abstract class BaseUsuarioFormFilter extends BaseFormFilterDoctrine
       'foto_path'                => 'Text',
       'id_sf_guard_user'         => 'Number',
       'id_tipo_sangre'           => 'ForeignKey',
+      'created_at'               => 'Date',
+      'updated_at'               => 'Date',
     );
   }
 }

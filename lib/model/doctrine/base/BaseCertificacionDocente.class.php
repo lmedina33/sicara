@@ -110,5 +110,9 @@ abstract class BaseCertificacionDocente extends sfDoctrineRecord
         $this->hasMany('Grupo as Grupo_2', array(
              'local' => 'id_certificacion_docente',
              'foreign' => 'certificacion_secundaria'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

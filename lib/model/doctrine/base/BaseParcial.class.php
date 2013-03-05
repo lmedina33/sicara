@@ -96,5 +96,9 @@ abstract class BaseParcial extends sfDoctrineRecord
         $this->hasOne('AsignaturaCursada', array(
              'local' => 'id_asignatura_cursada',
              'foreign' => 'id_asignatura_cursada'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

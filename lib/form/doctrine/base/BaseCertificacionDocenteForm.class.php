@@ -20,6 +20,8 @@ abstract class BaseCertificacionDocenteForm extends BaseFormDoctrine
       'numero'                   => new sfWidgetFormInputText(),
       'id_tipo_certificacion'    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('TipoCertificacion'), 'add_empty' => true)),
       'codigo_profesor'          => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Profesor'), 'add_empty' => false)),
+      'created_at'               => new sfWidgetFormDateTime(),
+      'updated_at'               => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -28,6 +30,8 @@ abstract class BaseCertificacionDocenteForm extends BaseFormDoctrine
       'numero'                   => new sfValidatorString(array('max_length' => 45)),
       'id_tipo_certificacion'    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('TipoCertificacion'), 'required' => false)),
       'codigo_profesor'          => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Profesor'))),
+      'created_at'               => new sfValidatorDateTime(),
+      'updated_at'               => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('certificacion_docente[%s]');

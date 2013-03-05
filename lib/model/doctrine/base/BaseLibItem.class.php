@@ -134,5 +134,9 @@ abstract class BaseLibItem extends sfDoctrineRecord
         $this->hasMany('LibSancion', array(
              'local' => 'serial_lib_item',
              'foreign' => 'serial_lib_item'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

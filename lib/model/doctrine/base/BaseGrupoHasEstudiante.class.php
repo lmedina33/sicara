@@ -59,5 +59,9 @@ abstract class BaseGrupoHasEstudiante extends sfDoctrineRecord
         $this->hasOne('Grupo', array(
              'local' => 'id_grupo',
              'foreign' => 'id_grupo'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

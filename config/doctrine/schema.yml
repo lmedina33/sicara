@@ -1,6 +1,7 @@
 Asignatura:
   connection: doctrine
   tableName: asignatura
+  actAs: [Timestampable]
   columns:
     codigo_asignatura:
       type: string(10)
@@ -53,6 +54,7 @@ Asignatura:
 AsignaturaCursada:
   connection: doctrine
   tableName: asignatura_cursada
+  actAs: [Timestampable]
   columns:
     id_asignatura_cursada:
       type: integer(4)
@@ -118,14 +120,36 @@ AsignaturaCursada:
       primary: false
       notnull: true
       autoincrement: false
+    nota_aprobatoria:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    is_aprobada:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
     id_periodo:
       type: integer(4)
       fixed: false
       unsigned: true
       primary: false
-      notnull: true
+      notnull: false
       autoincrement: false
     id_asignador:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_asignatura_homologada:
       type: integer(4)
       fixed: false
       unsigned: true
@@ -153,9 +177,15 @@ AsignaturaCursada:
       local: id_asignatura_cursada
       foreign: id_asignatura_cursada
       type: many
+    AsignaturaHomologada:
+      local: id_asignatura_homologada
+      foreign: id_asignatura_homologada
+      type: one
+
 CertificacionDocente:
   connection: doctrine
   tableName: certificacion_docente
+  actAs: [Timestampable]
   columns:
     id_certificacion_docente:
       type: integer(4)
@@ -209,6 +239,7 @@ CertificacionDocente:
       local: id_certificacion_docente
       foreign: certificacion_secundaria
       type: many
+
 EstadoEstudiante:
   connection: doctrine
   tableName: estado_estudiante
@@ -250,9 +281,11 @@ EstadoEstudiante:
       local: id_estado_estudiante
       foreign: id_estado
       type: many
+
 Estudiante:
   connection: doctrine
   tableName: estudiante
+  actAs: [Timestampable]
   columns:
     codigo_estudiante:
       type: string(10)
@@ -332,9 +365,11 @@ Estudiante:
       local: codigo_estudiante
       foreign: codigo_estudiante
       type: many
+
 FotoUsuario:
   connection: doctrine
   tableName: foto_usuario
+  actAs: [Timestampable]
   columns:
     id_foto_usuario:
       type: integer(4)
@@ -382,9 +417,11 @@ FotoUsuario:
       local: id_usuario
       foreign: id_usuario
       type: one
+      
 Grupo:
   connection: doctrine
   tableName: grupo
+  actAs: [Timestampable]
   columns:
     id_grupo:
       type: integer(4)
@@ -491,9 +528,11 @@ Grupo:
       local: id_grupo
       foreign: id_grupo
       type: many
+
 GrupoHasEstudiante:
   connection: doctrine
   tableName: grupo_has_estudiante
+  actAs: [Timestampable]
   columns:
     codigo_estudiante:
       type: string(10)
@@ -516,9 +555,11 @@ GrupoHasEstudiante:
       local: id_grupo
       foreign: id_grupo
       type: one
+
 Inscrito:
   connection: doctrine
   tableName: inscrito
+  actAs: [Timestampable]
   columns:
     numero_formulario:
       type: string(10)
@@ -585,6 +626,7 @@ Inscrito:
       local: id_usuario
       foreign: id_usuario
       type: one
+
 Jornada:
   connection: doctrine
   tableName: jornada
@@ -623,9 +665,11 @@ Jornada:
       local: id_jornada
       foreign: id_jornada
       type: many
+
 LibCategoria:
   connection: doctrine
   tableName: lib_categoria
+  actAs: [Timestampable]
   columns:
     codigo_lib_categoria:
       type: string(10)
@@ -679,6 +723,7 @@ LibCategoria:
       local: codigo_lib_categoria
       foreign: codigo_lib_categoria
       type: many
+
 LibEstado:
   connection: doctrine
   tableName: lib_estado
@@ -708,9 +753,11 @@ LibEstado:
       local: id_lib_estado
       foreign: id_lib_estado
       type: many
+
 LibMaterial:
   connection: doctrine
   tableName: lib_material
+  actAs: [Timestampable]
   columns:
     id_lib_material:
       type: integer(4)
@@ -831,9 +878,11 @@ LibMaterial:
       local: id_lib_material
       foreign: id_lib_material
       type: many
+
 LibItem:
   connection: doctrine
   tableName: lib_item
+  actAs: [Timestampable]
   columns:
     serial_lib_item:
       type: string(25)
@@ -900,9 +949,11 @@ LibItem:
       local: serial_lib_item
       foreign: serial_lib_item
       type: many
+
 LibPrestamo:
   connection: doctrine
   tableName: lib_prestamo
+  actAs: [Timestampable]
   columns:
     id_prestamo:
       type: integer(4)
@@ -980,9 +1031,11 @@ LibPrestamo:
       local: id_solicitante
       foreign: id_usuario
       type: one
+
 LibSancion:
   connection: doctrine
   tableName: lib_sancion
+  actAs: [Timestampable]
   columns:
     id_lib_sancion:
       type: integer(4)
@@ -1071,6 +1124,7 @@ LibSancion:
       local: id_tipo_sancion
       foreign: id_lib_tipo_sancion
       type: one
+
 LibTipoMaterial:
   connection: doctrine
   tableName: lib_tipo_material
@@ -1162,9 +1216,11 @@ LibTipoSancion:
       local: id_lib_tipo_sancion
       foreign: id_lib_tipo_sancion
       type: many
+
 Matricula:
   connection: doctrine
   tableName: matricula
+  actAs: [Timestampable]
   columns:
     id_matricula:
       type: integer(4)
@@ -1245,9 +1301,11 @@ Matricula:
       local: id_tipo_pago
       foreign: id_tipo_pago
       type: one
+
 Parcial:
   connection: doctrine
   tableName: parcial
+  actAs: [Timestampable]
   columns:
     id_parcial:
       type: integer(4)
@@ -1292,9 +1350,11 @@ Parcial:
       local: id_asignatura_cursada
       foreign: id_asignatura_cursada
       type: one
+
 Pensum:
   connection: doctrine
   tableName: pensum
+  actAs: [Timestampable]
   columns:
     codigo_pensum:
       type: string(10)
@@ -1308,6 +1368,13 @@ Pensum:
       unsigned: false
       primary: false
       notnull: true
+      autoincrement: false
+    nota_aprobatoria:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
       autoincrement: false
     is_inscribible:
       type: integer(1)
@@ -1334,9 +1401,11 @@ Pensum:
       local: codigo_pensum
       foreign: codigo_pensum
       type: many
+
 PeriodoAcademico:
   connection: doctrine
   tableName: periodo_academico
+  actAs: [Timestampable]
   columns:
     id_periodo_academico:
       type: integer(4)
@@ -1423,9 +1492,11 @@ PeriodoAcademico:
       local: id_periodo_academico
       foreign: id_periodo
       type: many
+
 Profesor:
   connection: doctrine
   tableName: profesor
+  actAs: [Timestampable]
   columns:
     codigo_profesor:
       type: string(10)
@@ -1467,9 +1538,11 @@ Profesor:
       local: codigo_profesor
       foreign: codigo_profesor
       type: many
+
 Semestre:
   connection: doctrine
   tableName: semestre
+  actAs: [Timestampable]
   columns:
     id_semestre:
       type: integer(4)
@@ -1507,9 +1580,11 @@ Semestre:
       local: id_semestre
       foreign: id_semestre
       type: many
+
 TipoCertificacion:
   connection: doctrine
   tableName: tipo_certificacion
+  actAs: [Timestampable]
   columns:
     id_tipo_certificacion:
       type: integer(4)
@@ -1536,6 +1611,7 @@ TipoCertificacion:
       local: id_tipo_certificacion
       foreign: id_tipo_certificacion
       type: many
+
 TipoDocumento:
   connection: doctrine
   tableName: tipo_documento
@@ -1562,6 +1638,7 @@ TipoDocumento:
       local: id_tipo_documento
       foreign: id_tipo_documento
       type: many
+
 TipoPago:
   connection: doctrine
   tableName: tipo_pago
@@ -1592,9 +1669,11 @@ TipoPago:
       local: id_tipo_pago
       foreign: id_tipo_pago
       type: many
+
 Usuario:
   connection: doctrine
   tableName: usuario
+  actAs: [Timestampable]
   columns:
     id_usuario:
       type: integer(4)
@@ -2665,6 +2744,7 @@ RefHojaVida:
 RefSancion:
   connection: doctrine
   tableName: ref_sancion
+  actAs: [Timestampable]
   columns:
     id_ref_sancion:
       type: integer(4)
@@ -2756,6 +2836,7 @@ RefSancion:
 RefPrestamo:
   connection: doctrine
   tableName: ref_prestamo
+  actAs: [Timestampable]
   columns:
     id_ref_prestamo:
       type: integer(4)
@@ -2836,6 +2917,7 @@ RefPrestamo:
 UsuarioHasRefElemento:
   connection: doctrine
   tableName: usuario_has_ref_elemento
+  actAs: [Timestampable]
   columns:
     id_usuario:
       type: integer(4)
@@ -2862,6 +2944,7 @@ UsuarioHasRefElemento:
 CurEmpresa:
   connection: doctrine
   tableName: cur_empresa
+  actAs: [Timestampable]
   columns:
     id_cur_empresa:
       type: integer(4)
@@ -2892,6 +2975,7 @@ CurEmpresa:
 CurCurso:
   connection: doctrine
   tableName: cur_curso
+  actAs: [Timestampable]
   columns:
     id_cur_curso:
       type: integer(4)
@@ -2986,6 +3070,7 @@ CurCurso:
 CurInscrito:
   connection: doctrine
   tableName: cur_inscrito
+  actAs: [Timestampable]
   columns:
     id_cur_inscrito:
       type: integer(4)
@@ -3462,3 +3547,182 @@ TipoSangre:
       local: id_tipo_sangre
       foreign: id_tipo_sangre
       type: many
+
+Homologacion:
+  connection: doctrine
+  tableName: homologacion
+  actAs: [Timestampable]
+  columns:
+    id_homologacion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    institucion_origen:
+      type: string(255)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    programa_origen:
+      type: string(255)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    nota_aprobatoria:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    is_oficializado:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    is_interna:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
+      autoincrement: false
+    observaciones:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    codigo_pensum_destino:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    codigo_pensum_origen:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_usuario:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_sf_guard_user:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Usuario:
+      local: id_usuario
+      foreign: id_usuario
+      type: one
+    PensumOrigen:
+      class: Pensum
+      local: codigo_pensum_origen
+      foreign: codigo_pensum
+      type: one
+    PensumDestino:
+      class: Pensum
+      local: codigo_pensum_destino
+      foreign: codigo_pensum
+      type: one
+    AsignaturaHomologada:
+      local: id_homologacion
+      foreign: id_homologacion
+      type: many
+
+AsignaturaHomologada:
+  connection: doctrine
+  tableName: asignatura_homologada
+  actAs: [Timestampable]
+  columns:
+    id_asignatura_homologada:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(255)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    calificacion:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    nota_aprobatoria:
+      type: float(18)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    observaciones:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    codigo_asignatura:
+      type: string(10)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    id_homologacion:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    id_sf_guard_user:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: false
+      autoincrement: false
+  relations:
+    Asignatura:
+      local: codigo_asignatura
+      foreign: codigo_asignatura
+      type: one
+    Homologacion:
+      local: id_homologacion
+      foreign: id_homologacion
+      type: one
+    AsignaturaHomologada:
+      local: id_asignatura_homologada
+      foreign: id_asignatura_homologada
+      type: many
+
+

@@ -15,23 +15,26 @@ Doctrine_Manager::getInstance()->bindComponent('Asignatura', 'doctrine');
  * @property Semestre $Semestre
  * @property Doctrine_Collection $AsignaturaCursada
  * @property Doctrine_Collection $Grupo
+ * @property Doctrine_Collection $AsignaturaHomologada
  * 
- * @method string              getCodigoAsignatura()   Returns the current record's "codigo_asignatura" value
- * @method string              getNombre()             Returns the current record's "nombre" value
- * @method integer             getIntensidadHoraria()  Returns the current record's "intensidad_horaria" value
- * @method integer             getIsPractica()         Returns the current record's "is_practica" value
- * @method integer             getIdSemestre()         Returns the current record's "id_semestre" value
- * @method Semestre            getSemestre()           Returns the current record's "Semestre" value
- * @method Doctrine_Collection getAsignaturaCursada()  Returns the current record's "AsignaturaCursada" collection
- * @method Doctrine_Collection getGrupo()              Returns the current record's "Grupo" collection
- * @method Asignatura          setCodigoAsignatura()   Sets the current record's "codigo_asignatura" value
- * @method Asignatura          setNombre()             Sets the current record's "nombre" value
- * @method Asignatura          setIntensidadHoraria()  Sets the current record's "intensidad_horaria" value
- * @method Asignatura          setIsPractica()         Sets the current record's "is_practica" value
- * @method Asignatura          setIdSemestre()         Sets the current record's "id_semestre" value
- * @method Asignatura          setSemestre()           Sets the current record's "Semestre" value
- * @method Asignatura          setAsignaturaCursada()  Sets the current record's "AsignaturaCursada" collection
- * @method Asignatura          setGrupo()              Sets the current record's "Grupo" collection
+ * @method string              getCodigoAsignatura()     Returns the current record's "codigo_asignatura" value
+ * @method string              getNombre()               Returns the current record's "nombre" value
+ * @method integer             getIntensidadHoraria()    Returns the current record's "intensidad_horaria" value
+ * @method integer             getIsPractica()           Returns the current record's "is_practica" value
+ * @method integer             getIdSemestre()           Returns the current record's "id_semestre" value
+ * @method Semestre            getSemestre()             Returns the current record's "Semestre" value
+ * @method Doctrine_Collection getAsignaturaCursada()    Returns the current record's "AsignaturaCursada" collection
+ * @method Doctrine_Collection getGrupo()                Returns the current record's "Grupo" collection
+ * @method Doctrine_Collection getAsignaturaHomologada() Returns the current record's "AsignaturaHomologada" collection
+ * @method Asignatura          setCodigoAsignatura()     Sets the current record's "codigo_asignatura" value
+ * @method Asignatura          setNombre()               Sets the current record's "nombre" value
+ * @method Asignatura          setIntensidadHoraria()    Sets the current record's "intensidad_horaria" value
+ * @method Asignatura          setIsPractica()           Sets the current record's "is_practica" value
+ * @method Asignatura          setIdSemestre()           Sets the current record's "id_semestre" value
+ * @method Asignatura          setSemestre()             Sets the current record's "Semestre" value
+ * @method Asignatura          setAsignaturaCursada()    Sets the current record's "AsignaturaCursada" collection
+ * @method Asignatura          setGrupo()                Sets the current record's "Grupo" collection
+ * @method Asignatura          setAsignaturaHomologada() Sets the current record's "AsignaturaHomologada" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -104,5 +107,13 @@ abstract class BaseAsignatura extends sfDoctrineRecord
         $this->hasMany('Grupo', array(
              'local' => 'codigo_asignatura',
              'foreign' => 'codigo_asignatura'));
+
+        $this->hasMany('AsignaturaHomologada', array(
+             'local' => 'codigo_asignatura',
+             'foreign' => 'codigo_asignatura'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

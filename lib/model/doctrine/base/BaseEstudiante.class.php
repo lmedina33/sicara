@@ -155,5 +155,9 @@ abstract class BaseEstudiante extends sfDoctrineRecord
         $this->hasMany('Matricula', array(
              'local' => 'codigo_estudiante',
              'foreign' => 'codigo_estudiante'));
+
+        $timestampable0 = new Doctrine_Template_Timestampable(array(
+             ));
+        $this->actAs($timestampable0);
     }
 }

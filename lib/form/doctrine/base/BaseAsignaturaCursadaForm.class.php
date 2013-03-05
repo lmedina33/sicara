@@ -24,8 +24,13 @@ abstract class BaseAsignaturaCursadaForm extends BaseFormDoctrine
       'observaciones'                        => new sfWidgetFormTextarea(),
       'codigo_estudiante'                    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Estudiante'), 'add_empty' => false)),
       'codigo_asignatura'                    => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Asignatura'), 'add_empty' => false)),
-      'id_periodo'                           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'), 'add_empty' => false)),
+      'nota_aprobatoria'                     => new sfWidgetFormInputText(),
+      'is_aprobada'                          => new sfWidgetFormInputText(),
+      'id_periodo'                           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'), 'add_empty' => true)),
       'id_asignador'                         => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => true)),
+      'id_asignatura_homologada'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('AsignaturaHomologada'), 'add_empty' => true)),
+      'created_at'                           => new sfWidgetFormDateTime(),
+      'updated_at'                           => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -38,8 +43,13 @@ abstract class BaseAsignaturaCursadaForm extends BaseFormDoctrine
       'observaciones'                        => new sfValidatorString(array('required' => false)),
       'codigo_estudiante'                    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Estudiante'))),
       'codigo_asignatura'                    => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Asignatura'))),
-      'id_periodo'                           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'))),
+      'nota_aprobatoria'                     => new sfValidatorNumber(array('required' => false)),
+      'is_aprobada'                          => new sfValidatorInteger(array('required' => false)),
+      'id_periodo'                           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'), 'required' => false)),
       'id_asignador'                         => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'required' => false)),
+      'id_asignatura_homologada'             => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('AsignaturaHomologada'), 'required' => false)),
+      'created_at'                           => new sfValidatorDateTime(),
+      'updated_at'                           => new sfValidatorDateTime(),
     ));
 
     $this->widgetSchema->setNameFormat('asignatura_cursada[%s]');
