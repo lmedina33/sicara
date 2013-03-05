@@ -52,6 +52,9 @@ slot('title', 'Listar Estudiantes')
             
                         $('#matricular').attr('href', '<?php echo url_for('estudiante/matricularNuevoPensum?cod=') ?>'+codigo);
                         $('#matricular img').attr('src', '/images/iconos/matricular.png');
+                        
+                        $('#homologar').attr('href', '<?php echo url_for('homologacion/new') ?>?id='+codigo+'&tipo=int');
+                        $('#homologar img').attr('src', '/images/iconos/homologarSmall.png');
                     } );
                     
                     if ( oSettings.aiDisplay.length == 0 )
@@ -106,7 +109,8 @@ slot('title', 'Listar Estudiantes')
         });
         
         $("div.toolbar").html('<a href="#" id="detallar" title="Ver Estudiante"><img src="/images/iconos/listarSmallGray.png"/></a>\n\
-            <a href="#" id="matricular" title="Matricular a Nuevo Curso"><img src="/images/iconos/matricularGray.png"/></a>');
+            <a href="#" id="matricular" title="Matricular a Nuevo Curso"><img src="/images/iconos/matricularGray.png"/></a>\n\
+            <a href="#" id="homologar" title="Homologar a Nuevo Curso"><img src="/images/iconos/homologarGray.png"/></a>');
     });
     
     function confirmFormalizar(){
