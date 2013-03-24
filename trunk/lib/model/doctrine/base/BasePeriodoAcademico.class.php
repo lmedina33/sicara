@@ -21,6 +21,7 @@ Doctrine_Manager::getInstance()->bindComponent('PeriodoAcademico', 'doctrine');
  * @property Doctrine_Collection $Inscrito
  * @property Doctrine_Collection $Matricula
  * @property Doctrine_Collection $FormularioInscripcion
+ * @property Doctrine_Collection $Grupo
  * 
  * @method integer             getIdPeriodoAcademico()    Returns the current record's "id_periodo_academico" value
  * @method string              getPeriodo()               Returns the current record's "periodo" value
@@ -36,6 +37,7 @@ Doctrine_Manager::getInstance()->bindComponent('PeriodoAcademico', 'doctrine');
  * @method Doctrine_Collection getInscrito()              Returns the current record's "Inscrito" collection
  * @method Doctrine_Collection getMatricula()             Returns the current record's "Matricula" collection
  * @method Doctrine_Collection getFormularioInscripcion() Returns the current record's "FormularioInscripcion" collection
+ * @method Doctrine_Collection getGrupo()                 Returns the current record's "Grupo" collection
  * @method PeriodoAcademico    setIdPeriodoAcademico()    Sets the current record's "id_periodo_academico" value
  * @method PeriodoAcademico    setPeriodo()               Sets the current record's "periodo" value
  * @method PeriodoAcademico    setFechaInicio()           Sets the current record's "fecha_inicio" value
@@ -50,6 +52,7 @@ Doctrine_Manager::getInstance()->bindComponent('PeriodoAcademico', 'doctrine');
  * @method PeriodoAcademico    setInscrito()              Sets the current record's "Inscrito" collection
  * @method PeriodoAcademico    setMatricula()             Sets the current record's "Matricula" collection
  * @method PeriodoAcademico    setFormularioInscripcion() Sets the current record's "FormularioInscripcion" collection
+ * @method PeriodoAcademico    setGrupo()                 Sets the current record's "Grupo" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -165,6 +168,10 @@ abstract class BasePeriodoAcademico extends sfDoctrineRecord
              'foreign' => 'id_periodo'));
 
         $this->hasMany('FormularioInscripcion', array(
+             'local' => 'id_periodo_academico',
+             'foreign' => 'id_periodo'));
+
+        $this->hasMany('Grupo', array(
              'local' => 'id_periodo_academico',
              'foreign' => 'id_periodo'));
 

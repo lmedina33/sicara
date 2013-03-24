@@ -46,6 +46,10 @@ $menu_item = new pmSuperfishMenuItem();
 $menu_item->setName("Listar")->setUrl("estudiante/index");
 $menu->addChild("Estudiantes_Lista", $menu_item);
 
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Informes")->setUrl("estudiante/generarInformes");
+$menu->addChild("Estudiantes_Informes", $menu_item);
+
 $root->addChild("Estudiantes",$menu);
 
 //ADMISIONES: Inscrito
@@ -57,9 +61,9 @@ $menu_item = new pmSuperfishMenuItem();
 $menu_item->setName("Listar")->setUrl("inscrito/index");
 $menu->addChild("Inscritos_Lista", $menu_item);
 
-$menu_item = new pmSuperfishMenuItem();
-$menu_item->setName("Registrar")->setUrl("inscrito/new");
-$menu->addChild("Inscritos_Registrar", $menu_item);
+//$menu_item = new pmSuperfishMenuItem();
+//$menu_item->setName("Registrar")->setUrl("inscrito/new");
+//$menu->addChild("Inscritos_Registrar", $menu_item);
 
 $root->addChild("Inscritos",$menu);
 

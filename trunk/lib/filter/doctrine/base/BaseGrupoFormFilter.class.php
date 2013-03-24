@@ -14,7 +14,7 @@ abstract class BaseGrupoFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'nombre'                   => new sfWidgetFormFilterInput(array('with_empty' => false)),
-      'id_periodo'               => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'id_periodo'               => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'), 'add_empty' => true)),
       'certificacion_primaria'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('CertificacionDocente'), 'add_empty' => true)),
       'certificacion_secundaria' => new sfWidgetFormFilterInput(),
       'fecha_inicio'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
@@ -30,7 +30,7 @@ abstract class BaseGrupoFormFilter extends BaseFormFilterDoctrine
 
     $this->setValidators(array(
       'nombre'                   => new sfValidatorPass(array('required' => false)),
-      'id_periodo'               => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'id_periodo'               => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('PeriodoAcademico'), 'column' => 'id_periodo_academico')),
       'certificacion_primaria'   => new sfValidatorDoctrineChoice(array('required' => false, 'model' => $this->getRelatedModelName('CertificacionDocente'), 'column' => 'id_certificacion_docente')),
       'certificacion_secundaria' => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'fecha_inicio'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDateTime(array('required' => false)))),
@@ -63,7 +63,7 @@ abstract class BaseGrupoFormFilter extends BaseFormFilterDoctrine
     return array(
       'id_grupo'                 => 'Number',
       'nombre'                   => 'Text',
-      'id_periodo'               => 'Number',
+      'id_periodo'               => 'ForeignKey',
       'certificacion_primaria'   => 'ForeignKey',
       'certificacion_secundaria' => 'Number',
       'fecha_inicio'             => 'Date',

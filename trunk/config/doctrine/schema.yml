@@ -524,6 +524,10 @@ Grupo:
       local: codigo_profesor
       foreign: codigo_profesor
       type: one
+    PeriodoAcademico:
+      local: id_periodo
+      foreign: id_periodo_academico
+      type: one
     GrupoHasEstudiante:
       local: id_grupo
       foreign: id_grupo

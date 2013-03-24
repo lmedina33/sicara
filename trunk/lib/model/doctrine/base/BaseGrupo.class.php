@@ -21,6 +21,7 @@ Doctrine_Manager::getInstance()->bindComponent('Grupo', 'doctrine');
  * @property timestamp $fin_calificacion
  * @property Asignatura $Asignatura
  * @property Profesor $Profesor
+ * @property PeriodoAcademico $PeriodoAcademico
  * @property Doctrine_Collection $GrupoHasEstudiante
  * @property CertificacionDocente $CertificacionDocente
  * 
@@ -38,6 +39,7 @@ Doctrine_Manager::getInstance()->bindComponent('Grupo', 'doctrine');
  * @method timestamp            getFinCalificacion()          Returns the current record's "fin_calificacion" value
  * @method Asignatura           getAsignatura()               Returns the current record's "Asignatura" value
  * @method Profesor             getProfesor()                 Returns the current record's "Profesor" value
+ * @method PeriodoAcademico     getPeriodoAcademico()         Returns the current record's "PeriodoAcademico" value
  * @method Doctrine_Collection  getGrupoHasEstudiante()       Returns the current record's "GrupoHasEstudiante" collection
  * @method CertificacionDocente getCertificacionDocente()     Returns the current record's "CertificacionDocente" value
  * @method Grupo                setIdGrupo()                  Sets the current record's "id_grupo" value
@@ -54,6 +56,7 @@ Doctrine_Manager::getInstance()->bindComponent('Grupo', 'doctrine');
  * @method Grupo                setFinCalificacion()          Sets the current record's "fin_calificacion" value
  * @method Grupo                setAsignatura()               Sets the current record's "Asignatura" value
  * @method Grupo                setProfesor()                 Sets the current record's "Profesor" value
+ * @method Grupo                setPeriodoAcademico()         Sets the current record's "PeriodoAcademico" value
  * @method Grupo                setGrupoHasEstudiante()       Sets the current record's "GrupoHasEstudiante" collection
  * @method Grupo                setCertificacionDocente()     Sets the current record's "CertificacionDocente" value
  * 
@@ -186,6 +189,10 @@ abstract class BaseGrupo extends sfDoctrineRecord
         $this->hasOne('Profesor', array(
              'local' => 'codigo_profesor',
              'foreign' => 'codigo_profesor'));
+
+        $this->hasOne('PeriodoAcademico', array(
+             'local' => 'id_periodo',
+             'foreign' => 'id_periodo_academico'));
 
         $this->hasMany('GrupoHasEstudiante', array(
              'local' => 'id_grupo',
