@@ -14,11 +14,11 @@ class estudianteActions extends sfActions {
         $this->estudiantes = Doctrine_Core::getTable('Estudiante')
                 ->createQuery('a')
                 ->execute();
-        
+
         $this->pensums = Doctrine_Core::getTable('Pensum')->findAll();
-        
-        $this->codPen=$request->getParameter('prog');
-        $this->idPer=$request->getParameter('per');
+
+        $this->codPen = $request->getParameter('prog');
+        $this->idPer = $request->getParameter('per');
     }
 
     public function executeNew(sfWebRequest $request) {
@@ -115,15 +115,15 @@ class estudianteActions extends sfActions {
                 ->leftJoin('e.Usuario u')
                 ->leftJoin('u.TipoDocumento t')
                 ->leftJoin('e.Pensum pen');
-        
-        if($request->getParameter('periodo')){
-            $q->where('m.id_periodo = ?',$request->getParameter('periodo'));
-            $bWhere=true;
+
+        if ($request->getParameter('periodo')) {
+            $q->where('m.id_periodo = ?', $request->getParameter('periodo'));
+            $bWhere = true;
         }
-        
-        if($request->getParameter('pensum')){
-            $q->leftJoin('m.PeriodoAcademico per')->where('per.codigo_pensum = ?',$request->getParameter('pensum'));
-            $bWhere=true;
+
+        if ($request->getParameter('pensum')) {
+            $q->leftJoin('m.PeriodoAcademico per')->where('per.codigo_pensum = ?', $request->getParameter('pensum'));
+            $bWhere = true;
         }
 
         //Se obtienen los datos necesarios para ejecutar el LIMIT:
@@ -252,10 +252,10 @@ class estudianteActions extends sfActions {
         $this->codigo = $request->getParameter('cod');
 
         $this->formUser = new UsuarioForm($this->estudiante->getUsuario());
-        
-        $this->matriculas= Doctrine_Core::getTable('Matricula')
+
+        $this->matriculas = Doctrine_Core::getTable('Matricula')
                 ->createQuery()
-                ->where('codigo_estudiante = ?',$this->estudiante->getCodigoEstudiante())
+                ->where('codigo_estudiante = ?', $this->estudiante->getCodigoEstudiante())
                 ->orderBy('fecha DESC')
                 ->execute();
     }
@@ -287,12 +287,12 @@ class estudianteActions extends sfActions {
 
     public function executeMatricular(sfWebRequest $request) {
 
-        $periodoId = $request->getParameter('periodo');        
+        $periodoId = $request->getParameter('periodo');
         $jornadaId = $request->getParameter('jornada');
         $pagoId = $request->getParameter('pago');
         $usuarioId = $request->getParameter('usuario');
-        
-        $periodo= Doctrine_Core::getTable('PeriodoAcademico')->find($periodoId);
+
+        $periodo = Doctrine_Core::getTable('PeriodoAcademico')->find($periodoId);
 
         $estudiante = new Estudiante();
 
@@ -336,20 +336,331 @@ class estudianteActions extends sfActions {
         $matricula->save();
 
         $this->getUser()->setAttribute('notice', 'El estudiante ha sido matriculado con éxito.');
-        
+
         $this->redirect('estudiante/index');
     }
-    
+
     public function executeGetPeriodosByPensum(sfWebRequest $request) {
         $periodos = Doctrine_Core::getTable('PeriodoAcademico')
                 ->findBy('codigo_pensum', $request->getParameter('codigo'));
-        
-        $data=array();
-        
-        foreach ($periodos as $periodo){
-            $data[]=array("id" => $periodo->getIdPeriodoAcademico(),"label"=>$periodo->getPeriodo());
+
+        $data = array();
+
+        foreach ($periodos as $periodo) {
+            $data[] = array("id" => $periodo->getIdPeriodoAcademico(), "label" => $periodo->getPeriodo());
         }
+
+        return $this->renderText(json_encode($data));
+    }
+
+    public function executeGenerarInformes(sfWebRequest $request) {
+        $this->programas = Doctrine_Core::getTable('Pensum')->findAll();
+        $this->estados = Doctrine_Core::getTable('EstadoEstudiante')->findAll();
+        $this->periodos = Doctrine_Core::getTable('PeriodoAcademico')->findAll();
+        $this->grupos = Doctrine_Core::getTable('Grupo')->findAll();
+    }
+
+    public function executeGenerarInforme(sfWebRequest $request) {
+
+        $programa = null;
+        $estado = null;
+        $periodo = null;
+        $grupo = null;
+
+        $codigo = null;
+        $estadoEs = null;
+        $nombre = null;
+        $documento = null;
+        $tipoDocumento = null;
+        $expedicion = null;
+        $nacimiento = null;
+        $genero = null;
+        $sangre = null;
+        $telefono1 = null;
+        $telefono2 = null;
+        $direccion = null;
+        $mail = null;
+        $acudiente1 = null;
+        $telefonoAcudiente1 = null;
+        $acudiente2 = null;
+        $telefonoAcudiente2 = null;
+        $medicas = null;
+        $observaciones = null;
+
+        if ($request->hasParameter('programa'))
+            $programa = $request->getParameter('programa');
+
+        if ($request->hasParameter('estado'))
+            $estado = $request->getParameter('estado');
+
+        if ($request->hasParameter('periodo'))
+            $periodo = $request->getParameter('periodo');
+
+        if ($request->hasParameter('grupo'))
+            $grupo = $request->getParameter('grupo');
+
+        ////
+
+        if ($request->hasParameter('codigo'))
+            $codigo = $request->getParameter('codigo');
         
+        if ($request->hasParameter('estadoEs'))
+            $estadoEs = $request->getParameter('estadoEs');
+
+        if ($request->hasParameter('nombre'))
+            $nombre = $request->getParameter('nombre');
+
+        if ($request->hasParameter('documento'))
+            $documento = $request->getParameter('documento');
+
+        if ($request->hasParameter('tipoDocumento'))
+            $tipoDocumento = $request->getParameter('tipoDocumento');
+
+        if ($request->hasParameter('expedicion'))
+            $expedicion = $request->getParameter('expedicion');
+
+        if ($request->hasParameter('nacimiento'))
+            $nacimiento = $request->getParameter('nacimiento');
+
+        if ($request->hasParameter('genero'))
+            $genero = $request->getParameter('genero');
+
+        if ($request->hasParameter('tipo_sangre'))
+            $sangre = $request->getParameter('tipo_sangre');
+
+        if ($request->hasParameter('telefono1'))
+            $telefono1 = $request->getParameter('telefono1');
+
+        if ($request->hasParameter('telefono2'))
+            $telefono2 = $request->getParameter('telefono2');
+
+        if ($request->hasParameter('direccion'))
+            $direccion = $request->getParameter('direccion');
+
+        if ($request->hasParameter('correo'))
+            $mail = $request->getParameter('correo');
+
+        if ($request->hasParameter('acudiente1'))
+            $acudiente1 = $request->getParameter('acudiente1');
+
+        if ($request->hasParameter('telefono_acudiente1'))
+            $telefonoAcudiente1 = $request->getParameter('telefono_acudiente1');
+
+        if ($request->hasParameter('acudiente2'))
+            $acudiente2 = $request->getParameter('acudiente2');
+
+        if ($request->hasParameter('telefono_acudiente2'))
+            $telefonoAcudiente2 = $request->getParameter('telefono_acudiente2');
+
+        if ($request->hasParameter('medicas'))
+            $medicas = $request->getParameter('medicas');
+
+        if ($request->hasParameter('observaciones'))
+            $observaciones = $request->getParameter('observaciones');
+
+        $query = Doctrine_Core::getTable('estudiante')
+                ->createQuery('e')
+                ->leftJoin('e.Usuario u')
+                ->leftJoin('e.Matricula m')
+                ->leftJoin('e.GrupoHasEstudiante h')
+                ->where('codigo_estudiante IS NOT NULL');
+
+//        echo $programa . "<br />";
+//        echo $estado . "<br />";
+//        echo $periodo . "<br />";
+//        echo $grupo . "<br />";
+
+        if ($programa != null) {
+            $query->andWhere('e.codigo_pensum = ?', $programa);
+        }
+
+        if ($estado != null) {
+            $query->andWhere('e.id_estado = ?', $estado);
+        }
+
+        if ($periodo != null) {
+            $query->andWhere('m.id_periodo = ?', $periodo);
+        }
+
+        if ($grupo != null) {
+            $query->andWhere('h.id_grupo = ?', $grupo);
+        }
+
+        $estudiantes = $query->execute();
+
+//        $estudiantes = Doctrine_Core::getTable('RefElemento')->createQuery('e')->orderBy('id_ref_lugar')->execute();
+//
+        $this->getContext()->getResponse()->setHttpHeader('Content-Disposition', 'inline;filename=NDEP_DB_Export_' . date("Y-m-d_Hi") . '.csv;');
+//
+        sfConfig::set('sf_web_debug', false);
+//
+        $this->getResponse()->clearHttpHeaders();
+        $this->getResponse()->setHttpHeader('Content-Type', 'application/vnd.ms-excel');
+        $this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=listadoElementos.csv');
+
+//        echo '"Serial","Serial Interno","Nombre","Marca","Modelo","' . utf8_decode('Descripción') . '","Tipo","Lugar","' . utf8_decode('Ubicación') . '","Prestable?","' . utf8_decode('Sanción') . '","Cantidad ' . utf8_decode('Sanción') . '","Estado","Responsable"';
+//
+        echo "\n";
+
+        if ($codigo != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "CODIGO")) . '",';
+
+        if ($estadoEs != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "ESTADO")) . '",';
+
+        if ($nombre != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "NOMBRE")) . '",';
+
+        if ($documento != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "DOCUMENTO")) . '",';
+
+        if ($tipoDocumento != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "TIPO DE DOCUMENTO")) . '",';
+
+        if ($expedicion != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "LUGAR DE EXPEDICIÓN")) . '",';
+
+        if ($nacimiento != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "FECHA DE NACIMIENTO")) . '",';
+
+        if ($genero != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "GÉNERO")) . '",';
+
+        if ($sangre != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "TIPO DE SANGRE")) . '",';
+
+        if ($telefono1 != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "TELÉFONO 1")) . '",';
+
+        if ($telefono2 != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "TELÉFONO 2")) . '",';
+
+        if ($direccion != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "DIRECCIÓN")) . '",';
+
+        if ($mail != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "E-MAIL")) . '",';
+
+        if ($acudiente1 != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "ACUDIENTE 1")) . '",';
+
+        if ($telefonoAcudiente1 != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "TELÉFONO ACUDIENTE 1")) . '",';
+
+        if ($acudiente2 != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "ACUDIENTE 2")) . '",';
+
+        if ($telefonoAcudiente2 != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "TELÉFONO ACUDIENTE 2")) . '",';
+
+        if ($medicas != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "OBSERVACIONES MÉDICAS")) . '",';
+
+        if ($observaciones != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "OBSERVACIONES")) . '",';
+
+//
+        echo '"' . utf8_decode(str_replace('"', '""', "")) . '"';
+        
+        echo "\n";
+
+        foreach ($estudiantes as $estudiante) {
+            if ($codigo != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getCodigoEstudiante())) . '",';
+            
+            if ($estadoEs != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getEstadoEstudiante()->getNombre())) . '",';
+
+            if ($nombre != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getPrimerApellido() . " " . $estudiante->getUsuario()->getSegundoApellido() . " " . $estudiante->getUsuario()->getPrimerNombre() . " " . $estudiante->getUsuario()->getSegundoNombre())) . '",';
+
+            if ($documento != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getDocumento())) . '",';
+
+            if ($tipoDocumento != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getTipoDocumento())) . '",';
+
+            if ($expedicion != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getLugarExpedicion())) . '",';
+
+            if ($nacimiento != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getFechaNacimiento())) . '",';
+
+            if ($genero != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getGenero() == 1 ? "Masculino" : "Femenino")) . '",';
+
+            if ($sangre != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getTipoSangre()->getNOmbre())) . '",';
+
+            if ($telefono1 != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getTelefono1())) . '",';
+
+            if ($telefono2 != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getTelefono2())) . '",';
+
+            if ($direccion != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getDireccion())) . '",';
+
+            if ($mail != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getCorreo())) . '",';
+
+            if ($acudiente1 != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getAcudiente1())) . '",';
+
+            if ($telefonoAcudiente1 != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getTelefonoAcudiente1())) . '",';
+
+            if ($acudiente2 != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getAcudiente2())) . '",';
+
+            if ($telefonoAcudiente2 != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getTelefonoAcudiente2())) . '",';
+
+            if ($medicas != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getEspecificacionesMedicas())) . '",';
+
+            if ($observaciones != null)
+                echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getObservaciones())) . '",';
+
+            echo '"' . utf8_decode(str_replace('"', '""', "")) . '"';
+//
+            echo "\n";
+        }
+
+        return sfView::NONE;
+    }
+
+    public function executeGetPeriodos(sfWebRequest $request) {
+        $periodos = null;
+
+        if ($request->hasParameter('id') && $request->getParameter('id') != '')
+            $periodos = Doctrine_Core::getTable('PeriodoAcademico')->findBy('codigo_pensum', $request->getParameter('id'));
+        else
+            $periodos = Doctrine_Core::getTable('PeriodoAcademico')->findAll();
+
+        $data = array();
+
+        foreach ($periodos as $periodo) {
+            $data[] = array("id" => $periodo->getIdPeriodoAcademico(), "nombre" => $periodo->getPeriodo() . " - " . $periodo->getPensum()->getNombre());
+        }
+
+        return $this->renderText(json_encode($data));
+    }
+
+    public function executeGetGrupos(sfWebRequest $request) {
+        $grupos = null;
+
+        if ($request->hasParameter('id') && $request->getParameter('id') != '')
+            $grupos = Doctrine_Core::getTable('Grupo')->findBy('id_periodo', $request->getParameter('id'));
+        else
+            $grupos = Doctrine_Core::getTable('Grupo')->findAll();
+
+        $data = array();
+
+        foreach ($grupos as $grupo) {
+            $data[] = array("id" => $grupo->getIdGrupo(), "nombre" => $grupo->getPeriodoAcademico()->getPeriodo() . " - " . $grupo->getPeriodoAcademico()->getPensum()->getCodigoPensum() . " :: " . $grupo->nombre);
+        }
+
         return $this->renderText(json_encode($data));
     }
 

@@ -17,7 +17,7 @@ abstract class BaseGrupoForm extends BaseFormDoctrine
     $this->setWidgets(array(
       'id_grupo'                 => new sfWidgetFormInputHidden(),
       'nombre'                   => new sfWidgetFormInputText(),
-      'id_periodo'               => new sfWidgetFormInputText(),
+      'id_periodo'               => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'), 'add_empty' => false)),
       'certificacion_primaria'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('CertificacionDocente'), 'add_empty' => true)),
       'certificacion_secundaria' => new sfWidgetFormInputText(),
       'fecha_inicio'             => new sfWidgetFormDate(),
@@ -34,7 +34,7 @@ abstract class BaseGrupoForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id_grupo'                 => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id_grupo')), 'empty_value' => $this->getObject()->get('id_grupo'), 'required' => false)),
       'nombre'                   => new sfValidatorString(array('max_length' => 250)),
-      'id_periodo'               => new sfValidatorInteger(),
+      'id_periodo'               => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'))),
       'certificacion_primaria'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('CertificacionDocente'), 'required' => false)),
       'certificacion_secundaria' => new sfValidatorInteger(array('required' => false)),
       'fecha_inicio'             => new sfValidatorDate(array('required' => false)),

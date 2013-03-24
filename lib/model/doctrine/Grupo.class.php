@@ -12,5 +12,7 @@
  */
 class Grupo extends BaseGrupo
 {
-
+    function __toString(){
+        return $this->getPeriodoAcademico()->getPeriodo()." - ".$this->getPeriodoAcademico()->getPensum()->getCodigoPensum()." :: ".$this->nombre;
+    }
 }
