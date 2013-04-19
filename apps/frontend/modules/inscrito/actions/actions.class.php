@@ -75,6 +75,10 @@ class inscritoActions extends sfActions {
                 $file->save(sfConfig::get('sf_app_dir') . '/private_uploads/fotoUsuario/' . $filename . $extension);
 
                 $formUser->getObject()->setFotoPath(sfConfig::get('sf_app_dir') . '/private_uploads/fotoUsuario/' . $filename . $extension);
+                
+//                $formulario = Doctrine_Core::getTable('FormularioInscripcion')->findBy('numero',$inscrito->getNumeroFormulario())->getFirst();
+//                $formulario->setFotoPath(sfConfig::get('sf_app_dir') . '/private_uploads/fotoUsuario/' . $filename . $extension);
+//                $formulario->save();
             }
 
             $formUser->save();
