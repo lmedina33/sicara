@@ -83,9 +83,10 @@ class curCursoActions extends sfActions {
                 ->createQuery('c')
                 ->leftJoin('c.CurEmpresa e')
                 ->where('c.is_inscribible = 1')
-                ->andWhere('c.fecha_fin > ?', date('Y-m-d'))
+                ->andWhere('c.fecha_fin >= ?', date('Y-m-d'))
                 ->orderBy('e.nombre ASC')
                 ->execute();
+        $this->setLayout('vacio');
     }
 
     public function executeVerInscritos(sfWebRequest $request) {
@@ -114,6 +115,7 @@ class curCursoActions extends sfActions {
                 ->andWhere('c.fecha_inicio > ?', date('Y-m-d', strtotime('-1 year')))
                 ->orderBy('e.nombre ASC')
                 ->execute();
+        $this->setLayout('vacio');
     }
 
     public function executeGetCursos(sfWebRequest $request) {
@@ -124,9 +126,9 @@ class curCursoActions extends sfActions {
                     ->createQuery('c')
                     ->leftJoin('c.CurEmpresa e')
                     ->where('c.is_inscribible = 1')
-                    ->andWhere('c.fecha_inicio > ?', date('Y-m-d'))
+                    ->andWhere('c.fecha_fin >= ?', date('Y-m-d'))
                     ->orderBy('c.fecha_inicio ASC')
-                    ->limit(5)
+//                    ->limit(5)
                     ->execute();
 
             if ($cursos != null) {
