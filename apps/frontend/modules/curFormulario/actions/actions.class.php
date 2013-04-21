@@ -32,6 +32,8 @@ class curFormularioActions extends sfActions {
 
             $this->curso = Doctrine_Core::getTable('CurCurso')->find($formInscrito->getValue('curso'));
         }
+        
+        $this->setLayout('vacio');
     }
 
     public function executeNewFull(sfWebRequest $request) {
@@ -46,6 +48,8 @@ class curFormularioActions extends sfActions {
 
         $tipoDoc = Doctrine_Core::getTable('TipoDocumento')->find($request->getParameter('tip'));
         $this->tipo = $tipoDoc->getNombre();
+        
+        $this->setLayout('vacio');
     }
 
     public function executeCreate(sfWebRequest $request) {
@@ -334,12 +338,15 @@ class curFormularioActions extends sfActions {
         $this->curso = Doctrine_Core::getTable('CurCurso')->find($request->getParameter('curso'));
 
         if ($this->curso == null || $this->curso->getIsInscribible() == 0 || $this->curso->getFechaFin() < date('Y-m-d')) {
-            $this->getUser()->setAttribute('error', 'El curso al que intenta inscribirse no se encuentra disponible.');
+            if($this->curso != null)
+                $this->getUser()->setAttribute('error', 'El curso al que intenta inscribirse no se encuentra disponible.');
             $this->redirect('curCurso/showCursos');
         }
 
         $this->form = new CurInscritoDocForm();
         $this->form->setDefault('curso', $request->getParameter('curso'));
+        
+        $this->setLayout('vacio');
     }
 
     public function executeShowConfirm(sfWebRequest $request) {

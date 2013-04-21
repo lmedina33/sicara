@@ -77,13 +77,15 @@ function showCursos(date){
         $('#cursos').html(html);
         
         for(i=0;i<data.length;i++){
-            html+='<div class="curso">\n\
-            <div class="nombre">'+data[i]["nombre"]+'</div>\n\
-            <div class="empresa"><label>Programado para:</label> '+data[i]["empresa"]+'</div>\n\
-            <div class="fecha"><label>Fecha de inicio:</label> '+data[i]["fecha"]+'</div>\n\
-            <div class="duracion"><label>Duración del curso:</label> '+data[i]["duracion"]+'</div>\n\
-            <a href="<?php echo url_for("curFormulario/registrar?curso=") ?>'+data[i]["id"]+'" class="inscribirse">Inscribirse</a>\n\
-            </div>';
+            if(i<3){
+                html+='<div class="curso">\n\
+                <div class="nombre">'+data[i]["nombre"]+'</div>\n\
+                <div class="empresa"><label>Programado para:</label> '+data[i]["empresa"]+'</div>\n\
+                <div class="fecha"><label>Fecha de inicio:</label> '+data[i]["fecha"]+'</div>\n\
+                <div class="duracion"><label>Duración del curso:</label> '+data[i]["duracion"]+'</div>\n\
+                <a href="http://www.escuelaaeronautica.edu.co/wordpress/?page_id=496&curso_id='+data[i]["id"]+'" class="inscribirse" target="_blank">Inscribirse</a>\n\
+                </div>';
+            }
         }
         
         if(date==""){
@@ -126,6 +128,8 @@ function showCursos(date){
         margin: 5px;
         color: #555;
         font-size: 13px;
+        width: 185px;
+        float: left;
     }
     
     .curso .nombre{
@@ -164,11 +168,11 @@ function showCursos(date){
 </style>
 
 <div id="calMantenimiento" style="float:left"></div>
-<div style="width: 500px; margin-left: 10px; float:left">
-    <div id="titulo_cursos">Cursos Próximos</div>
+<div style="width: 640px; margin-left: 10px; float:left">
+<!--    <div id="titulo_cursos">Cursos Próximos</div>-->
     <div style="font-size: 12px; text-align:right">
         <a href="javascript: showCursos('')" style="text-decoration: none">Ver próximos</a> | 
-        <a href="<?php echo url_for("curCurso/showCursos") ?>" style="text-decoration: none">Ver todos</a>
+        <a href="http://www.escuelaaeronautica.edu.co/wordpress/?page_id=496" target="_blank" style="text-decoration: none">Ver todos</a>
     </div>
     <div id="cursos">
         No hay cursos próximos
