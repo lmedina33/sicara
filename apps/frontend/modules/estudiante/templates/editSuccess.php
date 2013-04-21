@@ -112,6 +112,30 @@
                 </td>
             </tr>
             <tr>
+                <th><?php echo $form['fecha_nacimiento']->renderLabel() ?>
+                    <?php echo $form['fecha_nacimiento']->renderError() ?>
+                </th>
+                <td>
+                    <?php echo $form['fecha_nacimiento'] ?>
+                </td>
+            </tr>
+            <tr>
+                <th><?php echo $form['genero']->renderLabel() ?>
+                    <?php echo $form['genero']->renderError() ?>
+                </th>
+                <td>
+                    <?php echo $form['genero'] ?>
+                </td>
+            </tr>
+            <tr>
+                <th><?php echo $form['id_tipo_sangre']->renderLabel() ?>
+                    <?php echo $form['id_tipo_sangre']->renderError() ?>
+                </th>
+                <td>
+                    <?php echo $form['id_tipo_sangre'] ?>
+                </td>
+            </tr>
+            <tr>
                 <th><?php echo $form['telefono1']->renderLabel() ?>
                     <?php echo $form['telefono1']->renderError() ?></th>
                 <td>
