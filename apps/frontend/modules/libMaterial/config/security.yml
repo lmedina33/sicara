@@ -1,0 +1,53 @@
+## YAML Template.
+---
+all:
+  is_secure: true
+  credentials: libMaterial
+
+index:
+  is_secure: true
+  credentials: libMaterial_listar
+
+new:
+  is_secure: true
+  credentials: libMaterial_new
+
+create:
+  is_secure: true
+  credentials: libMaterial_new
+
+edit:
+  is_secure: true
+  credentials: libMaterial_edit
+
+update:
+  is_secure: true
+  credentials: libMaterial_edit
+
+delete:
+  is_secure: true
+  credentials: libMaterial_delete
+
+ver:
+  is_secure: true
+  credentials: libMaterial_ver
+
+addItem:
+  is_secure: true
+  credentials: libMaterial_addItem
+
+createItem:
+  is_secure: true
+  credentials: libMaterial_addItem
+
+updateItem:
+  is_secure: true
+  credentials: libMaterial_addItem
+
+deleteItem:
+  is_secure: true
+  credentials: libMaterial_addItem
+
+buscar:
+  is_secure: true
+  credentials: libMaterial_buscar

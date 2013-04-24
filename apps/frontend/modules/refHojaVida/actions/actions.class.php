@@ -45,14 +45,14 @@ class refHojaVidaActions extends sfActions {
         $this->setTemplate('verByElemento');
     }
 
-    public function executeDelete(sfWebRequest $request) {
-        $request->checkCSRFProtection();
-
-        $this->forward404Unless($ref_hoja_vida = Doctrine_Core::getTable('RefHojaVida')->find(array($request->getParameter('id_ref_hoja_vida'))), sprintf('Object ref_hoja_vida does not exist (%s).', $request->getParameter('id_ref_hoja_vida')));
-        $ref_hoja_vida->delete();
-
-        $this->redirect('refHojaVida/index');
-    }
+//    public function executeDelete(sfWebRequest $request) {
+//        $request->checkCSRFProtection();
+//
+//        $this->forward404Unless($ref_hoja_vida = Doctrine_Core::getTable('RefHojaVida')->find(array($request->getParameter('id_ref_hoja_vida'))), sprintf('Object ref_hoja_vida does not exist (%s).', $request->getParameter('id_ref_hoja_vida')));
+//        $ref_hoja_vida->delete();
+//
+//        $this->redirect('refHojaVida/index');
+//    }
 
     protected function processForm(sfWebRequest $request, sfForm $form) {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));

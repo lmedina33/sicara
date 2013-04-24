@@ -51,14 +51,14 @@ class inscritoActions extends sfActions {
         $this->setTemplate('edit');
     }
 
-    public function executeDelete(sfWebRequest $request) {
-        $request->checkCSRFProtection();
-
-        $this->forward404Unless($inscrito = Doctrine_Core::getTable('inscrito')->find(array($request->getParameter('id_inscrito'))), sprintf('Object inscrito does not exist (%s).', $request->getParameter('id_inscrito')));
-        $inscrito->delete();
-
-        $this->redirect('inscrito/index');
-    }
+//    public function executeDelete(sfWebRequest $request) {
+//        $request->checkCSRFProtection();
+//
+//        $this->forward404Unless($inscrito = Doctrine_Core::getTable('inscrito')->find(array($request->getParameter('id_inscrito'))), sprintf('Object inscrito does not exist (%s).', $request->getParameter('id_inscrito')));
+//        $inscrito->delete();
+//
+//        $this->redirect('inscrito/index');
+//    }
 
     protected function processForm(sfWebRequest $request, sfForm $form, UsuarioForm $formUser) {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));

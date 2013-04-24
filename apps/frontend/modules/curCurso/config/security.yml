@@ -1,7 +1,7 @@
 ## YAML Template.
 all:
   is_secure: true
-  credentials: admisiones
+  credentials: curCurso
 
 showCursos:
   is_secure: false

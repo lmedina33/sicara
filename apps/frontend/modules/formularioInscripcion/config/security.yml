@@ -1,13 +1,28 @@
 ## YAML Template.
 all:
   is_secure: true
-  credentials: admisiones
+  credentials: formularioInscripcion
 
 new:
   is_secure: false
 
 create:
   is_secure: false
+
+edit:
+  is_secure: formularioInscripcion_edit
+
+update:
+  is_secure: formularioInscripcion_edit
+
+ver:
+  is_secure: formularioInscripcion_ver
+
+formalizar:
+  is_secure: formularioInscripcion_formalizar
+
+inscribir:
+  is_secure: formularioInscripcion_inscribir
 
 showConfirm:
   is_secure: false
