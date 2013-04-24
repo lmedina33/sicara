@@ -1,8 +1,32 @@
 ## YAML Template.
 all:
   is_secure: true
-  credentials: admisiones
+  credentials: inscrito
+  
+index:
+  is_secure: true
+  credentials: inscrito_listar
   
 new:
   is_secure: true
-  credentials: root
+  credentials: inscrito_new
+  
+create:
+  is_secure: true
+  credentials: inscrito_new
+  
+edit:
+  is_secure: true
+  credentials: inscrito_edit
+  
+update:
+  is_secure: true
+  credentials: inscrito_edit
+  
+ver:
+  is_secure: true
+  credentials: inscrito_ver
+  
+matricular:
+  is_secure: true
+  credentials: inscrito_matricular

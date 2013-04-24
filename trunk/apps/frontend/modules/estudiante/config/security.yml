@@ -1,0 +1,41 @@
+## YAML Template.
+---
+all:
+  is_secure: true
+  credentials: estudiante
+
+index:
+  is_secure: true
+  credentials: estudiante_listar
+
+getDataPaging:
+  is_secure: true
+  credentials: estudiante_listar
+  
+ver:
+  is_secure: true
+  credentials: estudiante_ver
+
+edit:
+  is_secure: true
+  credentials: estudiante_edit
+
+update:
+  is_secure: true
+  credentials: estudiante_edit
+
+matricularNuevoPensum:
+  is_secure: true
+  credentials: estudiante_matricularNuevoPensum
+
+matricular:
+  is_secure: true
+  credentials: estudiante_matricular
+
+generarInformes:
+  is_secure: true
+  credentials: estudiante_generarInformes
+
+generarInforme:
+  is_secure: true
+  credentials: estudiante_generarInforme

@@ -85,14 +85,14 @@ class formularioInscripcionActions extends sfActions {
         $this->setTemplate('edit');
     }
 
-    public function executeDelete(sfWebRequest $request) {
-        $request->checkCSRFProtection();
-
-        $this->forward404Unless($formulario_inscripcion = Doctrine_Core::getTable('FormularioInscripcion')->find(array($request->getParameter('id_formulario_inscripcion'))), sprintf('Object formulario_inscripcion does not exist (%s).', $request->getParameter('id_formulario_inscripcion')));
-        $formulario_inscripcion->delete();
-
-        $this->redirect('formularioInscripcion/index');
-    }
+//    public function executeDelete(sfWebRequest $request) {
+//        $request->checkCSRFProtection();
+//
+//        $this->forward404Unless($formulario_inscripcion = Doctrine_Core::getTable('FormularioInscripcion')->find(array($request->getParameter('id_formulario_inscripcion'))), sprintf('Object formulario_inscripcion does not exist (%s).', $request->getParameter('id_formulario_inscripcion')));
+//        $formulario_inscripcion->delete();
+//
+//        $this->redirect('formularioInscripcion/index');
+//    }
 
     protected function processForm(sfWebRequest $request, sfForm $form, $numero = null, $codigo = null, $isUpdate = true) {
         $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));

@@ -1,0 +1,45 @@
+## YAML Template.
+---
+all:
+  is_secure: true
+  credentials: refHojaVida
+
+index:
+  is_secure: true
+  credentials: refHojaVida_listar
+
+new:
+  is_secure: true
+  credentials: refHojaVida_new
+
+create:
+  is_secure: true
+  credentials: refHojaVida_new
+
+edit:
+  is_secure: true
+  credentials: refHojaVida_edit
+
+update:
+  is_secure: true
+  credentials: refHojaVida_edit
+
+verByElemento:
+  is_secure: true
+  credentials: refElemento_verByElemento
+
+generarHojaVida:
+  is_secure: true
+  credentials: refElemento_verByElemento
+
+getMantenimiento:
+  is_secure: true
+  credentials: refElemento_verByElemento
+
+addMantenimiento:
+  is_secure: true
+  credentials: refElemento_verByElemento
+
+addEjecucion:
+  is_secure: true
+  credentials: refElemento_verByElemento

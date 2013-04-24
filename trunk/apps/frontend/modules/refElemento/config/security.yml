@@ -1,0 +1,41 @@
+## YAML Template.
+---
+all:
+  is_secure: true
+  credentials: refElemento
+
+index:
+  is_secure: true
+  credentials: refElemento_listar
+
+new:
+  is_secure: true
+  credentials: refElemento_new
+
+create:
+  is_secure: true
+  credentials: refElemento_new
+
+edit:
+  is_secure: true
+  credentials: refElemento_edit
+
+update:
+  is_secure: true
+  credentials: refElemento_edit
+
+delete:
+  is_secure: true
+  credentials: refElemento_delete
+
+ver:
+  is_secure: true
+  credentials: refElemento_ver
+
+verListado:
+  is_secure: true
+  credentials: refElemento_verListado
+
+generarListado:
+  is_secure: true
+  credentials: refElemento_generarListado
