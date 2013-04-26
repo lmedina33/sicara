@@ -2,6 +2,7 @@
 Para poder restaurar su contraseña es necesario que ingrese los datos a continuación:
 <br />
 <br />
+<form action="<?php echo url_for('home/enviarPass') ?>" method="post">
 <label style="float:left;"><b>Tipo de documento:</b></label> &nbsp;&nbsp;
 <select name="tipo">
     <?php
@@ -22,3 +23,4 @@ Se enviará su nueva contraseña al correo electrónico que tiene registrado en 
 Si tiene problemas, consulte con el departamento de registro y control.
 <br /><br />
 <input type="submit" value="Enviar" />
+</form>
