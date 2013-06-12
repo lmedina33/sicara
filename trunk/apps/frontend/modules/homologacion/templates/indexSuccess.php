@@ -16,17 +16,8 @@ slot('title', 'Listar Homologaciones')
             "sAjaxSource": "<?php echo url_for('homologacion/getDataPaging') ?>",
             "aoColumns": [
                 { "mDataProp": "Id", 'bVisible': false },
-                { "mDataProp": "IstitucionOr" },
-                { "mDataProp": "ProgramaOr" },
                 { "mDataProp": "ProgramaDes" },
                 { "mDataProp": "Homologante" , "sWidth":"200px" },
-                { "mDataProp": "Oficial" , "sClass": "small" , "sWidth":"25px" , "fnRender": function ( o, val ) {
-                        if(val == "1"){
-                            return "<img src='/images/iconos/check.png' />";
-                        }else{
-                            return "";
-                        }
-                    } },
                 { "mDataProp": "Interna" , "sClass": "small" , "sWidth":"25px" , "fnRender": function ( o, val ) {
                         if(val == "1"){
                             return "<img src='/images/iconos/check.png' />";
@@ -61,7 +52,7 @@ slot('title', 'Listar Homologaciones')
                         $('#detallar').attr('href', '<?php echo url_for('homologacion/homologar?id=') ?>'+idHomologacion);
                         $('#detallar img').attr('src', '/images/iconos/listarSmall.png');
                         
-                        if(oficial == ""){
+//                        if(oficial == ""){
                             if(oficializable != ""){
                                 $('#oficializar').attr('href', '<?php echo url_for('homologacion/oficializar?id=') ?>'+idHomologacion);
                                 $('#oficializar img').attr('src', '/images/iconos/docCheckSmall.png');
@@ -71,11 +62,11 @@ slot('title', 'Listar Homologaciones')
                                 $('#oficializar img').attr('src', '/images/iconos/docCheckSmallGray.png');
                                 $('#oficializar img').attr('onClick', 'return');
                             }
-                        }else{
-                            $('#oficializar').attr('href', '#');
-                            $('#oficializar img').attr('src', '/images/iconos/docCheckSmallGray.png');
-                            $('#oficializar img').attr('onClick', 'return');
-                        }
+//                        }else{
+//                            $('#oficializar').attr('href', '#');
+//                            $('#oficializar img').attr('src', '/images/iconos/docCheckSmallGray.png');
+//                            $('#oficializar img').attr('onClick', 'return');
+//                        }
                     } );
                 } );
             },
@@ -109,7 +100,7 @@ slot('title', 'Listar Homologaciones')
     });
     
     function confirmOficializar(){
-        return confirm('Si oficializa esta homologación, no se podrá volver a modificar\n y se registrarán las asignaturas homologadas en el curriculum\n del estudiante.\n\nEstá seguro de querer formalizar este formulario?');
+        return confirm('Si oficializa esta homologación, no se podrá volver a modificar\n y se registrarán las asignaturas homologadas en el curriculum\n del estudiante.\n\nEstá seguro de querer formalizar esta homologación?');
     }
     
 </script>
@@ -120,11 +111,8 @@ slot('title', 'Listar Homologaciones')
     <thead>
         <tr>
             <th>Id</th>
-            <th>Institución de Origen</th>
-            <th>Programa de Origen</th>
             <th>Programa Destino</th>
             <th>Homologante</th>
-            <th>Oficial</th>
             <th>Interna</th>
             <th>Matriculado</th>
             <th>Fecha de Registro</th>

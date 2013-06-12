@@ -12,5 +12,7 @@
  */
 class Estudiante extends BaseEstudiante
 {
-
+    function __toString(){
+        return $this->getCodigoEstudiante()." :: ".$this->getUsuario();
+    }
 }

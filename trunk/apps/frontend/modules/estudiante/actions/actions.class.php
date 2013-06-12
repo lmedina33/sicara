@@ -386,6 +386,9 @@ class estudianteActions extends sfActions {
         $telefonoAcudiente2 = null;
         $medicas = null;
         $observaciones = null;
+        $beneficiarioNom = null;
+        $beneficiarioDoc = null;
+        $beneficiarioTel = null;
 
         if ($request->hasParameter('programa'))
             $programa = $request->getParameter('programa');
@@ -458,6 +461,15 @@ class estudianteActions extends sfActions {
         if ($request->hasParameter('observaciones'))
             $observaciones = $request->getParameter('observaciones');
 
+        if ($request->hasParameter('beneficiario_nom'))
+            $beneficiarioNom = $request->getParameter('beneficiario_nom');
+
+        if ($request->hasParameter('beneficiario_doc'))
+            $beneficiarioDoc = $request->getParameter('beneficiario_doc');
+
+        if ($request->hasParameter('beneficiario_tel'))
+            $beneficiarioTel = $request->getParameter('beneficiario_tel');
+
         $query = Doctrine_Core::getTable('estudiante')
                 ->createQuery('e')
                 ->leftJoin('e.Usuario u')
@@ -496,7 +508,7 @@ class estudianteActions extends sfActions {
 //
         $this->getResponse()->clearHttpHeaders();
         $this->getResponse()->setHttpHeader('Content-Type', 'application/vnd.ms-excel');
-        $this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=listadoElementos.csv');
+        $this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=listadoEstudiantes.csv');
 
 //        echo '"Serial","Serial Interno","Nombre","Marca","Modelo","' . utf8_decode('Descripción') . '","Tipo","Lugar","' . utf8_decode('Ubicación') . '","Prestable?","' . utf8_decode('Sanción') . '","Cantidad ' . utf8_decode('Sanción') . '","Estado","Responsable"';
 //
@@ -558,6 +570,15 @@ class estudianteActions extends sfActions {
 
         if ($observaciones != null)
             echo '"' . utf8_decode(str_replace('"', '""', "OBSERVACIONES")) . '",';
+
+        if ($beneficiarioNom != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "BENEFICIARIO")) . '",';
+
+        if ($beneficiarioDoc != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "DOCUMENTO BENEFICIARIO")) . '",';
+
+        if ($beneficiarioTel != null)
+            echo '"' . utf8_decode(str_replace('"', '""', "TELÉFONO BENEFICIARIO")) . '",';
 
 //
         echo '"' . utf8_decode(str_replace('"', '""', "")) . '"';
@@ -622,6 +643,27 @@ class estudianteActions extends sfActions {
             if ($observaciones != null)
                 echo '"' . utf8_decode(str_replace('"', '""', $estudiante->getUsuario()->getObservaciones())) . '",';
 
+            if ($beneficiarioNom != null || $beneficiarioDoc != null || $beneficiarioTel != null){
+                $matricula = Doctrine_Core::getTable('Matricula')
+                        ->createQuery('m')
+                        ->where('m.codigo_estudiante = ?',$estudiante->getCodigoEstudiante())
+                        ->orderBy('m.fecha DESC')
+                        ->execute()
+                        ->getFirst();
+            
+                if($matricula != null){
+                    if ($beneficiarioNom != null)
+                        echo '"' . utf8_decode(str_replace('"', '""', $matricula->getNombreBeneficiario())) . '",';
+                    
+                    if ($beneficiarioDoc != null)
+                        echo '"' . utf8_decode(str_replace('"', '""', $matricula->getDocumento())) . '",';
+                    
+                    if ($beneficiarioTel != null)
+                        echo '"' . utf8_decode(str_replace('"', '""', $matricula->getTelefono())) . '",';
+                    
+                }
+            }
+            
             echo '"' . utf8_decode(str_replace('"', '""', "")) . '"';
 //
             echo "\n";

@@ -35,9 +35,6 @@ class homologacionActions extends sfActions {
                 $this->usuario = $this->estudiante->getUsuario();
 
                 $this->form->setDefault('id_usuario', $this->estudiante->getIdUsuario());
-                $this->form->setDefault('codigo_pensum_origen', $this->estudiante->getCodigoPensum());
-                $this->form->setDefault('institucion_origen', 'Escuela Aeronáutica de Colombia');
-                $this->form->setDefault('programa_origen', $this->estudiante->getPensum()->getNombre());
                 $this->form->setDefault('is_interna', 1);
                 $this->form->setDefault('id_sf_guard_user', sfContext::getInstance()->getUser()->getGuardUser()->getId());
             } else {
@@ -124,6 +121,8 @@ class homologacionActions extends sfActions {
         $idsCur = "'0'";
         $idsHom = "'0'";
 
+        $this->especificacionesHomologacion=array();
+        
         foreach ($this->semestres as $semestre) {
 
             $asignaturasCur = Doctrine_Core::getTable('AsignaturaCursada')
@@ -155,6 +154,18 @@ class homologacionActions extends sfActions {
 
             if ($asignaturasHom != null)
                 $this->asignaturasHomologadas[$semestre->getNumero()] = $asignaturasHom;
+            
+            foreach($asignaturasHom as $asignaHomolog){
+                $asignaturasHomologadas=Doctrine_Core::getTable('AsignaturaHomologada')
+                        ->createQuery('ah')
+                        ->where('ah.id_homologacion = ?',$this->homologacion->getIdHomologacion())
+                        ->andWhere('ah.codigo_asignatura = ?',$asignaHomolog->getCodigoAsignatura())
+                        ->execute();
+                
+                $cod=$asignaHomolog->getCodigoAsignatura();
+                
+                $this->especificacionesHomologacion[$cod]=$asignaturasHomologadas;
+            }
 
             foreach ($asignaturasCur as $asignaturaCur) {
                 $idsCur.=",'" . $asignaturaCur->getCodigoAsignatura() . "'";
@@ -172,7 +183,7 @@ class homologacionActions extends sfActions {
                     ->andWhere('sem.id_semestre = ' . $semestre->getIdSemestre())
                     ->execute();
 
-            if ($this->homologacion->getIsOficializado() != 1) {
+//            if ($this->homologacion->getIsOficializado() != 1) {
                 $dataAsignaturas = array();
 
                 foreach ($asignaturasHomolog as $asignatura) {
@@ -200,24 +211,80 @@ class homologacionActions extends sfActions {
                     }
                 }
                 $this->asignaturasHomologables[$semestre->getNumero()] = $dataAsignaturas;
+//            }
+        }
+
+        
+
+        $this->asignaturasHomolog = array();
+        $asignaturas = Doctrine_Core::getTable('Asignatura')
+                ->createQuery('a')
+                ->leftJoin('a.Semestre s')
+                ->where('s.codigo_pensum = ?', $this->homologacion->getCodigoPensumDestino())
+                ->orderBy('s.numero')
+                ->addOrderBy('a.codigo_asignatura')
+                ->execute();
+
+        foreach ($asignaturas as $asignatura) {
+            $asignaturaCur = Doctrine_Core::getTable('AsignaturaCursada')
+                    ->createQuery('asc')
+                    ->leftJoin('asc.Estudiante es')
+                    ->where('asc.codigo_asignatura = ?', $asignatura->getCodigoAsignatura())
+                    ->andWhere('es.id_usuario = ?', $this->homologacion->getIdUsuario())
+                    ->execute()
+                    ->getFirst();
+            if ($asignatura->getIsPractica() != 1 && $asignaturaCur == null) {
+                $this->asignaturasHomolog[] = array(
+                    'codigo' => $asignatura->getCodigoAsignatura(),
+                    'nombre' => $asignatura->getNombre(),
+                    'semestre' => $asignatura->getSemestre()->getNumero(),
+                );
             }
         }
 
-        if ($this->homologacion->getIsInterna() == 1) {
-            $asignaturasSelectables = Doctrine_Core::getTable('AsignaturaCursada')
-                    ->createQuery('asc')
-                    ->leftJoin('asc.Asignatura as')
-                    ->leftJoin('as.Semestre sem')
-                    ->where('as.is_practica = 0')
-                    ->andWhere('sem.codigo_pensum = ?', $this->homologacion->getCodigoPensumOrigen())
-                    ->andWhere('as.is_practica = 0')
-                    ->andWhere('asc.is_aprobada = 1')
+        $this->origenesHomologacion = array();
+
+        foreach ($this->asignaturasHomolog as $asigHom) {
+            $origenes = Doctrine_Core::getTable('AsignaturaHomologada')
+                    ->createQuery('a')
+                    ->where('codigo_asignatura = ?', $asigHom['codigo'])
+                    ->andWhere('id_homologacion = ?',$this->homologacion->getIdHomologacion())
                     ->execute();
-            $this->options = array();
-            foreach ($asignaturasSelectables as $asignaturaSel) {
-                $this->options[] = array('codigo' => $asignaturaSel->getAsignatura()->getCodigoAsignatura(), 'nombre' => $asignaturaSel->getAsignatura()->getNombre());
+            
+            $arrayOrigen = array();
+
+            foreach ($origenes as $origen) {
+                $arrayOrigen[] = array(
+                    'id' => $origen->getIdAsignaturaHomologada(),
+                    'ins_origen' => $origen->getInstitucionOrigen(),
+                    'prog_origen' => $origen->getProgramaOrigen(),
+                    'origen' => $origen->getNombre(),
+                    'calificacion' => $origen->getCalificacion(),
+                    'aprobatoria' => $origen->getNotaAprobatoria(),
+                    'porcentaje' => $origen->getPorcentaje(),
+                    'observaciones' => $origen->getObservaciones(),
+                );
             }
+
+            $this->origenesHomologacion[$asigHom['codigo']] = $arrayOrigen;
         }
+        
+        $matriculas = Doctrine_Core::getTable('Matricula')
+                ->createQuery('m')
+                ->leftJoin('m.Estudiante e')
+                ->where('e.id_usuario = ?',$this->homologacion->getIdUsuario())
+                ->execute();
+        
+        $idsPensums = "0";
+        
+        foreach($matriculas as $matricula){
+            $idsPensums.=",".$matricula->getPeriodoAcademico()->getCodigoPensum();
+        }
+        
+        $this->pensums=  Doctrine_Core::getTable('Pensum')
+                ->createQuery('p')
+                ->where('p.codigo_pensum IN ('.$idsPensums.')')
+                ->execute();
     }
 
     public function executeGuardarHomo(sfWebRequest $request) {
@@ -269,34 +336,44 @@ class homologacionActions extends sfActions {
                 ->execute()
                 ->getFirst();
         if ($asignatura != null)
-            return $this->renderText($asignatura->getNotaAsignaturaCursada());
+            return $this->renderText($asignatura->getNotaAsignaturaCursada()."-".$asignatura->getNotaAprobatoria());
         else
             return $this->renderText("");
+    }
+
+    public function executeGetAsignatura(sfWebRequest $request) {
+        $asignaturas = Doctrine_Core::getTable('Asignatura')
+                ->createQuery('a')
+                ->leftJoin('a.Semestre s')
+                ->where('s.codigo_pensum = ?', $request->getParameter('pensum'))
+                ->execute();
+        
+        $data=array();
+        
+        foreach($asignaturas as $asignatura){
+            $data[]=array('codigo'=>$asignatura->getCodigoAsignatura(),'value'=>$asignatura->getNombre(),'label' => $asignatura->getCodigoAsignatura()." :: ".$asignatura->getNombre());
+        }
+        
+        return $this->renderText(json_encode($data));
     }
 
     public function executeGetDataPaging($request) {
         //*Se construye el arreglo que contiene los campos a mostrarse con este datatable
         $aColumns = array(
             'id_homologacion',
-            'institucion_origen',
-            'programa_origen',
             'codigo_pensum_destino',
             'CONCAT(u.primer_apellido," ",u.segundo_apellido," ",u.primer_nombre," ",u.segundo_nombre)',
             'is_interna',
-            'is_oficializado',
             'created_at');
 
         //*Se seleeciona la tabla y los campos que se van a mostrar en este datatables
         $q = Doctrine_Query::create()
                 ->select('
                     h.id_homologacion,
-                    h.institucion_origen,
-                    h.programa_origen,
                     CONCAT(pd.codigo_pensum," :: ",pd.nombre) as penDest,
                     CONCAT(u.primer_apellido," ",u.segundo_apellido," ",u.primer_nombre," ",u.segundo_nombre) AS nombre,
                     h.codigo_pensum_destino,
                     h.is_interna,
-                    h.is_oficializado,
                     h.created_at,
                     u.id_usuario AS id_usu')
                 ->from('Homologacion h')
@@ -366,25 +443,16 @@ class homologacionActions extends sfActions {
         //*Llenado de la matriz de datos:
         for ($i = 0; $i < count($rows); $i++) {
             $id = "";
-            $instOrigen = "";
-            $progOrigen = "";
             $progDestino = "";
             $progDestinoCode = "";
             $homologante = "";
             $interna = "";
-            $oficial = "";
             $fecha = "";
             $idUsuario = "";
 
             //*Se evalúa si el dato a insertar existe
             if (isset($rows[$i]['id_homologacion']))
                 $id = $rows[$i]['id_homologacion'];
-
-            if (isset($rows[$i]['institucion_origen']))
-                $instOrigen = $rows[$i]['institucion_origen'];
-
-            if (isset($rows[$i]['programa_origen']))
-                $progOrigen = $rows[$i]['programa_origen'];
 
             if (isset($rows[$i]['penDest']))
                 $progDestino = $rows[$i]['penDest'];
@@ -394,9 +462,6 @@ class homologacionActions extends sfActions {
 
             if (isset($rows[$i]['is_interna']))
                 $interna = $rows[$i]['is_interna'];
-
-            if (isset($rows[$i]['is_oficializado']))
-                $oficial = $rows[$i]['is_oficializado'];
 
             if (isset($rows[$i]['created_at']))
                 $fecha = $rows[$i]['created_at'];
@@ -416,16 +481,16 @@ class homologacionActions extends sfActions {
                     ->where('es.id_usuario = ? AND per.codigo_pensum = ?', array($idUsuario, $progDestinoCode))
                     ->execute()
                     ->getFirst();
-            
+
             $estudiante = Doctrine_Core::getTable('Estudiante')
-                ->findBySql('id_usuario = ' . $idUsuario . ' AND codigo_pensum ="' . $progDestinoCode . '"')
-                ->getFirst();
-            
+                    ->findBySql('id_usuario = ' . $idUsuario . ' AND codigo_pensum ="' . $progDestinoCode . '"')
+                    ->getFirst();
+
             if ($matricula != null && $estudiante != null)
                 $oficializable = 1;
 
             //*Se agregan los datos en la matriz
-            $data[$i] = array('Id' => $id, 'IstitucionOr' => $instOrigen, 'ProgramaOr' => $progOrigen, 'ProgramaDes' => $progDestino, 'Homologante' => $homologante, 'Interna' => $interna, 'Oficial' => $oficial, 'Fecha' => $fecha, 'Oficializable' => $oficializable);
+            $data[$i] = array('Id' => $id, 'ProgramaDes' => $progDestino, 'Homologante' => $homologante, 'Interna' => $interna, 'Fecha' => $fecha, 'Oficializable' => $oficializable);
         }
 
         //*Calculo del total de registros en la BD si no se usaran los filtros de busqueda
@@ -454,41 +519,56 @@ class homologacionActions extends sfActions {
         $estudiante = Doctrine_Core::getTable('Estudiante')
                 ->findBySql('id_usuario = ' . $homologacion->getIdUsuario() . ' AND codigo_pensum ="' . $homologacion->getCodigoPensumDestino() . '"')
                 ->getFirst();
-        
-        if($estudiante == null){
+
+        if ($estudiante == null) {
             $this->getUser()->setAttribute('error', 'No se encontró al estudiante para oficializar esta homologación.');
             $this->redirect('homologacion/index');
         }
 
         $asignador = Doctrine_Core::getTable('Usuario')->findBy('id_sf_guard_user', sfContext::getInstance()->getUser()->getGuardUser()->getId())->getFirst();
 
-        if ($homologacion != null && $homologacion->getIsOficializado() != 1 && $homologacion->getIsOficializado() != "1") {
+        if ($homologacion != null) {
 
-            $asignaturasHomo = Doctrine_Core::getTable('AsignaturaHomologada')->findBy('id_homologacion', $homologacion->getIdHomologacion());
-
+//            $asignaturasHomo = Doctrine_Core::getTable('AsignaturaHomologada')->findBy('id_homologacion', $homologacion->getIdHomologacion());
+            $asignaturasHomo = Doctrine_Core::getTable('AsignaturaHomologada')
+                    ->createQuery('a')
+                    ->select('a.id_asignatura_homologada ,a.codigo_asignatura, a.id_homologacion, 
+                        ROUND((SUM(a.calificacion*a.porcentaje/100)*'.$homologacion->getPensumDestino()->getNotaAprobatoria().' / SUM(a.nota_aprobatoria*a.porcentaje/100)),2) as nota_final,
+                        ROUND(SUM(a.nota_aprobatoria*a.porcentaje/100),2) as nota_aprobatoria_final')
+                    ->where('a.id_homologacion = ?',$homologacion->getIdHomologacion())
+                    ->andWhere('a.is_oficializado != 1')
+                    ->groupBy('a.codigo_asignatura')
+                    ->fetchArray();
+//                    ->;
+            // SELECT ROUND(SUM(`calificacion`*`porcentaje`/100),2) as Nota_final FROM `asignatura_homologada` GROUP BY `id_homologacion`,`codigo_asignatura`
+            
             foreach ($asignaturasHomo as $asignaturaHomo) {
                 $asignaturaCursada = Doctrine_Core::getTable('AsignaturaCursada')
-                        ->findBySql('codigo_estudiante = "' . $estudiante->getCodigoEstudiante() . '" AND codigo_asignatura = "' . $asignaturaHomo->getCodigoAsignatura() . '"')
+                        ->findBySql('codigo_estudiante = "' . $estudiante->getCodigoEstudiante() . '" AND codigo_asignatura = "' . $asignaturaHomo['codigo_asignatura'] . '"')
                         ->getFirst();
 
                 if ($asignaturaCursada == null) {
                     $asignaturaCursadaHom = new AsignaturaCursada();
-                    $asignaturaCursadaHom->setNotaAsignaturaCursada($asignaturaHomo->getCalificacion());
+                    $asignaturaCursadaHom->setNotaAsignaturaCursada($asignaturaHomo['nota_final']);
                     $asignaturaCursadaHom->setIsHomologacion(1);
-                    $asignaturaCursadaHom->setObservaciones($asignaturaHomo->getObservaciones());
-                    $asignaturaCursadaHom->setCodigoAsignatura($asignaturaHomo->getCodigoAsignatura());
+//                    $asignaturaCursadaHom->setObservaciones($asignaturaHomo->getObservaciones());
+                    $asignaturaCursadaHom->setCodigoAsignatura($asignaturaHomo['codigo_asignatura']);
                     $asignaturaCursadaHom->setCodigoEstudiante($estudiante->getCodigoEstudiante());
-                    $asignaturaCursadaHom->setNotaAprobatoria($asignaturaHomo->getNotaAprobatoria());
+                    $asignaturaCursadaHom->setNotaAprobatoria($homologacion->getPensumDestino()->getNotaAprobatoria());
                     $asignaturaCursadaHom->setIsAprobada(1);
                     $asignaturaCursadaHom->setIdAsignador($asignador->getIdUsuario());
-                    $asignaturaCursadaHom->setAsignaturaHomologada($asignaturaHomo);
+                    $asignaturaCursadaHom->setHomologacion($homologacion);
                     $asignaturaCursadaHom->save();
+                    
+                    $asignaturaHomolog=  Doctrine_Core::getTable('AsignaturaHomologada')->find($asignaturaHomo['id_asignatura_homologada']);
+                    $asignaturaHomolog->setIsOficializado(1);
+                    $asignaturaHomolog->save();
                 }
             }
-            
+
             $homologacion->setIsOficializado(1);
             $homologacion->save();
-            
+
             $this->getUser()->setAttribute('notice', 'El proceso de homologación ha sido oficializado exitosamente.');
             $this->redirect('homologacion/homologar?id=' . $homologacion->getIdHomologacion());
         } else {
@@ -497,4 +577,44 @@ class homologacionActions extends sfActions {
         }
     }
 
+    public function executeGuardarAsignatura(sfWebRequest $request) {
+        $idHomologacion = $request->getParameter('id_hom');
+        $codAsignatura = $request->getParameter('codigo_as');
+        $insOrigen = $request->getParameter('ins_origen');
+        $progOrigen = $request->getParameter('prog_origen');
+        $asOrigen = $request->getParameter('as_origen');
+        $nota = $request->getParameter('nota');
+        $nota_aprob = $request->getParameter('nota_aprob');
+        $obs = $request->getParameter('obs');
+        $porcentaje = $request->getParameter('porcentaje');
+        
+        $asignaturaHom= new AsignaturaHomologada();
+        $asignaturaHom->setIdHomologacion($idHomologacion);
+        $asignaturaHom->setCodigoAsignatura($codAsignatura);
+        $asignaturaHom->setInstitucionOrigen($insOrigen);
+        $asignaturaHom->setProgramaOrigen($progOrigen);
+        $asignaturaHom->setNombre($asOrigen);
+        $asignaturaHom->setCalificacion($nota);
+        $asignaturaHom->setNotaAprobatoria($nota_aprob);
+        $asignaturaHom->setObservaciones($obs);
+        $asignaturaHom->setPorcentaje($porcentaje);
+        $asignaturaHom->setIdSfGuardUser(sfContext::getInstance()->getUser()->getGuardUser()->getId());
+        $asignaturaHom->save();
+        
+        $data=array('id'=>$asignaturaHom->getIdAsignaturaHomologada(),'nombre'=>$asOrigen);
+//        $data['id']=$asignaturaHom->getIdAsignaturaHomologada();
+//        $data['nombre']=$nombre;
+        return $this->renderText(json_encode($data));
+    }
+    
+    public function executeBorrarAsignatura(sfWebRequest $request) {
+        $asignatura = Doctrine_Core::getTable('AsignaturaHomologada')->find($request->getParameter('id'));
+        
+        if($asignatura != null){
+            $asignatura->delete();
+            return $this->renderText('borrado');
+        }else{
+            return $this->renderText('fail');
+        }
+    }
 }

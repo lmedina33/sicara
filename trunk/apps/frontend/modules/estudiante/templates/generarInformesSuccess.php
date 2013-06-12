@@ -142,6 +142,13 @@ Seleccione los campos que desea presentar:
 <input type="checkbox" name="observaciones" />Observaciones
 <br />
 <br />
+<input type="checkbox" name="beneficiario_nom" />Nombre del Beneficiario del Seguro
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="checkbox" name="beneficiario_doc" />Documento del Beneficiario del Seguro
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="checkbox" name="beneficiario_tel" />Telefono del Beneficiario del Seguro
+<br />
+<br />
 <input type="submit" value="Generar">
 </form>
 

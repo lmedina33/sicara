@@ -28,7 +28,7 @@ abstract class BaseAsignaturaCursadaForm extends BaseFormDoctrine
       'is_aprobada'                          => new sfWidgetFormInputText(),
       'id_periodo'                           => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'), 'add_empty' => true)),
       'id_asignador'                         => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'add_empty' => true)),
-      'id_asignatura_homologada'             => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('AsignaturaHomologada'), 'add_empty' => true)),
+      'id_homologacion'                      => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Homologacion'), 'add_empty' => true)),
       'created_at'                           => new sfWidgetFormDateTime(),
       'updated_at'                           => new sfWidgetFormDateTime(),
     ));
@@ -47,7 +47,7 @@ abstract class BaseAsignaturaCursadaForm extends BaseFormDoctrine
       'is_aprobada'                          => new sfValidatorInteger(array('required' => false)),
       'id_periodo'                           => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'), 'required' => false)),
       'id_asignador'                         => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Usuario'), 'required' => false)),
-      'id_asignatura_homologada'             => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('AsignaturaHomologada'), 'required' => false)),
+      'id_homologacion'                      => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Homologacion'), 'required' => false)),
       'created_at'                           => new sfValidatorDateTime(),
       'updated_at'                           => new sfValidatorDateTime(),
     ));
