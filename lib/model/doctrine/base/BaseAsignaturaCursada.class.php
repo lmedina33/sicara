@@ -20,54 +20,54 @@ Doctrine_Manager::getInstance()->bindComponent('AsignaturaCursada', 'doctrine');
  * @property integer $is_aprobada
  * @property integer $id_periodo
  * @property integer $id_asignador
- * @property integer $id_asignatura_homologada
+ * @property integer $id_homologacion
  * @property Asignatura $Asignatura
  * @property Estudiante $Estudiante
  * @property PeriodoAcademico $PeriodoAcademico
  * @property Usuario $Usuario
  * @property Doctrine_Collection $Parcial
- * @property AsignaturaHomologada $AsignaturaHomologada
+ * @property Homologacion $Homologacion
  * 
- * @method integer              getIdAsignaturaCursada()                  Returns the current record's "id_asignatura_cursada" value
- * @method float                getNotaAsignaturaCursada()                Returns the current record's "nota_asignatura_cursada" value
- * @method float                getNotaHabilitacionAsignaturaCursada()    Returns the current record's "nota_habilitacion_asignatura_cursada" value
- * @method float                getNotaNivelacionAsignaturaCursada()      Returns the current record's "nota_nivelacion_asignatura_cursada" value
- * @method integer              getIsHomologacion()                       Returns the current record's "is_homologacion" value
- * @method integer              getAsistencia()                           Returns the current record's "asistencia" value
- * @method string               getObservaciones()                        Returns the current record's "observaciones" value
- * @method string               getCodigoEstudiante()                     Returns the current record's "codigo_estudiante" value
- * @method string               getCodigoAsignatura()                     Returns the current record's "codigo_asignatura" value
- * @method float                getNotaAprobatoria()                      Returns the current record's "nota_aprobatoria" value
- * @method integer              getIsAprobada()                           Returns the current record's "is_aprobada" value
- * @method integer              getIdPeriodo()                            Returns the current record's "id_periodo" value
- * @method integer              getIdAsignador()                          Returns the current record's "id_asignador" value
- * @method integer              getIdAsignaturaHomologada()               Returns the current record's "id_asignatura_homologada" value
- * @method Asignatura           getAsignatura()                           Returns the current record's "Asignatura" value
- * @method Estudiante           getEstudiante()                           Returns the current record's "Estudiante" value
- * @method PeriodoAcademico     getPeriodoAcademico()                     Returns the current record's "PeriodoAcademico" value
- * @method Usuario              getUsuario()                              Returns the current record's "Usuario" value
- * @method Doctrine_Collection  getParcial()                              Returns the current record's "Parcial" collection
- * @method AsignaturaHomologada getAsignaturaHomologada()                 Returns the current record's "AsignaturaHomologada" value
- * @method AsignaturaCursada    setIdAsignaturaCursada()                  Sets the current record's "id_asignatura_cursada" value
- * @method AsignaturaCursada    setNotaAsignaturaCursada()                Sets the current record's "nota_asignatura_cursada" value
- * @method AsignaturaCursada    setNotaHabilitacionAsignaturaCursada()    Sets the current record's "nota_habilitacion_asignatura_cursada" value
- * @method AsignaturaCursada    setNotaNivelacionAsignaturaCursada()      Sets the current record's "nota_nivelacion_asignatura_cursada" value
- * @method AsignaturaCursada    setIsHomologacion()                       Sets the current record's "is_homologacion" value
- * @method AsignaturaCursada    setAsistencia()                           Sets the current record's "asistencia" value
- * @method AsignaturaCursada    setObservaciones()                        Sets the current record's "observaciones" value
- * @method AsignaturaCursada    setCodigoEstudiante()                     Sets the current record's "codigo_estudiante" value
- * @method AsignaturaCursada    setCodigoAsignatura()                     Sets the current record's "codigo_asignatura" value
- * @method AsignaturaCursada    setNotaAprobatoria()                      Sets the current record's "nota_aprobatoria" value
- * @method AsignaturaCursada    setIsAprobada()                           Sets the current record's "is_aprobada" value
- * @method AsignaturaCursada    setIdPeriodo()                            Sets the current record's "id_periodo" value
- * @method AsignaturaCursada    setIdAsignador()                          Sets the current record's "id_asignador" value
- * @method AsignaturaCursada    setIdAsignaturaHomologada()               Sets the current record's "id_asignatura_homologada" value
- * @method AsignaturaCursada    setAsignatura()                           Sets the current record's "Asignatura" value
- * @method AsignaturaCursada    setEstudiante()                           Sets the current record's "Estudiante" value
- * @method AsignaturaCursada    setPeriodoAcademico()                     Sets the current record's "PeriodoAcademico" value
- * @method AsignaturaCursada    setUsuario()                              Sets the current record's "Usuario" value
- * @method AsignaturaCursada    setParcial()                              Sets the current record's "Parcial" collection
- * @method AsignaturaCursada    setAsignaturaHomologada()                 Sets the current record's "AsignaturaHomologada" value
+ * @method integer             getIdAsignaturaCursada()                  Returns the current record's "id_asignatura_cursada" value
+ * @method float               getNotaAsignaturaCursada()                Returns the current record's "nota_asignatura_cursada" value
+ * @method float               getNotaHabilitacionAsignaturaCursada()    Returns the current record's "nota_habilitacion_asignatura_cursada" value
+ * @method float               getNotaNivelacionAsignaturaCursada()      Returns the current record's "nota_nivelacion_asignatura_cursada" value
+ * @method integer             getIsHomologacion()                       Returns the current record's "is_homologacion" value
+ * @method integer             getAsistencia()                           Returns the current record's "asistencia" value
+ * @method string              getObservaciones()                        Returns the current record's "observaciones" value
+ * @method string              getCodigoEstudiante()                     Returns the current record's "codigo_estudiante" value
+ * @method string              getCodigoAsignatura()                     Returns the current record's "codigo_asignatura" value
+ * @method float               getNotaAprobatoria()                      Returns the current record's "nota_aprobatoria" value
+ * @method integer             getIsAprobada()                           Returns the current record's "is_aprobada" value
+ * @method integer             getIdPeriodo()                            Returns the current record's "id_periodo" value
+ * @method integer             getIdAsignador()                          Returns the current record's "id_asignador" value
+ * @method integer             getIdHomologacion()                       Returns the current record's "id_homologacion" value
+ * @method Asignatura          getAsignatura()                           Returns the current record's "Asignatura" value
+ * @method Estudiante          getEstudiante()                           Returns the current record's "Estudiante" value
+ * @method PeriodoAcademico    getPeriodoAcademico()                     Returns the current record's "PeriodoAcademico" value
+ * @method Usuario             getUsuario()                              Returns the current record's "Usuario" value
+ * @method Doctrine_Collection getParcial()                              Returns the current record's "Parcial" collection
+ * @method Homologacion        getHomologacion()                         Returns the current record's "Homologacion" value
+ * @method AsignaturaCursada   setIdAsignaturaCursada()                  Sets the current record's "id_asignatura_cursada" value
+ * @method AsignaturaCursada   setNotaAsignaturaCursada()                Sets the current record's "nota_asignatura_cursada" value
+ * @method AsignaturaCursada   setNotaHabilitacionAsignaturaCursada()    Sets the current record's "nota_habilitacion_asignatura_cursada" value
+ * @method AsignaturaCursada   setNotaNivelacionAsignaturaCursada()      Sets the current record's "nota_nivelacion_asignatura_cursada" value
+ * @method AsignaturaCursada   setIsHomologacion()                       Sets the current record's "is_homologacion" value
+ * @method AsignaturaCursada   setAsistencia()                           Sets the current record's "asistencia" value
+ * @method AsignaturaCursada   setObservaciones()                        Sets the current record's "observaciones" value
+ * @method AsignaturaCursada   setCodigoEstudiante()                     Sets the current record's "codigo_estudiante" value
+ * @method AsignaturaCursada   setCodigoAsignatura()                     Sets the current record's "codigo_asignatura" value
+ * @method AsignaturaCursada   setNotaAprobatoria()                      Sets the current record's "nota_aprobatoria" value
+ * @method AsignaturaCursada   setIsAprobada()                           Sets the current record's "is_aprobada" value
+ * @method AsignaturaCursada   setIdPeriodo()                            Sets the current record's "id_periodo" value
+ * @method AsignaturaCursada   setIdAsignador()                          Sets the current record's "id_asignador" value
+ * @method AsignaturaCursada   setIdHomologacion()                       Sets the current record's "id_homologacion" value
+ * @method AsignaturaCursada   setAsignatura()                           Sets the current record's "Asignatura" value
+ * @method AsignaturaCursada   setEstudiante()                           Sets the current record's "Estudiante" value
+ * @method AsignaturaCursada   setPeriodoAcademico()                     Sets the current record's "PeriodoAcademico" value
+ * @method AsignaturaCursada   setUsuario()                              Sets the current record's "Usuario" value
+ * @method AsignaturaCursada   setParcial()                              Sets the current record's "Parcial" collection
+ * @method AsignaturaCursada   setHomologacion()                         Sets the current record's "Homologacion" value
  * 
  * @package    sicara2
  * @subpackage model
@@ -198,7 +198,7 @@ abstract class BaseAsignaturaCursada extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 4,
              ));
-        $this->hasColumn('id_asignatura_homologada', 'integer', 4, array(
+        $this->hasColumn('id_homologacion', 'integer', 4, array(
              'type' => 'integer',
              'fixed' => 0,
              'unsigned' => true,
@@ -232,9 +232,9 @@ abstract class BaseAsignaturaCursada extends sfDoctrineRecord
              'local' => 'id_asignatura_cursada',
              'foreign' => 'id_asignatura_cursada'));
 
-        $this->hasOne('AsignaturaHomologada', array(
-             'local' => 'id_asignatura_homologada',
-             'foreign' => 'id_asignatura_homologada'));
+        $this->hasOne('Homologacion', array(
+             'local' => 'id_homologacion',
+             'foreign' => 'id_homologacion'));
 
         $timestampable0 = new Doctrine_Template_Timestampable(array(
              ));

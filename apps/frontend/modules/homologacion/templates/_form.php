@@ -34,27 +34,6 @@
         <tbody>
             <?php echo $form->renderGlobalErrors() ?>
             <tr>
-                <th><?php echo $form['institucion_origen']->renderLabel() ?></th>
-                <td>
-                    <?php echo $form['institucion_origen']->renderError() ?>
-                    <?php echo $form['institucion_origen'] ?>
-                </td>
-            </tr>
-            <tr>
-                <th><?php echo $form['programa_origen']->renderLabel() ?></th>
-                <td>
-                    <?php echo $form['programa_origen']->renderError() ?>
-                    <?php echo $form['programa_origen'] ?>
-                </td>
-            </tr>
-            <tr>
-                <th><?php echo $form['nota_aprobatoria']->renderLabel() ?></th>
-                <td>
-                    <?php echo $form['nota_aprobatoria']->renderError() ?>
-                    <?php echo $form['nota_aprobatoria'] ?>
-                </td>
-            </tr>
-            <tr>
                 <th><?php echo $form['is_oficializado']->renderLabel() ?></th>
                 <td>
                     <?php echo $form['is_oficializado']->renderError() ?>
@@ -80,13 +59,6 @@
                 <td>
                     <?php echo $form['codigo_pensum_destino']->renderError() ?>
                     <?php echo $form['codigo_pensum_destino'] ?>
-                </td>
-            </tr>
-            <tr>
-                <th><?php echo $form['codigo_pensum_origen']->renderLabel() ?></th>
-                <td>
-                    <?php echo $form['codigo_pensum_origen']->renderError() ?>
-                    <?php echo $form['codigo_pensum_origen'] ?>
                 </td>
             </tr>
             <tr>

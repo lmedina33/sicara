@@ -64,27 +64,6 @@ slot('title', 'Crear Homologación')
         </tfoot>
         <tbody>
             <?php echo $form->renderGlobalErrors() ?>
-            <tr id="tr_institucion_or">
-                <th><?php echo $form['institucion_origen']->renderLabel() ?></th>
-                <td>
-                    <?php echo $form['institucion_origen']->renderError() ?>
-                    <?php echo $form['institucion_origen'] ?>
-                </td>
-            </tr>
-            <tr id="tr_programa_or">
-                <th><?php echo $form['programa_origen']->renderLabel() ?></th>
-                <td>
-                    <?php echo $form['programa_origen']->renderError() ?>
-                    <?php echo $form['programa_origen'] ?>
-                </td>
-            </tr>
-            <tr>
-                <th><?php echo $form['nota_aprobatoria']->renderLabel() ?></th>
-                <td>
-                    <?php echo $form['nota_aprobatoria']->renderError() ?>
-                    <?php echo $form['nota_aprobatoria'] ?>
-                </td>
-            </tr>
             <tr>
                 <th><?php echo $form['observaciones']->renderLabel() ?></th>
                 <td>

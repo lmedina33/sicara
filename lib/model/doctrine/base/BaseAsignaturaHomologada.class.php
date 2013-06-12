@@ -11,39 +11,45 @@ Doctrine_Manager::getInstance()->bindComponent('AsignaturaHomologada', 'doctrine
  * @property string $nombre
  * @property float $calificacion
  * @property float $nota_aprobatoria
- * @property string $observaciones
+ * @property float $porcentaje
  * @property string $codigo_asignatura
+ * @property string $institucion_origen
+ * @property string $programa_origen
+ * @property string $observaciones
+ * @property integer $is_oficializado
  * @property integer $id_homologacion
  * @property integer $id_sf_guard_user
  * @property Asignatura $Asignatura
  * @property Homologacion $Homologacion
- * @property Doctrine_Collection $AsignaturaHomologada
- * @property Doctrine_Collection $AsignaturaCursada
  * 
  * @method integer              getIdAsignaturaHomologada()   Returns the current record's "id_asignatura_homologada" value
  * @method string               getNombre()                   Returns the current record's "nombre" value
  * @method float                getCalificacion()             Returns the current record's "calificacion" value
  * @method float                getNotaAprobatoria()          Returns the current record's "nota_aprobatoria" value
- * @method string               getObservaciones()            Returns the current record's "observaciones" value
+ * @method float                getPorcentaje()               Returns the current record's "porcentaje" value
  * @method string               getCodigoAsignatura()         Returns the current record's "codigo_asignatura" value
+ * @method string               getInstitucionOrigen()        Returns the current record's "institucion_origen" value
+ * @method string               getProgramaOrigen()           Returns the current record's "programa_origen" value
+ * @method string               getObservaciones()            Returns the current record's "observaciones" value
+ * @method integer              getIsOficializado()           Returns the current record's "is_oficializado" value
  * @method integer              getIdHomologacion()           Returns the current record's "id_homologacion" value
  * @method integer              getIdSfGuardUser()            Returns the current record's "id_sf_guard_user" value
  * @method Asignatura           getAsignatura()               Returns the current record's "Asignatura" value
  * @method Homologacion         getHomologacion()             Returns the current record's "Homologacion" value
- * @method Doctrine_Collection  getAsignaturaHomologada()     Returns the current record's "AsignaturaHomologada" collection
- * @method Doctrine_Collection  getAsignaturaCursada()        Returns the current record's "AsignaturaCursada" collection
  * @method AsignaturaHomologada setIdAsignaturaHomologada()   Sets the current record's "id_asignatura_homologada" value
  * @method AsignaturaHomologada setNombre()                   Sets the current record's "nombre" value
  * @method AsignaturaHomologada setCalificacion()             Sets the current record's "calificacion" value
  * @method AsignaturaHomologada setNotaAprobatoria()          Sets the current record's "nota_aprobatoria" value
- * @method AsignaturaHomologada setObservaciones()            Sets the current record's "observaciones" value
+ * @method AsignaturaHomologada setPorcentaje()               Sets the current record's "porcentaje" value
  * @method AsignaturaHomologada setCodigoAsignatura()         Sets the current record's "codigo_asignatura" value
+ * @method AsignaturaHomologada setInstitucionOrigen()        Sets the current record's "institucion_origen" value
+ * @method AsignaturaHomologada setProgramaOrigen()           Sets the current record's "programa_origen" value
+ * @method AsignaturaHomologada setObservaciones()            Sets the current record's "observaciones" value
+ * @method AsignaturaHomologada setIsOficializado()           Sets the current record's "is_oficializado" value
  * @method AsignaturaHomologada setIdHomologacion()           Sets the current record's "id_homologacion" value
  * @method AsignaturaHomologada setIdSfGuardUser()            Sets the current record's "id_sf_guard_user" value
  * @method AsignaturaHomologada setAsignatura()               Sets the current record's "Asignatura" value
  * @method AsignaturaHomologada setHomologacion()             Sets the current record's "Homologacion" value
- * @method AsignaturaHomologada setAsignaturaHomologada()     Sets the current record's "AsignaturaHomologada" collection
- * @method AsignaturaHomologada setAsignaturaCursada()        Sets the current record's "AsignaturaCursada" collection
  * 
  * @package    sicara2
  * @subpackage model
@@ -90,14 +96,14 @@ abstract class BaseAsignaturaHomologada extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 18,
              ));
-        $this->hasColumn('observaciones', 'string', null, array(
-             'type' => 'string',
+        $this->hasColumn('porcentaje', 'float', 18, array(
+             'type' => 'float',
              'fixed' => 0,
              'unsigned' => false,
              'primary' => false,
-             'notnull' => true,
+             'notnull' => false,
              'autoincrement' => false,
-             'length' => '',
+             'length' => 18,
              ));
         $this->hasColumn('codigo_asignatura', 'string', 10, array(
              'type' => 'string',
@@ -107,6 +113,43 @@ abstract class BaseAsignaturaHomologada extends sfDoctrineRecord
              'notnull' => false,
              'autoincrement' => false,
              'length' => 10,
+             ));
+        $this->hasColumn('institucion_origen', 'string', 255, array(
+             'type' => 'string',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'length' => 255,
+             ));
+        $this->hasColumn('programa_origen', 'string', 255, array(
+             'type' => 'string',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => false,
+             'autoincrement' => false,
+             'length' => 255,
+             ));
+        $this->hasColumn('observaciones', 'string', null, array(
+             'type' => 'string',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => '',
+             ));
+        $this->hasColumn('is_oficializado', 'integer', 1, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => false,
+             'primary' => false,
+             'default' => '0',
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 1,
              ));
         $this->hasColumn('id_homologacion', 'integer', 4, array(
              'type' => 'integer',
@@ -138,14 +181,6 @@ abstract class BaseAsignaturaHomologada extends sfDoctrineRecord
         $this->hasOne('Homologacion', array(
              'local' => 'id_homologacion',
              'foreign' => 'id_homologacion'));
-
-        $this->hasMany('AsignaturaHomologada', array(
-             'local' => 'id_asignatura_homologada',
-             'foreign' => 'id_asignatura_homologada'));
-
-        $this->hasMany('AsignaturaCursada', array(
-             'local' => 'id_asignatura_homologada',
-             'foreign' => 'id_asignatura_homologada'));
 
         $timestampable0 = new Doctrine_Template_Timestampable(array(
              ));

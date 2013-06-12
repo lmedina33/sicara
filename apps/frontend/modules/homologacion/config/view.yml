@@ -1,3 +1,3 @@
 default:
-  stylesheets:    [ ]
-  javascripts:    [ /js/jquery-1.7.1.js, /js/tinymce/jscripts/tiny_mce/tiny_mce.js ]
+  stylesheets:    [  ]
+#  javascripts:    [ /sfFormExtraPlugin/css/jquery.autocompleter.css,/js/jquery-1.7.1.js, /js/tinymce/jscripts/tiny_mce/tiny_mce.js ]

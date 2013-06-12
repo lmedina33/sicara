@@ -12,5 +12,7 @@
  */
 class Asignatura extends BaseAsignatura
 {
-
+    function __toString(){
+        return $this->getCodigoAsignatura()." :: ".$this->getNombre();
+    }
 }

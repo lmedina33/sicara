@@ -105,7 +105,7 @@ abstract class BasePensum extends sfDoctrineRecord
 
         $this->hasMany('Homologacion', array(
              'local' => 'codigo_pensum',
-             'foreign' => 'codigo_pensum_origen'));
+             'foreign' => 'codigo_pensum_destino'));
 
         $timestampable0 = new Doctrine_Template_Timestampable(array(
              ));

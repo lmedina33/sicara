@@ -149,7 +149,7 @@ AsignaturaCursada:
       primary: false
       notnull: false
       autoincrement: false
-    id_asignatura_homologada:
+    id_homologacion:
       type: integer(4)
       fixed: false
       unsigned: true
@@ -177,9 +177,9 @@ AsignaturaCursada:
       local: id_asignatura_cursada
       foreign: id_asignatura_cursada
       type: many
-    AsignaturaHomologada:
-      local: id_asignatura_homologada
-      foreign: id_asignatura_homologada
+    Homologacion:
+      local: id_homologacion
+      foreign: id_homologacion
       type: one
 
 CertificacionDocente:
@@ -3563,35 +3563,6 @@ Homologacion:
       unsigned: true
       primary: true
       autoincrement: true
-    institucion_origen:
-      type: string(255)
-      fixed: false
-      unsigned: false
-      primary: false
-      notnull: false
-      autoincrement: false
-    programa_origen:
-      type: string(255)
-      fixed: false
-      unsigned: false
-      primary: false
-      notnull: false
-      autoincrement: false
-    nota_aprobatoria:
-      type: float(18)
-      fixed: false
-      unsigned: false
-      primary: false
-      notnull: false
-      autoincrement: false
-    is_oficializado:
-      type: integer(1)
-      fixed: false
-      unsigned: false
-      primary: false
-      default: '0'
-      notnull: true
-      autoincrement: false
     is_interna:
       type: integer(1)
       fixed: false
@@ -3614,13 +3585,6 @@ Homologacion:
       primary: false
       notnull: true
       autoincrement: false
-    codigo_pensum_origen:
-      type: string(10)
-      fixed: false
-      unsigned: false
-      primary: false
-      notnull: false
-      autoincrement: false
     id_usuario:
       type: integer(4)
       fixed: false
@@ -3640,17 +3604,16 @@ Homologacion:
       local: id_usuario
       foreign: id_usuario
       type: one
-    PensumOrigen:
-      class: Pensum
-      local: codigo_pensum_origen
-      foreign: codigo_pensum
-      type: one
     PensumDestino:
       class: Pensum
       local: codigo_pensum_destino
       foreign: codigo_pensum
       type: one
     AsignaturaHomologada:
+      local: id_homologacion
+      foreign: id_homologacion
+      type: many
+    AsignaturaCursada:
       local: id_homologacion
       foreign: id_homologacion
       type: many
@@ -3687,12 +3650,12 @@ AsignaturaHomologada:
       primary: false
       notnull: false
       autoincrement: false
-    observaciones:
-      type: string()
+    porcentaje:
+      type: float(18)
       fixed: false
       unsigned: false
       primary: false
-      notnull: true
+      notnull: false
       autoincrement: false
     codigo_asignatura:
       type: string(10)
@@ -3700,6 +3663,35 @@ AsignaturaHomologada:
       unsigned: false
       primary: false
       notnull: false
+      autoincrement: false
+    institucion_origen:
+      type: string(255)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    programa_origen:
+      type: string(255)
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: false
+      autoincrement: false
+    observaciones:
+      type: string()
+      fixed: false
+      unsigned: false
+      primary: false
+      notnull: true
+      autoincrement: false
+    is_oficializado:
+      type: integer(1)
+      fixed: false
+      unsigned: false
+      primary: false
+      default: '0'
+      notnull: true
       autoincrement: false
     id_homologacion:
       type: integer(4)
@@ -3724,9 +3716,5 @@ AsignaturaHomologada:
       local: id_homologacion
       foreign: id_homologacion
       type: one
-    AsignaturaHomologada:
-      local: id_asignatura_homologada
-      foreign: id_asignatura_homologada
-      type: many
 
 
