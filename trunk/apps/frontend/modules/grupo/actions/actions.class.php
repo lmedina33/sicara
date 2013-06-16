@@ -18,6 +18,7 @@ class grupoActions extends sfActions {
 
     public function executeNew(sfWebRequest $request) {
         $this->form = new GrupoForm();
+        $this->pensums=  Doctrine_Core::getTable('Pensum')->findAll();
     }
 
     public function executeCreate(sfWebRequest $request) {
@@ -33,6 +34,8 @@ class grupoActions extends sfActions {
     public function executeEdit(sfWebRequest $request) {
         $this->forward404Unless($grupo = Doctrine_Core::getTable('Grupo')->find(array($request->getParameter('id_grupo'))), sprintf('Object grupo does not exist (%s).', $request->getParameter('id_grupo')));
         $this->form = new GrupoForm($grupo);
+        
+        $this->pensums=  Doctrine_Core::getTable('Pensum')->findAll();
     }
 
     public function executeUpdate(sfWebRequest $request) {
@@ -229,10 +232,20 @@ class grupoActions extends sfActions {
         $this->grupo = Doctrine_Core::getTable('Grupo')->find($request->getParameter('id'));
         $this->estudiantes = Doctrine_Core::getTable('GrupoHasEstudiante')->findBy('id_grupo',$this->grupo->getIdGrupo());
         
-        $cods="0";
+        $cods="'0'";
         
         foreach($this->estudiantes as $has){
-            $cods.=",".$has->getCodigoEstudiante();
+            $cods.=",'".$has->getCodigoEstudiante()."'";
+        }
+        
+        $estudiantesAprob=  Doctrine_Core::getTable('AsignaturaCursada')
+                ->createQuery('ac')
+                ->where('ac.codigo_asignatura = ?',$this->grupo->getCodigoAsignatura())
+                ->andWhere('ac.is_aprobada = 1')
+                ->execute();
+        
+        foreach($estudiantesAprob as $repro){
+            $cods.=",'".$repro->getCodigoEstudiante()."'";
         }
         
         $this->disponibles = Doctrine_Core::getTable('Matricula')
@@ -272,6 +285,35 @@ class grupoActions extends sfActions {
         }
         
         return $this->renderText('fail');
+    }
+    
+    public function executeGetPeriodos(sfWebRequest $request){
+        $periodos=  Doctrine_Core::getTable('PeriodoAcademico')
+                ->findBy('codigo_pensum', $request->getParameter('idPensum'));
+        
+        $data=array();
+        
+        foreach($periodos as $periodo){
+            $data[]=array('id'=>$periodo->getIdPeriodoAcademico(),'periodo'=>$periodo->getPeriodo());
+        }
+        
+        return $this->renderText(json_encode($data));
+    }
+    
+    public function executeGetAsignaturas(sfWebRequest $request){
+        $asignaturas=  Doctrine_Core::getTable('Asignatura')
+                ->createQuery('a')
+                ->leftJoin('a.Semestre s')
+                ->where('s.codigo_pensum = ?', $request->getParameter('idPensum'))
+                ->execute();
+        
+        $data=array();
+        
+        foreach($asignaturas as $asignatura){
+            $data[]=array('id'=>$asignatura->getCodigoAsignatura(),'nombre'=>  strval($asignatura));
+        }
+        
+        return $this->renderText(json_encode($data));
     }
 
 }

@@ -1,0 +1,3 @@
+all:
+  stylesheets:    [ ]
+  javascripts:    [ /js/jquery-ui-timepicker-addon.js ]
