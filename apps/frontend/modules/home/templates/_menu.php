@@ -93,6 +93,12 @@ $menu_item->setName("Homologaciones")->setUrl("homologacion/index")->setCredenti
 
 $root->addChild("Homologacion",$menu_item);
 
+//GRUPOS DE ESTUDIANTES
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Grupos")->setUrl("grupo/index")->setCredentials('grupos');
+
+$root->addChild("Grupos",$menu_item);
+
 //BIBLIOTECA:
 //Material:
 $menu = new pmSuperfishMenu();

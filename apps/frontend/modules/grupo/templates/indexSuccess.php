@@ -38,6 +38,9 @@ slot('title', 'Listar Grupos')
             
                         $('#detallar').attr('href', '<?php echo url_for('grupo/ver?id=') ?>'+idGrupo);
                         $('#detallar img').attr('src', '/images/iconos/listarSmall.png');
+            
+                        $('#editar').attr('href', '<?php echo url_for('grupo/edit?id_grupo=') ?>'+idGrupo);
+                        $('#editar img').attr('src', '/images/iconos/editSmall.png');
                     } );
                 } );
             },
@@ -66,7 +69,9 @@ slot('title', 'Listar Grupos')
             }
         });
         
-        $("div.toolbar").html('<a href="#" id="detallar" title="Ver Grupo"><img src="/images/iconos/listarSmallGray.png"/></a>');
+$("div.toolbar").html('<a href="<?php echo url_for('grupo/new') ?>" id="nuevo" title="Nuevo Grupo"><img src="/images/iconos/newSmall.png"/></a>\n\
+        <a href="#" id="editar" title="Editar Grupo"><img src="/images/iconos/editSmallGray.png"/></a>\n\
+        <a href="#" id="detallar" title="Ver Grupo"><img src="/images/iconos/listarSmallGray.png"/></a>');
     });
     
 </script>

@@ -13,8 +13,8 @@ class GrupoForm extends BaseGrupoForm {
     public function configure() {
         $this->setWidgets(array(
             'id_grupo' => new sfWidgetFormInputHidden(),
-            'nombre' => new sfWidgetFormInputText(),
-            'id_periodo' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('PeriodoAcademico'), 'add_empty' => false)),
+            'nombre' => new sfWidgetFormInputText(array(),array('class'=>'validate[required]')),
+            'id_periodo' => new sfWidgetFormDoctrineChoice(array('label'=>'Periodo','model' => $this->getRelatedModelName('PeriodoAcademico'), 'add_empty' => false)),
             'certificacion_primaria' => new sfWidgetFormDoctrineChoice(array('label' => 'Certificación Primaria','model' => $this->getRelatedModelName('CertificacionDocente'), 'add_empty' => true)),
             'certificacion_secundaria' => new sfWidgetFormInputText(array('label' => 'Certificación Secundaria',)),
             'fecha_inicio' => new sfWidgetFormJQueryDate(array(
@@ -48,38 +48,40 @@ class GrupoForm extends BaseGrupoForm {
                     ),
                     array('readonly' => 'readonly')),
             'observaciones' => new sfWidgetFormTextarea(),
-            'codigo_asignatura' => new sfWidgetFormDoctrineChoice(array('label' => 'Asignatura','model' => $this->getRelatedModelName('Asignatura'), 'add_empty' => false)),
-            'codigo_profesor' => new sfWidgetFormDoctrineChoice(array('label' => 'Profesor','model' => $this->getRelatedModelName('Profesor'), 'add_empty' => true)),
-            'inicio_calificacion' => new sfWidgetFormJQueryDate(array(
-                'label' => 'Inicio de Calificación',
-                'image' => '/images/iconos/calendar.png',
-                'culture' => 'es',
-                'config' => "{
-                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                    buttonText: ['Ver Calendario...'],
-                    yearRange: '-1:+1',
-                    changeMonth: true,
-                    changeYear: true }",
-                'date_widget' => new sfWidgetFormInputText()
-                    ),
-                    array('readonly' => 'readonly')),
-            'fin_calificacion' => new sfWidgetFormJQueryDate(array(
-                'label' => 'Fin de Calificación',
-                'image' => '/images/iconos/calendar.png',
-                'culture' => 'es',
-                'config' => "{
-                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                    buttonText: ['Ver Calendario...'],
-                    yearRange: '-1:+1',
-                    changeMonth: true,
-                    changeYear: true }",
-                'date_widget' => new sfWidgetFormInputText()
-                    ),
-                    array('readonly' => 'readonly')),
+            'codigo_asignatura' => new sfWidgetFormDoctrineChoice(array('label' => 'Asignatura','model' => $this->getRelatedModelName('Asignatura'), 'add_empty' => 'Seleccione...'),array('class'=>'validate[required]')),
+            'codigo_profesor' => new sfWidgetFormDoctrineChoice(array('label' => 'Profesor','model' => $this->getRelatedModelName('Profesor'), 'add_empty' => 'Ninguno')),
+            'inicio_calificacion' => new sfWidgetFormInputText(array('label' => 'Inicio de Calificación'),array('readonly' => 'readonly')),
+//            'inicio_calificacion' => new sfWidgetFormJQueryDate(array(
+//                'label' => 'Inicio de Calificación',
+//                'image' => '/images/iconos/calendar.png',
+//                'culture' => 'es',
+//                'config' => "{
+//                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+//                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+//                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+//                    buttonText: ['Ver Calendario...'],
+//                    yearRange: '-1:+1',
+//                    changeMonth: true,
+//                    changeYear: true }",
+//                'date_widget' => new sfWidgetFormInputText()
+//                    ),
+//                    array('readonly' => 'readonly')),
+            'fin_calificacion' =>  new sfWidgetFormInputText(array('label' => 'Fin de Calificación'),array('readonly' => 'readonly')),
+//            'fin_calificacion' => new sfWidgetFormJQueryDate(array(
+//                'label' => 'Fin de Calificación',
+//                'image' => '/images/iconos/calendar.png',
+//                'culture' => 'es',
+//                'config' => "{
+//                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+//                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+//                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+//                    buttonText: ['Ver Calendario...'],
+//                    yearRange: '-1:+1',
+//                    changeMonth: true,
+//                    changeYear: true }",
+//                'date_widget' => new sfWidgetFormInputText()
+//                    ),
+//                    array('readonly' => 'readonly')),
         ));
 
         $this->setValidators(array(

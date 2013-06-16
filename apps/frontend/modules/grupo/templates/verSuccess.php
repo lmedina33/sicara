@@ -78,6 +78,7 @@ slot('title', 'Ver Grupo')
 </script>
 
 <h1>Ver Grupo</h1>
+<a href="<?php echo url_for('grupo/index') ?>" class="button back">Volver</a>
 <h2>Datos Generales</h2>
 <form>
     <table>
