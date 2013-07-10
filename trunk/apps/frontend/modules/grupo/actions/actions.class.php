@@ -18,7 +18,7 @@ class grupoActions extends sfActions {
 
     public function executeNew(sfWebRequest $request) {
         $this->form = new GrupoForm();
-        $this->pensums=  Doctrine_Core::getTable('Pensum')->findAll();
+        $this->pensums = Doctrine_Core::getTable('Pensum')->findAll();
     }
 
     public function executeCreate(sfWebRequest $request) {
@@ -34,8 +34,8 @@ class grupoActions extends sfActions {
     public function executeEdit(sfWebRequest $request) {
         $this->forward404Unless($grupo = Doctrine_Core::getTable('Grupo')->find(array($request->getParameter('id_grupo'))), sprintf('Object grupo does not exist (%s).', $request->getParameter('id_grupo')));
         $this->form = new GrupoForm($grupo);
-        
-        $this->pensums=  Doctrine_Core::getTable('Pensum')->findAll();
+
+        $this->pensums = Doctrine_Core::getTable('Pensum')->findAll();
     }
 
     public function executeUpdate(sfWebRequest $request) {
@@ -227,93 +227,585 @@ class grupoActions extends sfActions {
         //Envío del mensaje JSON
         return $this->renderText(json_encode($output));
     }
-    
+
     public function executeVer(sfWebRequest $request) {
         $this->grupo = Doctrine_Core::getTable('Grupo')->find($request->getParameter('id'));
-        $this->estudiantes = Doctrine_Core::getTable('GrupoHasEstudiante')->findBy('id_grupo',$this->grupo->getIdGrupo());
-        
-        $cods="'0'";
-        
-        foreach($this->estudiantes as $has){
-            $cods.=",'".$has->getCodigoEstudiante()."'";
+        $this->estudiantes = Doctrine_Core::getTable('GrupoHasEstudiante')->findBy('id_grupo', $this->grupo->getIdGrupo());
+
+        $cods = "'0'";
+
+        foreach ($this->estudiantes as $has) {
+            $cods.=",'" . $has->getCodigoEstudiante() . "'";
         }
-        
-        $estudiantesAprob=  Doctrine_Core::getTable('AsignaturaCursada')
+
+        $estudiantesAprob = Doctrine_Core::getTable('AsignaturaCursada')
                 ->createQuery('ac')
-                ->where('ac.codigo_asignatura = ?',$this->grupo->getCodigoAsignatura())
+                ->where('ac.codigo_asignatura = ?', $this->grupo->getCodigoAsignatura())
                 ->andWhere('ac.is_aprobada = 1')
                 ->execute();
-        
-        foreach($estudiantesAprob as $repro){
-            $cods.=",'".$repro->getCodigoEstudiante()."'";
+
+        foreach ($estudiantesAprob as $repro) {
+            $cods.=",'" . $repro->getCodigoEstudiante() . "'";
         }
-        
+
         $this->disponibles = Doctrine_Core::getTable('Matricula')
                 ->createQuery('m')
                 ->leftJoin('m.PeriodoAcademico p')
-                ->where('p.codigo_pensum = ?',$this->grupo->getAsignatura()->getSemestre()->getCodigoPensum())
-                ->andWhere('m.codigo_estudiante NOT IN ('.$cods.')')
+                ->where('p.codigo_pensum = ?', $this->grupo->getAsignatura()->getSemestre()->getCodigoPensum())
+                ->andWhere('m.codigo_estudiante NOT IN (' . $cods . ')')
                 ->execute();
     }
-    
-    public function executeAddEstudiante(sfWebRequest $request){
-        $grupo= $request->getParameter('grupo');
+
+    public function executeAddEstudiante(sfWebRequest $request) {
+        $grupo = $request->getParameter('grupo');
         $estudiante = $request->getParameter('estudiante');
-        
-        $hasOld=  Doctrine_Core::getTable('GrupoHasEstudiante')->findBySql('id_grupo ='.$grupo.' AND codigo_estudiante ='.$estudiante)->getFirst();
-        if($hasOld == null){
+
+        $hasOld = Doctrine_Core::getTable('GrupoHasEstudiante')->findBySql('id_grupo =' . $grupo . ' AND codigo_estudiante =' . $estudiante)->getFirst();
+        if ($hasOld == null) {
             $has = new GrupoHasEstudiante();
             $has->setIdGrupo($grupo);
             $has->setCodigoEstudiante($estudiante);
             $has->save();
-            
+
             return $this->renderText('added');
         }
-        
+
         return $this->renderText('fail');
     }
-    
-    public function executeDeleteEstudiante(sfWebRequest $request){
-        $grupo= $request->getParameter('grupo');
+
+    public function executeDeleteEstudiante(sfWebRequest $request) {
+        $grupo = $request->getParameter('grupo');
         $estudiante = $request->getParameter('estudiante');
-        
-        $hasOld=  Doctrine_Core::getTable('GrupoHasEstudiante')->findBySql('id_grupo ='.$grupo.' AND codigo_estudiante ='.$estudiante)->getFirst();
-        if($hasOld != null){
+
+        $hasOld = Doctrine_Core::getTable('GrupoHasEstudiante')->findBySql('id_grupo =' . $grupo . ' AND codigo_estudiante =' . $estudiante)->getFirst();
+        if ($hasOld != null) {
             $hasOld->delete();
-            
+
             return $this->renderText('removed');
         }
-        
+
         return $this->renderText('fail');
     }
-    
-    public function executeGetPeriodos(sfWebRequest $request){
-        $periodos=  Doctrine_Core::getTable('PeriodoAcademico')
+
+    public function executeGetPeriodos(sfWebRequest $request) {
+        $periodos = Doctrine_Core::getTable('PeriodoAcademico')
                 ->findBy('codigo_pensum', $request->getParameter('idPensum'));
-        
-        $data=array();
-        
-        foreach($periodos as $periodo){
-            $data[]=array('id'=>$periodo->getIdPeriodoAcademico(),'periodo'=>$periodo->getPeriodo());
+
+        $data = array();
+
+        foreach ($periodos as $periodo) {
+            $data[] = array('id' => $periodo->getIdPeriodoAcademico(), 'periodo' => $periodo->getPeriodo());
         }
-        
+
         return $this->renderText(json_encode($data));
     }
-    
-    public function executeGetAsignaturas(sfWebRequest $request){
-        $asignaturas=  Doctrine_Core::getTable('Asignatura')
+
+    public function executeGetAsignaturas(sfWebRequest $request) {
+        $asignaturas = Doctrine_Core::getTable('Asignatura')
                 ->createQuery('a')
                 ->leftJoin('a.Semestre s')
                 ->where('s.codigo_pensum = ?', $request->getParameter('idPensum'))
                 ->execute();
-        
-        $data=array();
-        
-        foreach($asignaturas as $asignatura){
-            $data[]=array('id'=>$asignatura->getCodigoAsignatura(),'nombre'=>  strval($asignatura));
+
+        $data = array();
+
+        foreach ($asignaturas as $asignatura) {
+            $data[] = array('id' => $asignatura->getCodigoAsignatura(), 'nombre' => strval($asignatura));
         }
-        
+
         return $this->renderText(json_encode($data));
+    }
+
+    public function executeListarGrupos(sfWebRequest $request) {
+        $this->gruposVigentes = Doctrine_Core::getTable('Grupo')
+                ->createQuery('g')
+                ->leftJoin('g.Profesor p')
+                ->leftJoin('p.Usuario u')
+                ->where('u.id_sf_guard_user = ?', sfContext::getInstance()->getUser()->getGuardUser()->getId())
+                ->andWhere('? BETWEEN g.inicio_calificacion AND g.fin_calificacion', date('Y-m-d H:i:s'))
+                ->orderBy('g.fin_calificacion ASC')
+                ->execute();
+
+        $this->gruposAnteriores = Doctrine_Core::getTable('Grupo')
+                ->createQuery('g')
+                ->leftJoin('g.Profesor p')
+                ->leftJoin('p.Usuario u')
+                ->where('u.id_sf_guard_user = ?', sfContext::getInstance()->getUser()->getGuardUser()->getId())
+                ->andWhere('? > g.fin_calificacion', date('Y-m-d H:i:s'))
+                ->orderBy('g.fin_calificacion ASC')
+                ->execute();
+
+        $this->gruposFuturos = Doctrine_Core::getTable('Grupo')
+                ->createQuery('g')
+                ->leftJoin('g.Profesor p')
+                ->leftJoin('p.Usuario u')
+                ->where('u.id_sf_guard_user = ?', sfContext::getInstance()->getUser()->getGuardUser()->getId())
+                ->andWhere('? < g.inicio_calificacion', date('Y-m-d H:i:s'))
+                ->orderBy('g.fin_calificacion ASC')
+                ->execute();
+    }
+
+    public function executeVerGrupo(sfWebRequest $request) {
+        $this->grupo = Doctrine_Core::getTable('Grupo')->find($request->getParameter('id'));
+        $this->estudiantesHas = Doctrine_Core::getTable('GrupoHasEstudiante')
+                ->createQuery('h')
+                ->leftJoin('h.Estudiante e')
+                ->leftJoin('e.Usuario u')
+                ->where('h.id_grupo = ?', $this->grupo->getIdGrupo())
+                ->orderBy('CONCAT(u.primer_apellido," ",u.segundo_apellido," ",u.primer_nombre," ",u.segundo_nombre) ASC')
+                ->execute();
+
+        $grupoAct = Doctrine_Core::getTable('Grupo')
+                ->createQuery('g')
+                ->where('g.id_grupo = ?', $request->getParameter('id'))
+                ->andWhere('? BETWEEN g.inicio_calificacion AND g.fin_calificacion', date('Y-m-d H:i:s'))
+                ->execute()
+                ->getFirst();
+
+        if ($grupoAct == null) {
+            $this->isActivo = false;
+        } else {
+            $this->isActivo = true;
+        }
+
+        $this->notas = array();
+
+        foreach ($this->estudiantesHas as $has) {
+            $data = array();
+
+            $definitiva = Doctrine_Core::getTable('AsignaturaCursada')
+                    ->findBySql("codigo_estudiante = '" . $has->getCodigoEstudiante() . "' AND codigo_asignatura = '" . $this->grupo->getCodigoAsignatura() . "' AND id_periodo = " . $this->grupo->getIdPeriodo())
+                    ->getFirst();
+
+            $data['definitiva'] = '';
+            $data['nivelacion'] = '';
+            $data['asistencia'] = '';
+            $data['is_homologacion'] = '';
+            $data['parcial1'] = '';
+            $data['parcial2'] = '';
+            $data['parcial3'] = '';
+
+            if ($definitiva != null) {
+                $data['definitiva'] = $definitiva->getNotaAsignaturaCursada();
+                $data['nivelacion'] = $definitiva->getNotaNivelacionAsignaturaCursada();
+                $data['asistencia'] = $definitiva->getAsistencia();
+                $data['is_homologacion'] = $definitiva->getIsHomologacion();
+
+                $parciales = Doctrine_Core::getTable('Parcial')
+                        ->createQuery('p')
+                        ->where('id_asignatura_cursada = ?', $definitiva->getIdAsignaturaCursada())
+                        ->orderBy('orden ASC')
+                        ->execute();
+
+                foreach ($parciales as $parcial) {
+                    switch ($parcial->getOrden()) {
+                        case 1: {
+                                $data['parcial1'] = $parcial->getCalificacion();
+                            }break;
+                        case 2: {
+                                $data['parcial2'] = $parcial->getCalificacion();
+                            }break;
+                        case 3: {
+                                $data['parcial3'] = $parcial->getCalificacion();
+                            }break;
+                    }
+                }
+
+                $this->notas[$has->getCodigoEstudiante()] = $data;
+            }
+        }
+    }
+
+    public function executeCalificarGrupo(sfWebRequest $request) {
+        $grupoAct = Doctrine_Core::getTable('Grupo')
+                ->createQuery('g')
+                ->where('g.id_grupo = ?', $request->getParameter('id'))
+                ->andWhere('? BETWEEN g.inicio_calificacion AND g.fin_calificacion', date('Y-m-d H:i:s'))
+                ->execute()
+                ->getFirst();
+
+        if ($grupoAct == null) {
+            $this->redirect('grupo/listarGrupos');
+        }
+
+        $this->grupo = Doctrine_Core::getTable('Grupo')->find($request->getParameter('id'));
+        $this->estudiantesHas = Doctrine_Core::getTable('GrupoHasEstudiante')
+                ->createQuery('h')
+                ->leftJoin('h.Estudiante e')
+                ->leftJoin('e.Usuario u')
+                ->where('h.id_grupo = ?', $this->grupo->getIdGrupo())
+                ->orderBy('CONCAT(u.primer_apellido," ",u.segundo_apellido," ",u.primer_nombre," ",u.segundo_nombre) ASC')
+                ->execute();
+
+        $this->notas = array();
+
+        foreach ($this->estudiantesHas as $estudianteH) {
+
+            $asignaturaCur = Doctrine_Core::getTable('AsignaturaCursada')
+                    ->findBySql("codigo_estudiante = '" . $estudianteH->getCodigoEstudiante() . "' AND codigo_asignatura = '" . $this->grupo->getCodigoAsignatura() . "' AND id_periodo = " . $this->grupo->getIdPeriodo())
+                    ->getFirst();
+
+            $notas = null;
+
+            if ($asignaturaCur != null) {
+                $notas = array();
+                $notas['nota'] = $asignaturaCur;
+
+                $parcial1 = Doctrine_Core::getTable('Parcial')
+                        ->createQuery('p')
+                        ->where('p.id_asignatura_cursada = ?', $asignaturaCur->getIdAsignaturaCursada())
+                        ->andWhere('p.orden = 1')
+                        ->execute()
+                        ->getFirst();
+
+                if ($parcial1 != null)
+                    $notas['parcial1'] = $parcial1;
+                else
+                    $notas['parcial1'] = null;
+
+                $parcial2 = Doctrine_Core::getTable('Parcial')
+                        ->createQuery('p')
+                        ->where('p.id_asignatura_cursada = ?', $asignaturaCur->getIdAsignaturaCursada())
+                        ->andWhere('p.orden = 2')
+                        ->execute()
+                        ->getFirst();
+
+                if ($parcial2 != null)
+                    $notas['parcial2'] = $parcial2;
+                else
+                    $notas['parcial2'] = null;
+
+                $parcial3 = Doctrine_Core::getTable('Parcial')
+                        ->createQuery('p')
+                        ->where('p.id_asignatura_cursada = ?', $asignaturaCur->getIdAsignaturaCursada())
+                        ->andWhere('p.orden = 3')
+                        ->execute()
+                        ->getFirst();
+
+                if ($parcial3 != null)
+                    $notas['parcial3'] = $parcial3;
+                else
+                    $notas['parcial3'] = null;
+            }
+
+            $this->notas[$estudianteH->getCodigoEstudiante()] = $notas;
+        }
+    }
+
+    public function executeGuardarNota(sfWebRequest $request) {
+        $grupoAct = Doctrine_Core::getTable('Grupo')
+                ->createQuery('g')
+                ->where('g.id_grupo = ?', $request->getParameter('idGrupo'))
+                ->andWhere('? BETWEEN g.inicio_calificacion AND g.fin_calificacion', date('Y-m-d H:i:s'))
+                ->execute()
+                ->getFirst();
+
+        if ($grupoAct == null) {
+            $this->renderText('fail');
+        }
+
+        $parcial1 = $request->getParameter('parcial1');
+        $parcial2 = $request->getParameter('parcial2');
+        $parcial3 = $request->getParameter('parcial3');
+        $nota = $request->getParameter('nota');
+        $asistencia = $request->getParameter('asistencia');
+        $nivelacion = $request->getParameter('nivelacion');
+        $codEstudiante = $request->getParameter('codEstudiante');
+        $codAsignatura = $request->getParameter('codAsignatura');
+        $idPeriodo = $request->getParameter('idPeriodo');
+
+        $asCur = Doctrine_Core::getTable('AsignaturaCursada')
+                ->findBySql("codigo_estudiante = '" . $codEstudiante . "' AND codigo_asignatura = '" . $codAsignatura . "'")
+                ->getFirst();
+
+        if ($asCur == null) {
+            $asCur = new AsignaturaCursada();
+            if ($nota != "")
+                $asCur->setNotaAsignaturaCursada($nota);
+
+            $asCur->setAsistencia($asistencia);
+            $asCur->setCodigoAsignatura($codAsignatura);
+            $asCur->setCodigoEstudiante($codEstudiante);
+            $asCur->setNotaNivelacionAsignaturaCursada($nivelacion);
+            $asCur->setIdPeriodo($idPeriodo);
+            $asCur->save();
+        }else {
+            if ($nota != "")
+                $asCur->setNotaAsignaturaCursada($nota);
+
+            $asCur->setAsistencia($asistencia);
+            $asCur->setNotaNivelacionAsignaturaCursada($nivelacion);
+            $asCur->save();
+        }
+
+        $par1 = Doctrine_Core::getTable('Parcial')
+                ->findBySql("id_asignatura_cursada = " . $asCur->getIdAsignaturaCursada() . " AND orden = 1")
+                ->getFirst();
+
+        if ($par1 == null) {
+            $par1 = new Parcial();
+        }
+        $par1->setCalificacion($parcial1);
+        $par1->setPorcentaje(0.3);
+        $par1->setIdAsignaturaCursada($asCur->getIdAsignaturaCursada());
+        $par1->setIdCalificador(sfContext::getInstance()->getUser()->getGuardUser()->getId());
+        $par1->setOrden(1);
+        $par1->save();
+
+        $par2 = Doctrine_Core::getTable('Parcial')
+                ->findBySql("id_asignatura_cursada = " . $asCur->getIdAsignaturaCursada() . " AND orden = 2")
+                ->getFirst();
+
+        if ($par2 == null) {
+            $par2 = new Parcial();
+        }
+        $par2->setCalificacion($parcial2);
+        $par2->setPorcentaje(0.3);
+        $par2->setIdAsignaturaCursada($asCur->getIdAsignaturaCursada());
+        $par2->setIdCalificador(sfContext::getInstance()->getUser()->getGuardUser()->getId());
+        $par2->setOrden(2);
+        $par2->save();
+
+        $par3 = Doctrine_Core::getTable('Parcial')
+                ->findBySql("id_asignatura_cursada = " . $asCur->getIdAsignaturaCursada() . " AND orden = 3")
+                ->getFirst();
+
+        if ($par3 == null) {
+            $par3 = new Parcial();
+        }
+        $par3->setCalificacion($parcial3);
+        $par3->setPorcentaje(0.4);
+        $par3->setIdAsignaturaCursada($asCur->getIdAsignaturaCursada());
+        $par3->setIdCalificador(sfContext::getInstance()->getUser()->getGuardUser()->getId());
+        $par3->setOrden(3);
+        $par3->save();
+
+        return $this->renderText('ok');
+    }
+
+    //ASISTENCIA
+    public function executeGenerarFormatoRC003(sfWebRequest $request) {
+        $grupo = Doctrine_Core::getTable('Grupo')->find($request->getParameter('id'));
+        $estudiantes = Doctrine_Core::getTable('GrupoHasEstudiante')
+                ->createQuery('h')
+                ->leftJoin('h.Estudiante e')
+                ->leftJoin('e.Usuario u')
+                ->where('h.id_grupo = ?', $grupo->getIdGrupo())
+                ->orderBy('CONCAT(u.primer_apellido," ",u.segundo_apellido," ",u.primer_nombre," ",u.segundo_nombre) ASC')
+                ->execute();
+
+        sfConfig::set('sf_web_debug', false);
+
+        $pdf = new FormatoRC003Pdf('L', 'mm', 'letter');
+
+        $pdf->numReg($estudiantes->count());
+        $pdf->setEstudiantes($estudiantes);
+        $pdf->setGrupo($grupo);
+        $pdf->generar();
+
+        $pdf->Output();
+
+        throw new sfStopException();
+    }
+
+    //CALIFICACIONES
+    public function executeGenerarFormatoRC005(sfWebRequest $request) {
+        $grupo = Doctrine_Core::getTable('Grupo')->find($request->getParameter('id'));
+        $estudiantes = Doctrine_Core::getTable('GrupoHasEstudiante')
+                ->createQuery('h')
+                ->leftJoin('h.Estudiante e')
+                ->leftJoin('e.Usuario u')
+                ->where('h.id_grupo = ?', $grupo->getIdGrupo())
+                ->orderBy('CONCAT(u.primer_apellido," ",u.segundo_apellido," ",u.primer_nombre," ",u.segundo_nombre) ASC')
+                ->execute();
+
+        sfConfig::set('sf_web_debug', false);
+
+        $pdf = new FormatoRC005Pdf('L', 'mm', 'letter');
+
+        $pdf->numReg($estudiantes->count());
+        $pdf->setEstudiantes($estudiantes);
+        $pdf->setGrupo($grupo);
+        $pdf->generar();
+
+        $pdf->Output();
+
+        throw new sfStopException();
+    }
+
+    //CALIFICACIONES DILIGENCIADA
+    public function executeGenerarFormatoRC005Dil(sfWebRequest $request) {
+        $grupo = Doctrine_Core::getTable('Grupo')->find($request->getParameter('id'));
+        $estudiantes = Doctrine_Core::getTable('GrupoHasEstudiante')
+                ->createQuery('h')
+                ->leftJoin('h.Estudiante e')
+                ->leftJoin('e.Usuario u')
+                ->where('h.id_grupo = ?', $grupo->getIdGrupo())
+                ->orderBy('CONCAT(u.primer_apellido," ",u.segundo_apellido," ",u.primer_nombre," ",u.segundo_nombre) ASC')
+                ->execute();
+        
+        ////
+        $notas = array();
+
+        foreach ($estudiantes as $has) {
+            $data = array();
+
+            $definitiva = Doctrine_Core::getTable('AsignaturaCursada')
+                    ->findBySql("codigo_estudiante = '" . $has->getCodigoEstudiante() . "' AND codigo_asignatura = '" . $grupo->getCodigoAsignatura() . "' AND id_periodo = " . $grupo->getIdPeriodo())
+                    ->getFirst();
+
+            $data['definitiva'] = '';
+            $data['nivelacion'] = '';
+            $data['asistencia'] = '';
+            $data['is_homologacion'] = '';
+            $data['parcial1'] = '';
+            $data['parcial2'] = '';
+            $data['parcial3'] = '';
+
+            if ($definitiva != null) {
+                $data['definitiva'] = $definitiva->getNotaAsignaturaCursada();
+                $data['nivelacion'] = $definitiva->getNotaNivelacionAsignaturaCursada();
+                $data['asistencia'] = $definitiva->getAsistencia();
+                $data['is_homologacion'] = $definitiva->getIsHomologacion();
+
+//                $parciales = Doctrine_Core::getTable('Parcial')
+//                        ->createQuery('p')
+//                        ->where('id_asignatura_cursada = ?', $definitiva->getIdAsignaturaCursada())
+//                        ->orderBy('orden ASC')
+//                        ->execute();
+//
+//                foreach ($parciales as $parcial) {
+//                    switch ($parcial->getOrden()) {
+//                        case 1: {
+//                                $data['parcial1'] = $parcial->getCalificacion();
+//                            }break;
+//                        case 2: {
+//                                $data['parcial2'] = $parcial->getCalificacion();
+//                            }break;
+//                        case 3: {
+//                                $data['parcial3'] = $parcial->getCalificacion();
+//                            }break;
+//                    }
+//                }
+
+                $notas[$has->getCodigoEstudiante()] = $data;
+            }
+        }
+        ////
+
+        sfConfig::set('sf_web_debug', false);
+
+        $pdf = new FormatoRC005DilPdf('L', 'mm', 'letter');
+
+        $pdf->numReg($estudiantes->count());
+        $pdf->setEstudiantes($estudiantes);
+        $pdf->setGrupo($grupo);
+        $pdf->setNotas($notas);
+        $pdf->generar();
+
+        $pdf->Output();
+
+        throw new sfStopException();
+    }
+
+    //CALIFICACIONES PARCIALES
+    public function executeGenerarFormatoRC011(sfWebRequest $request) {
+        $grupo = Doctrine_Core::getTable('Grupo')->find($request->getParameter('id'));
+        $estudiantes = Doctrine_Core::getTable('GrupoHasEstudiante')
+                ->createQuery('h')
+                ->leftJoin('h.Estudiante e')
+                ->leftJoin('e.Usuario u')
+                ->where('h.id_grupo = ?', $grupo->getIdGrupo())
+                ->orderBy('CONCAT(u.primer_apellido," ",u.segundo_apellido," ",u.primer_nombre," ",u.segundo_nombre) ASC')
+                ->execute();
+
+        sfConfig::set('sf_web_debug', false);
+
+        $pdf = new FormatoRC011Pdf('L', 'mm', 'letter');
+
+        $pdf->numReg($estudiantes->count());
+        $pdf->setEstudiantes($estudiantes);
+        $pdf->setGrupo($grupo);
+        $pdf->generar();
+
+        $pdf->Output();
+
+        throw new sfStopException();
+    }
+
+    //CALIFICACIONES PARCIALES
+    public function executeGenerarFormatoRC011Dil(sfWebRequest $request) {
+        $grupo = Doctrine_Core::getTable('Grupo')->find($request->getParameter('id'));
+        $estudiantes = Doctrine_Core::getTable('GrupoHasEstudiante')
+                ->createQuery('h')
+                ->leftJoin('h.Estudiante e')
+                ->leftJoin('e.Usuario u')
+                ->where('h.id_grupo = ?', $grupo->getIdGrupo())
+                ->orderBy('CONCAT(u.primer_apellido," ",u.segundo_apellido," ",u.primer_nombre," ",u.segundo_nombre) ASC')
+                ->execute();
+
+        ////
+        $notas = array();
+
+        foreach ($estudiantes as $has) {
+            $data = array();
+
+            $definitiva = Doctrine_Core::getTable('AsignaturaCursada')
+                    ->findBySql("codigo_estudiante = '" . $has->getCodigoEstudiante() . "' AND codigo_asignatura = '" . $grupo->getCodigoAsignatura() . "' AND id_periodo = " . $grupo->getIdPeriodo())
+                    ->getFirst();
+
+            $data['definitiva'] = '';
+            $data['nivelacion'] = '';
+            $data['asistencia'] = '';
+            $data['is_homologacion'] = '';
+            $data['parcial1'] = '';
+            $data['parcial2'] = '';
+            $data['parcial3'] = '';
+
+            if ($definitiva != null) {
+                $data['definitiva'] = $definitiva->getNotaAsignaturaCursada();
+                $data['nivelacion'] = $definitiva->getNotaNivelacionAsignaturaCursada();
+                $data['asistencia'] = $definitiva->getAsistencia();
+                $data['is_homologacion'] = $definitiva->getIsHomologacion();
+
+                $parciales = Doctrine_Core::getTable('Parcial')
+                        ->createQuery('p')
+                        ->where('id_asignatura_cursada = ?', $definitiva->getIdAsignaturaCursada())
+                        ->orderBy('orden ASC')
+                        ->execute();
+
+                foreach ($parciales as $parcial) {
+                    switch ($parcial->getOrden()) {
+                        case 1: {
+                                $data['parcial1'] = $parcial->getCalificacion();
+                            }break;
+                        case 2: {
+                                $data['parcial2'] = $parcial->getCalificacion();
+                            }break;
+                        case 3: {
+                                $data['parcial3'] = $parcial->getCalificacion();
+                            }break;
+                    }
+                }
+
+                $notas[$has->getCodigoEstudiante()] = $data;
+            }
+        }
+        ////
+        
+        sfConfig::set('sf_web_debug', false);
+
+        $pdf = new FormatoRC011DilPdf('L', 'mm', 'letter');
+
+        $pdf->numReg($estudiantes->count());
+        $pdf->setEstudiantes($estudiantes);
+        $pdf->setGrupo($grupo);
+        $pdf->setNotas($notas);
+        $pdf->generar();
+
+        $pdf->Output();
+
+        throw new sfStopException();
     }
 
 }

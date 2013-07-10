@@ -10,6 +10,7 @@ Doctrine_Manager::getInstance()->bindComponent('Parcial', 'doctrine');
  * @property integer $id_parcial
  * @property float $porcentaje
  * @property float $calificacion
+ * @property integer $orden
  * @property integer $id_asignatura_cursada
  * @property integer $id_calificador
  * @property Usuario $Usuario
@@ -18,6 +19,7 @@ Doctrine_Manager::getInstance()->bindComponent('Parcial', 'doctrine');
  * @method integer           getIdParcial()             Returns the current record's "id_parcial" value
  * @method float             getPorcentaje()            Returns the current record's "porcentaje" value
  * @method float             getCalificacion()          Returns the current record's "calificacion" value
+ * @method integer           getOrden()                 Returns the current record's "orden" value
  * @method integer           getIdAsignaturaCursada()   Returns the current record's "id_asignatura_cursada" value
  * @method integer           getIdCalificador()         Returns the current record's "id_calificador" value
  * @method Usuario           getUsuario()               Returns the current record's "Usuario" value
@@ -25,6 +27,7 @@ Doctrine_Manager::getInstance()->bindComponent('Parcial', 'doctrine');
  * @method Parcial           setIdParcial()             Sets the current record's "id_parcial" value
  * @method Parcial           setPorcentaje()            Sets the current record's "porcentaje" value
  * @method Parcial           setCalificacion()          Sets the current record's "calificacion" value
+ * @method Parcial           setOrden()                 Sets the current record's "orden" value
  * @method Parcial           setIdAsignaturaCursada()   Sets the current record's "id_asignatura_cursada" value
  * @method Parcial           setIdCalificador()         Sets the current record's "id_calificador" value
  * @method Parcial           setUsuario()               Sets the current record's "Usuario" value
@@ -65,6 +68,15 @@ abstract class BaseParcial extends sfDoctrineRecord
              'notnull' => false,
              'autoincrement' => false,
              'length' => 18,
+             ));
+        $this->hasColumn('orden', 'integer', 4, array(
+             'type' => 'integer',
+             'fixed' => 0,
+             'unsigned' => true,
+             'primary' => false,
+             'notnull' => true,
+             'autoincrement' => false,
+             'length' => 4,
              ));
         $this->hasColumn('id_asignatura_cursada', 'integer', 4, array(
              'type' => 'integer',
