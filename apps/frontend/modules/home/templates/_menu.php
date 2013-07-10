@@ -99,6 +99,17 @@ $menu_item->setName("Grupos")->setUrl("grupo/index")->setCredentials('grupos');
 
 $root->addChild("Grupos",$menu_item);
 
+//GRUPOS DE ESTUDIANTES PARA PROFESORES
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Mis Grupos")->setUrl("grupo/listarGrupos")->setCredentials('grupos_prof');
+
+$root->addChild("GruposProf",$menu_item);
+
+//NOTAS PARA ESTUDIANTES
+$menu_item = new pmSuperfishMenuItem();
+$menu_item->setName("Mis Calificaciones")->setUrl("calificaciones/index")->setCredentials('ver_calificaciones_es');
+
+$root->addChild("calificaciones_es",$menu_item);
 //BIBLIOTECA:
 //Material:
 $menu = new pmSuperfishMenu();

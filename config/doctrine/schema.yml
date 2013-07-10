@@ -1331,6 +1331,13 @@ Parcial:
       primary: false
       notnull: false
       autoincrement: false
+    orden:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
     id_asignatura_cursada:
       type: integer(4)
       fixed: false
