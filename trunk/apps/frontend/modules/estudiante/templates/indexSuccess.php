@@ -29,7 +29,8 @@ slot('title', 'Listar Estudiantes')
                 { "mDataProp": "Documento" , "sClass": "documento" },
                 { "mDataProp": "Telefono" , "sClass": "telefono" },
                 { "mDataProp": "Correo" , "sClass": "correo" },
-                { "mDataProp": "Pensum" , "sWidth":"250px" }
+                { "mDataProp": "Pensum" , "sWidth":"250px" },
+                { "mDataProp": "Estado" , "sWidth":"250px" }
             ],
             "fnDrawCallback": function ( oSettings ) {
                 var row;
@@ -191,6 +192,7 @@ Periodo:
             <th>Teléfono</th>
             <th>Correo</th>
             <th>Programa</th>
+            <th>Estado</th>
         </tr>
     </thead>
     <tbody>

@@ -97,7 +97,8 @@ class estudianteActions extends sfActions {
             'u.documento',
             'u.telefono1',
             'u.correo',
-            'pen.nombre');
+            'pen.nombre',
+            'estado');
 
         //*Se seleeciona la tabla y los campos que se van a mostrar en este datatables
         $q = Doctrine_Query::create()
@@ -109,11 +110,13 @@ class estudianteActions extends sfActions {
                     u.telefono1 as tel,
                     u.correo as mail,
                     pen.nombre AS pensum,
-                    u.id_usuario AS id_usuario')
+                    u.id_usuario AS id_usuario,
+                    es.nombre as estado')
                 ->from('Estudiante e')
                 ->innerJoin('e.Matricula m')
                 ->leftJoin('e.Usuario u')
                 ->leftJoin('u.TipoDocumento t')
+                ->leftJoin('e.EstadoEstudiante es')
                 ->leftJoin('e.Pensum pen');
 
         if ($request->getParameter('periodo')) {
@@ -196,6 +199,7 @@ class estudianteActions extends sfActions {
             $correo = "";
             $pensum = "";
             $idUsuario = "";
+            $estado = "";
 
             //*Se evalúa si el dato a insertar existe
             if (isset($rows[$i]['codigo_estudiante']))
@@ -222,8 +226,11 @@ class estudianteActions extends sfActions {
             if (isset($rows[$i]['id_usuario']))
                 $idUsuario = $rows[$i]['id_usuario'];
 
+            if (isset($rows[$i]['estado']))
+                $estado = $rows[$i]['estado'];
+
             //*Se agregan los datos en la matriz
-            $data[$i] = array('Codigo' => $codigo, 'Nombre' => $nombre, 'TipoDoc' => $tipoDoc, 'Documento' => $documento, 'Telefono' => $telefono, 'Correo' => $correo, 'Pensum' => $pensum, 'IdUsuario' => $idUsuario);
+            $data[$i] = array('Codigo' => $codigo, 'Nombre' => $nombre, 'TipoDoc' => $tipoDoc, 'Documento' => $documento, 'Telefono' => $telefono, 'Correo' => $correo, 'Pensum' => $pensum, 'IdUsuario' => $idUsuario, 'Estado' => $estado);
         }
 
         //*Calculo del total de registros en la BD si no se usaran los filtros de busqueda
